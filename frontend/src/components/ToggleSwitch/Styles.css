@@ -1,0 +1,101 @@
+.container {
+    text-align: center;
+    }
+    .toggle-switch {
+    position: relative;
+    width: 4em;
+    display: inline-block;
+    text-align: left;
+    padding-top: 1%;
+    margin-bottom: -8%;
+    outline: none;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    }
+    .checkbox {
+    display: none;
+     outline: none;
+    }
+    .label {
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    border: 0 solid #bbb;
+    border-radius: 20px;
+    outline: none;
+    }
+    .inner {
+    display: block;
+    width: 200%;
+    margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+    outline: none;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    }
+    .inner:before,
+    .inner:after {
+    float: left;
+    width: 50%;
+    height: 2em;
+    padding: 0;
+    line-height: 36px;
+    color: #fff;
+    font-weight: bold;
+    box-sizing: border-box;
+    outline: none;
+    }
+    .inner:before {
+    content: "";
+    padding-left: 10px;
+    background-color: #03DAC6;
+    color: #fff;
+    outline: none
+    }
+    .inner:after {
+    content: "";
+    padding-right: 10px;
+    background-color: #018786;
+    color: #fff;
+    text-align: right;
+    outline: none;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    }
+    .switch {
+    display: block;
+    width: 24px;
+    margin: 5px;
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 30px;
+    border: 0 solid #bbb;
+    border-radius: 20px;
+    transition: all 0.3s ease-in 0s;
+    outline: none;
+    user-select: none;
+    -moz-user-select: none;
+    -khtml-user-select: none;
+    -webkit-user-select: none;
+    -o-user-select: none;
+    }
+    .checkbox:checked + .label .inner {
+    margin-left: 0;
+    outline: none;
+    }
+    .checkbox:checked + .label .switch {
+    right: 0px;
+    outline: none;
+    }
+    

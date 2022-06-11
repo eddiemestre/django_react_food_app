@@ -10,6 +10,4 @@ router.register(r'public', PublicReviewList, 'public_reviews')
 urlpatterns = [
     path('', include(router.urls)),
     path('my_reviews/', ReviewList.as_view(), name='my_reviews'),
-    # path('<int:pk>/', PublicReviewList.as_view(), name='public_reviews'),
-    # path('my_reviews/', views.ReviewList.as_view(), name="my_reviews"),
 ]

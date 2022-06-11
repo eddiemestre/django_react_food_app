@@ -18,12 +18,6 @@ class NumberSerializer(serializers.ModelSerializer):
         instance.save()
         return instance
 
-        # update_fields = [k for k in validated_data]
-        # for k, v in validated_data.items():
-        #     setattr(instance, k, v)
-        
-        # instance.save(update_fields=update_fields)
-        # return instance
 
 class CommentSerializer(serializers.ModelSerializer):
 

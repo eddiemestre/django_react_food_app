@@ -30,12 +30,6 @@ class ReviewSerializer(serializers.ModelSerializer):
 
 
 class ReviewListSerializer(serializers.ModelSerializer):
-    # title = serializers.CharField(max_length=120)
-    # class Meta:
-    #     model = ReviewModel
-    #     fields = ('title', 'date', 'review', 'private', 'date_created', 'date_modified')
-    #     read_only_fields = ('title', 'date', 'review', 'private', 'date_created', 'date_modified')
-
     class Meta:
         model = ReviewModel
         fields = ('title', 'date', 'review', 'private', 'user', 'date_created', 'date_modified')

@@ -19,27 +19,6 @@ class RegistrationAPI(generics.CreateAPIView):
     queryset = Account.objects.all()
     permission_classes = (AllowAny,)
     serializer_class = UserRegistration
-    # def post(request):
-        # serializer_class = UserRegistration(request)
-        # if serializer_class.is_valid():
-        #     email = serializer_class.validated_data['email']
-        #     username = serializer_class.validated_data['username']
-        #     password = serializer_class.validated_data['password1']
-        #     password2 = serializer_class.validated_data['password2']
-
-        #     if password == password2:
-        #         if Account.objects.filter(username=username).exists():
-        #             messages.error(request, 'An account with this username already exists!')
-        #             # redirect
-        #             return redirect('register')
-        #         if Account.objects.filter(email=email).exists():
-        #             messages.error(request, 'An account with this email already exists!')
-        #             # redirect
-        #             return redirect('register')
-        #         account = authenticate(email=email, username=username, password=password)
-        #         serializer_class.save()
-        #     login(request, account)
-        #     return redirect('home')
 
             
 
@@ -75,19 +54,6 @@ class UserAuthentication(authentication.BaseAuthentication):
         
         return (user, None)
 
-# class AuthenticationView(APIView):
-#     authentication_classes = (UserAuthentication)
-    
-#     def post(self, request, format=None):
-
-#         user = authenticate(request, email=)
-#         return Response(content)
-
-
-
-# class MyObtainTokenPairView(TokenObtainPairView):
-#     permission_classes = (AllowAny,)
-#     serializer_class = MyTokenObtainPairSerializer
 
 class ChangePasswordView(generics.UpdateAPIView):
     queryset = Account.objects.all()
