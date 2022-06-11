@@ -63,9 +63,10 @@ export const InputTitle = styled.div`
 
 export const InputText = styled.input`
     padding-top: 1%;
-    height: 2em;
-    width: 95.5%;
+    height: 2.5em;
+    width: 100%;
     border: none;
+    box-sizing: border-box;
     border-radius: 5px;
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), #121212;
     color: white;
@@ -102,7 +103,8 @@ export const InputText = styled.input`
 export const LargeInputText = styled.textarea`
     padding-top: 1%;
     height: 18em;
-    width: 95.5%;
+    width: 100%;
+    box-sizing: border-box;
     padding-left: 0.5em;
     border: none;
     border-radius: 5px;
@@ -130,12 +132,12 @@ export const DatePick = styled(DatePicker)`
     border: none;
     border-radius: 5px;
     padding-top: 1%;
-    height: 2.1em;
-    ${'' /* box-sizing: border-box; */}
-    width: 95.5%;
+    height: 2.5em;
+    width: 100%;
     font-family: 'Open Sans', sans-serif;
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), #121212;
     color: white;
+    box-sizing: border-box;
     padding-left: 0.5em;
     font-size: 16px;
     outline: none;

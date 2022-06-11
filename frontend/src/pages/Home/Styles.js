@@ -157,3 +157,37 @@ export const FaderDiv = styled(animated.div)`
     z-index: 5;
     bottom: 105%;
 `;
+
+export const FaderDivClose = styled(animated.div)`
+    position: absolute;
+    height: 100vh;
+    bottom: 0;
+    width: 100vw;
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.8);;
+    z-index: 5000;
+`;
+
+// export const CloseModalContainer = styled.div`
+//     position: absolute;
+//     height: 20%;
+//     width: 90%;
+//     bottom: 0;
+//     top: 50%;
+//     left: 50%;
+//     -webkit-transform: translate(-50%, -50%);
+//     transform: translate(-50%, -50%);
+//     z-index: 6000;
+// `;
+
+
+export const Test3 = styled(animated.div)`
+    ${'' /* background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212; */}
+    position: fixed;
+    height: 100%;
+    top: 0;
+    width: 100%;
+    border: none;
+    border-radius: 10px;
+    z-index: 20000;
+`;

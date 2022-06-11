@@ -6,7 +6,7 @@ import ToggleSwitch from "../ToggleSwitch/index.js";
 import './datepicker.scss';
 
 
-const ReviewModule = () => {
+const ReviewModule = (props) => {
     const [showDateModule, setShowDateModule] = useState(false)
     const [writeReviewModal, setWriteReviewModal] = useState(false)
     const [dateValue, setDateValue] = useState('')
@@ -30,6 +30,22 @@ const ReviewModule = () => {
         }
     }
 
+    const onChange = () => {
+        props.hasChanged(true)
+        console.log("input has changed set to true")
+    }
+
+    const onChangeDate = (date) => {
+        setStartDate(date)
+        onChange()
+    }
+
+    // short lived, will be replaced by the new modal
+    const onThoughtsClick = () => {
+        setWriteReviewModal(true)
+        onChange()
+    }
+
     return (
         <DetailsContainer>
             <Head>
@@ -38,24 +54,24 @@ const ReviewModule = () => {
             </Head>
             <InsideContainer>
                 <InputTitle>I Went To</InputTitle>
-                <InputText placeholder="restaurant, cafe, bar..." type="text" name="uname" required />
+                <InputText placeholder="restaurant, cafe, bar..." type="text" name="uname" onChange={onChange} required />
                 <InputTitle>On</InputTitle>
                 <DatePick
                     selected={startDate}
-                    onChange={(date) => setStartDate(date)}
+                    onChange={(date) => onChangeDate(date)}
                     maxDate={(new Date())}
-                    locale="en-US"
+                    // locale="en-US"
                     dateFormat="MMM d, yyyy"
                     isClearable
                     placeholderText="enter date..."
                     calendarClassName="datepicker"
                 />
                 <InputTitle>My Thoughts</InputTitle>
-                <LargeInputText placeholder= "add review..." type="text" name="review" onClick={() => setWriteReviewModal(true)}/>
+                <LargeInputText placeholder= "add review..." type="text" name="review" onClick={onThoughtsClick}/>
                 <FieldDetailText>Last edited on March 26th, 2022</FieldDetailText>
                 <InputTitle>Make Private?</InputTitle>
                 <SwitchContainer>
-                    <ToggleSwitch label="label" setIsPrivate={setIsPrivate}/>
+                    <ToggleSwitch label="label" setIsPrivate={setIsPrivate} change={props.hasChanged}/>
                 </SwitchContainer>
                 <VisibilityToggle>{checkPrivate()}</VisibilityToggle>
                 <br/><br/><br/><br/><br/>

@@ -18,6 +18,7 @@ const ToggleSwitch = (props) => {
         setIsPublic(!isPublic);
         props.setIsPrivate(isPublic);
         console.log(isPublic);
+        props.change(true)
     }
 
 
