@@ -1,13 +1,16 @@
 .container {
     text-align: center;
+    display: block;
+    position: relative;
+    /* background: blue; */
     }
+    
     .toggle-switch {
     position: relative;
     width: 4em;
-    display: inline-block;
+    display: block;
     text-align: left;
-    padding-top: 1%;
-    margin-bottom: -8%;
+    padding-top: 0.05%;
     outline: none;
     user-select: none;
     -moz-user-select: none;
@@ -44,7 +47,6 @@
     float: left;
     width: 50%;
     height: 2em;
-    padding: 0;
     line-height: 36px;
     color: #fff;
     font-weight: bold;
@@ -73,8 +75,8 @@
     }
     .switch {
     display: block;
-    width: 24px;
-    margin: 5px;
+    width: 25px;
+    margin: 4px;
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212;
     position: absolute;
     top: 0;
