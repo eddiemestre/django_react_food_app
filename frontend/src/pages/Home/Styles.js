@@ -5,10 +5,9 @@ export const GlobalStyle = createGlobalStyle`
     body {
         background-color: #121212;
         font-family: 'Open Sans', sans-serif;
-        position: ${props => props.modal_opened ? "fixed" : ""};
-        ${'' /* ${'' /* height: ${props => props.modal_opened ? "100vh" : "100%"}; */}
-        overflow: ${props => props.modal_opened ? "hidden" : "scroll"}; */}
-        top: ${props => props.modal_opened ? `-${window.scrollY}px` : ""};
+        position: ${props => props.modal_opened || props.menu_opened ? "fixed" : ""};
+        overflow: ${props => props.modal_opened || props.menu_opened ? "hidden" : "scroll"};
+        top: ${props => props.modal_opened || props.menu_opened ? `-${window.scrollY}px` : ""};
         ${'' /* height: 100%;
         width: 100%; */}
     
@@ -190,4 +189,27 @@ export const Test3 = styled(animated.div)`
     border: none;
     border-radius: 10px;
     z-index: 20000;
+`;
+
+export const MenuContainer = styled(animated.div)`
+    ${'' /* background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212; */}
+    position: fixed;
+    background: white;
+    height: 100%;
+    top: 0;
+    right: 0;
+    width: 75%;
+    border: none;
+    border-radius: 5px 0px 0px 5px;
+    z-index: 20000;
+`;
+
+export const MenuBackground = styled(animated.div)`
+    position: fixed;
+    height: 100vh;
+    bottom: 0;
+    right: 0;
+    width: 100vw;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 5000;
 `;

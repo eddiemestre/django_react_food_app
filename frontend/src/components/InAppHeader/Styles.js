@@ -20,3 +20,9 @@ export const Icon = styled.div`
     padding-top: 1%;
 
 `;
+
+export const SvgContainer = styled.svg`
+    height: min-content;
+    transform: scale(1.3);
+    box-sizing: border-box;
+`;
