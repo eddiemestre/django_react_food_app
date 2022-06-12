@@ -106,6 +106,7 @@ export const LargeInputText = styled.textarea`
     width: 100%;
     box-sizing: border-box;
     padding-left: 0.5em;
+    padding-bottom: 10%;
     border: none;
     border-radius: 5px;
     outline: none;
@@ -117,6 +118,11 @@ export const LargeInputText = styled.textarea`
         color: #bebebe;
         font-style: italic;
     } 
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    ::-webkit-scrollbar {
+        display: none;
+    }
 `;
 
 export const FieldDetailText = styled.div`
@@ -176,3 +182,27 @@ export const VisibilityToggle = styled.div`
     font-weight: 400;
     font-size: 12px;
 `;
+
+export const ContentContainer = styled(animated.div)`
+    display: grid;
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    position: absolute;
+    margin-left: -5%;
+    margin-right: -5%;
+    ${'' /* overflow: auto; */}
+    ${'' /* top: 6%; */}
+     grid-template-rows: 6% auto;
+    border: none;
+    border-radius: 10px 10px 0px 0px;
+    font-family: 'Open Sans', sans-serif;
+`;
+
+export const FadeText = styled.div` 
+    background: white;
+    height: 10%;
+    width: 100%;
+    z-index: 10000;
+    top: 0;
+`
