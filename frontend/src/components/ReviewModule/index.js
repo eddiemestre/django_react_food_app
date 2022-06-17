@@ -75,7 +75,7 @@ const ReviewModule = (props) => {
         setWriteReviewModal(false)
     }
 
-        const onTitleChange = (event) => {
+    const onTitleChange = (event) => {
         setReviewTitle(event.target.value);
         console.log(reviewTitle);
     }
@@ -110,9 +110,9 @@ const ReviewModule = (props) => {
                 </SwitchContainer>
                 <VisibilityToggle>{checkPrivate()}</VisibilityToggle>
                 <br/><br/><br/><br/><br/>
-            </InsideContainer>
-            {slideAnimation((style, item) => 
-            item ? <ContentContainer style={style}><ReviewContent saveReview={saveReview} setReview={setReviewContent} title={reviewTitle} editTitle={onTitleChange} review={reviewContent}></ReviewContent></ContentContainer> : ''
+                </InsideContainer>
+                {slideAnimation((style, item) => 
+                item ? <ContentContainer style={style}><ReviewContent saveReview={saveReview} setReview={setReviewContent} title={reviewTitle} editTitle={onTitleChange} review={reviewContent}></ReviewContent></ContentContainer> : ''
         )}
         </DetailsContainer>
 

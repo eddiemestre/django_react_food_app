@@ -6,6 +6,10 @@ export const ReviewModule = styled.div`
     border: none;
     border-radius: 5px;
     padding: 0.3em 0;
+    
+    :hover {
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.16)), #121212;
+    }
 `;
 
 export const ReviewTitle = styled.div`

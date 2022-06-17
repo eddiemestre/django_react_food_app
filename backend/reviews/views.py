@@ -14,9 +14,11 @@ class ReviewList(generics.ListAPIView):
     permission_classes = (IsAuthenticated,)
 
     def get_queryset(self):
+        print(self.request.data)
         user = self.request.user
         print("user:", user)
-        if request.user.is_authenticated():
+
+        if user.is_authenticated:
             return ReviewModel.objects.filter(user=user)
 
 

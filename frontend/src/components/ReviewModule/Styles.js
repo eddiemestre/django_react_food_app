@@ -186,7 +186,7 @@ export const VisibilityToggle = styled.div`
 export const ContentContainer = styled(animated.div)`
     display: grid;
     width: 100%;
-    height: 100%;
+    height: 100vh;
     bottom: 0;
     position: absolute;
     margin-left: -5%;

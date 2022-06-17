@@ -73,10 +73,12 @@ export const SubmitButton = styled.button`
 `;
 
 export const Error = styled.div`
-  color: #C56679;
+  color: #B00020;
   font-size: 0.8em;
   font-weight: 400;
-  padding-top: 0.5em;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 12px;
 `
 
 export const CredentialConfirmation = styled.div`
@@ -92,4 +94,5 @@ export const CredentialConfirmation = styled.div`
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212;
     color: white;
     font-size: 1.2em;
+
 `;

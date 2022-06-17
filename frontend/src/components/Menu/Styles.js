@@ -23,15 +23,24 @@ export const Header = styled.div`
     box-sizing: border-box;
     height: 100%;
     display: flex;
-    justify-content: right;
+    justify-content: space-between;
     align-items: center;
-    padding-right: 6%;
+    padding-right: 5%;
+    padding-left: 5%;
+`;
+
+export const Greeting = styled.div`
+    width: auto;
+    height: auto;
+    box-sizing: border-box;
+    font-weight: 700;
 `;
 
 export const SvgContainer = styled.svg`
     height: min-content;
     transform: scale(1.8);
     box-sizing: border-box;
+    right: 0;
 `; 
 
 export const Body = styled.div` 

@@ -2,11 +2,10 @@ from rest_framework import serializers
 from .models import ReviewModel
 
 class ReviewSerializer(serializers.ModelSerializer):
-
     class Meta:
         model = ReviewModel
-        fields = ('title', 'date', 'review', 'private', 'user', 'date_created', 'date_modified')
-        read_only_fields = ('date_created', 'date_modified')
+        fields = ('id', 'title', 'date', 'review', 'private', 'user', 'date_created', 'date_modified')
+        read_only_fields = ('id', 'date_created', 'date_modified')
 
     
     def update(self, instance, validated_data):
@@ -32,5 +31,5 @@ class ReviewSerializer(serializers.ModelSerializer):
 class ReviewListSerializer(serializers.ModelSerializer):
     class Meta:
         model = ReviewModel
-        fields = ('title', 'date', 'review', 'private', 'user', 'date_created', 'date_modified')
-        read_only_fields = ('date_created', 'date_modified')
+        fields = ('id', 'title', 'date', 'review', 'private', 'user', 'date_created', 'date_modified')
+        read_only_fields = ('id', 'date_created', 'date_modified')

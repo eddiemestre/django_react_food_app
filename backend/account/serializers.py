@@ -6,6 +6,15 @@ from django.contrib.auth.password_validation import validate_password
 from django.contrib.auth import authenticate
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        fields = ['id', 'name', 'username', 'email', 'password']
+        extra_kwargs = {
+            'password1': {'write_only': True}
+        }
+
 class UserRegistration(serializers.ModelSerializer):
     email = serializers.EmailField(required=True, validators=[UniqueValidator(queryset=Account.objects.all())])
     username = serializers.CharField(max_length=30, required=True, validators=[UniqueValidator(queryset=Account.objects.all())])

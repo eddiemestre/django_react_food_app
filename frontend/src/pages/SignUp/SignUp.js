@@ -8,7 +8,6 @@ import Header from "../../components/Header/index.js";
 import Footer from "../../components/Footer/index.js";
 import SignUpForm from "../../components/SignUpForm/index.js";
 
-
 const SignUp = () => {
     return (
         <>

@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { ReviewModule, ReviewTitle, ReviewDate, ReviewPreview } from './Styles.js';
 
+
 const ReviewListModule = (props) => {
     const reviews = props.value;
 
@@ -10,9 +11,13 @@ const ReviewListModule = (props) => {
     //     )
     // }
 
+    const handleClick = (event) => {
+        console.log(event)
+    }
 
     return(
-        <ReviewModule>
+        <ReviewModule onClick={() => handleClick(reviews.id)}>
+        {/* <ReviewModule> */}
             <ReviewTitle>
                 {reviews.title}
             </ReviewTitle>
@@ -20,7 +25,7 @@ const ReviewListModule = (props) => {
                 {reviews.date}
             </ReviewDate>
             <ReviewPreview>
-                {reviews.content}
+                {reviews.review}
             </ReviewPreview>
         </ReviewModule>
     );
