@@ -165,29 +165,29 @@ class LoginView(APIView):
             return Response({"Invalid" : "Invalid username or password!!"}, status=status.HTTP_404_NOT_FOUND)
 
 
-class UserAPIView(APIView):
+# class UserAPIView(APIView):
     
-    def get(self, request):
-        auth = get_authorization_header(request).split()
+#     def get(self, request):
+#         auth = get_authorization_header(request).split()
 
-        print(auth)
+#         print(auth)
 
-        if auth and len(auth) == 2:
-            # token = auth[1].decode('utf-8')
-            # id = decode_access_token(token)
+#         if auth and len(auth) == 2:
+#             # token = auth[1].decode('utf-8')
+#             # id = decode_access_token(token)
 
-            response = Response()
-            response.data = {
-                'user_id': id
-            }
+#             response = Response()
+#             response.data = {
+#                 'user_id': id
+#             }
 
-            return response
+#             return response
         
-        else:
-            return Response({"Invalid" : "Could not complete request"}, status=status.HTTP_404_NOT_FOUND)
-            user = Account.objects.filter(pk=id).first()
+#         else:
+#             return Response({"Invalid" : "Could not complete request"}, status=status.HTTP_404_NOT_FOUND)
+#             user = Account.objects.filter(pk=id).first()
 
-            return Response(UserSerializer(user).data)
+#             return Response(UserSerializer(user).data)
 
 class RefreshAPIView(APIView):
    

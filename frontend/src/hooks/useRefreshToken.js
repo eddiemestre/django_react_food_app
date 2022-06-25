@@ -1,27 +1,36 @@
-import axios from "../api/axios";
+import axios from "../api/axios.js";
 import useAuth from "./useAuth.js";
 
 const useRefreshToken = () => {
     const { setAuth } = useAuth();
     const { auth } = useAuth();
-    console.log("use refresh", auth?.refreshToken)
 
     const refresh = async () => {
-        const response = await axios.post('/auth/login/refresh/', 
-        JSON.stringify({refresh:auth?.refreshToken}),
-        {
-            headers: {'Content-Type': 'application/json'},
-            withCredentials: true,   // sends cookie to backend
-        });
 
-        console.log("response", response)
+        try {
+            const response = await axios.post('/auth/login/refresh/', 
+            JSON.stringify({refresh: auth?.refreshToken}),
+            {
+                headers: {'Content-Type': 'application/json'},
+                withCredentials: true,   // sends cookie to backend
+            });
 
-        setAuth(prev => {
-            console.log("prev", JSON.stringify(prev));
-            console.log("new", response.data.access);
-            return { ...prev, accessToken: response.data.access }
-        });
-        return response.data.access;
+            console.log("response", response)
+
+            setAuth(prev => {
+                console.log("prev", JSON.stringify(prev));
+                console.log("new", response.data.access);
+                return { ...prev, accessToken: response.data.access }
+            });
+            console.log("access", response.data.access)
+            localStorage.setItem("user", JSON.stringify(auth))
+            return response.data.access;
+        } catch (err) {
+            console.log(err)
+            console.log("refresh token expired")
+            setAuth({})
+            localStorage.removeItem('user');
+        }
     }
 
     return refresh;

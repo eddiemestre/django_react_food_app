@@ -19,7 +19,7 @@ class ReviewList(generics.ListAPIView):
         print("user:", user)
 
         if user.is_authenticated:
-            return ReviewModel.objects.filter(user=user)
+            return ReviewModel.objects.filter(user=user).order_by('-date')
 
 
 # Create your views here.

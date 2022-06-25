@@ -2,6 +2,7 @@ import './App.css';
 import React, {  } from "react"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import RequireAuth from "../RequireAuth/index.js";
+import PersistLogin from '../PersistLogin/PersistLogin';
 
 import Layout from '../Layout/index';
 import Home from '../../pages/Home/Home';
@@ -15,12 +16,16 @@ function App() {
         <Routes>
         <Route path="/" element={<Layout />}>
             {/* public routes */}
-            <Route path="/login" element={<Login />} />
+            <Route element={<PersistLogin />}>
+              <Route path="/login" element={<Login />} />
+            </Route>
             <Route path="/register" element={<SignUp />}/>
 
             {/* private routes */}
-            <Route element={<RequireAuth />}>
-              <Route path="/home" element={<Home />}/>
+            <Route element={<PersistLogin />}>
+              <Route element={<RequireAuth />}>
+                <Route path="/home" element={<Home />}/>
+              </Route>
             </Route>
             
             {/* catch all, 404 */}

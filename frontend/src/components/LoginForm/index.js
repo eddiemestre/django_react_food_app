@@ -4,8 +4,8 @@ import { App, LogForm, Title, InputContainer, Error, ButtonContainer, InputText,
 import useAuth from "../../hooks/useAuth.js";
 import axios from '../../api/axios';
 import { Link, useNavigate, useLocation} from "react-router-dom";
-
-
+import useLocalStorage from "../../hooks/useLocalStorage.js";
+import useInput from "../../hooks/useInput.js";
 
 /////////
 // error message for special characters in username
@@ -14,7 +14,7 @@ const LOGIN_URL = '/auth/login/';
 
 const LoginForm = () => {
     // React States
-    const { setAuth } = useAuth();
+    const { auth, setAuth } = useAuth();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -27,13 +27,23 @@ const LoginForm = () => {
     const [errorMessages, setErrorMessages] = useState({});
     // const [isSubmitted, setIsSubmitted] = useState(false);
 
-    const [email, setEmail] = useState('');
+    const [email, resetEmail, emailAttribs] =  useInput('email', '') // useLocalStorage('email', '') //useState('');
     const [password, setPassword] = useState('');
   
     useEffect(() => {
       setErrorMessages({});
     }, [email, password])
 
+
+    useEffect(() => {
+      const loggedInUser = localStorage.getItem("user")
+
+      console.log(loggedInUser);
+    
+      if (loggedInUser) {
+        window.location.href = '/home';
+      }
+    }, [])
 
     // User Login info
     // const database = [
@@ -75,10 +85,12 @@ const LoginForm = () => {
         // console.log("refresh:", refreshToken);
           
         console.log("from", from);
-        console.log(email, password, accessToken, refreshToken);
-        setAuth({email, password, accessToken, refreshToken});
-        setEmail('');
+        console.log(email, accessToken, refreshToken);
+        setAuth({email, accessToken, refreshToken});
+        //setEmail('');
+        resetEmail();
         setPassword('');
+        localStorage.setItem("user", JSON.stringify({email, accessToken, refreshToken}))
 
         // send them back to the from value if they tried to access deeper part of the site
         // otherwise sent to home
@@ -154,8 +166,7 @@ const LoginForm = () => {
                 placeholder="email..." 
                 type="text"
                 name="email" 
-                value={email} 
-                onChange={(e) => setEmail(e.target.value)} 
+                {...emailAttribs}
                 required />
             {/* {renderErrorMessage("email")} */}
           </InputContainer>

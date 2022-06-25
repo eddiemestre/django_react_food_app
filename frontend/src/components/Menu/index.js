@@ -1,17 +1,19 @@
 import React from "react";
 import { Container, Header, Body, Footer, SvgContainer, Settings, SignOut, Text, Greeting } from './Styles.js';
 import { CredentialConfirmation } from "../LoginForm/Styles.js";
+import useLogout from "../../hooks/useLogout.js";
+import { Navigate, useNavigate } from "react-router-dom";
 
 const MenuModal = (props) => {
+    const logout = useLogout();
 
     const closeMenu = () => {
         props.onClick(false)
     }
 
-    const redirect = () => {
-        setTimeout(() => {
-            window.location.href = '/login';
-        }, 200);
+    const signOut = () => {
+        logout();
+        Navigate('/login');
     };
 
     return (
@@ -22,7 +24,7 @@ const MenuModal = (props) => {
             </Header>
             <Body>
                 <Settings><Text>Settings</Text></Settings>
-                <SignOut><Text onClick={redirect}>Sign Out</Text></SignOut>
+                <SignOut><Text onClick={signOut}>Sign Out</Text></SignOut>
             </Body>
             <Footer>© The Food App, Inc. 2022</Footer>
         </Container>
