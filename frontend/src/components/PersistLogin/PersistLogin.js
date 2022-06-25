@@ -26,6 +26,7 @@ const PersistLogin = () => {
 
         const loggedInUser = localStorage.getItem("user")
 
+        // eventually adjust this so only the refresh token is stored in localStorage (and later in httponly cookies)
         if (loggedInUser) {
             const foundUser = JSON.parse(loggedInUser)
             console.log("found user", foundUser)

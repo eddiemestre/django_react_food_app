@@ -34,9 +34,8 @@ export const AddSpot = styled.div`
 `
 
 export const Done = styled.div`
-    right: 4%;
-    padding: 1% 1%;
-    
+    right: 2%;
+    padding: 2% 3%;
     display: flex;
     font-size: 16px;
     position: absolute;

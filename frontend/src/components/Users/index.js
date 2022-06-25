@@ -32,7 +32,7 @@ const Users = () => {
             {users?.length
                 ? (
                     <ul>
-                       {users.map((users, i) => <li key={i}>{user?.username}</li>)} 
+                       {users.map((users, i) => <li key={i}>{users?.username}</li>)} 
                     </ul>
                 ) : <p>No users to display</p>
             }

@@ -68,7 +68,7 @@ class UserAuthentication(authentication.BaseAuthentication):
             raise exceptions.AuthenticationFailed(('Invalid username/password.'))
 
         if not user.is_active:
-            raise exceptions.AuthenticationFailed(_('User inactive or deleted.'))
+            raise exceptions.AuthenticationFailed(('User inactive or deleted.'))
         
         return (user, None)
 

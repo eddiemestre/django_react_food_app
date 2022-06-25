@@ -11,8 +11,8 @@ const ReviewListModule = (props) => {
     const parseDate = (date) => {
         const parsed = date.split('-');
         if (parsed) {
-            if (parsed[2][0] === '0') {
-                parsed[2] = parsed[2][1]
+            if (parsed[0][0] === '0') {
+                parsed[0] = parsed[0][1]
             }
         }
 
@@ -20,7 +20,7 @@ const ReviewListModule = (props) => {
     }
     const formatDate = (date) => {
         const parse = parseDate(date)
-        const newDate = `${months[parseInt(parse[1] - 1)]} ${parse[2]}, ${parse[0]}`
+        const newDate = `${months[parseInt(parse[1] - 1)]} ${parse[0]}, ${parse[2]}`
         setformattedDate(newDate)
     }
 

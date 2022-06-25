@@ -37,7 +37,7 @@ const LoginForm = () => {
 
     useEffect(() => {
       const loggedInUser = localStorage.getItem("user")
-
+  
       console.log(loggedInUser);
     
       if (loggedInUser) {

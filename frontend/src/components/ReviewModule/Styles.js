@@ -28,6 +28,7 @@ export const DetailsContainer = styled(animated.div)`
 // should this be flex but the outer be grid so it scrolls?
 export const Head = styled.div`
     display: flex;
+    height: 100%;
     border-bottom: 1px solid white;
     align-items: center;
     justify-content: center;
@@ -41,14 +42,25 @@ export const AddSpot = styled.div`
     color: white;
 `
 
-export const Save = styled.div`
-    right: 0px;
-    padding-right: 5%;
+export const Save = styled.button`
+    right: 2%;
+    padding: 2% 3%;
+    display: flex;
     font-size: 16px;
     position: absolute;
     color: #03DAC6;
     font-weight: 700;
     font-family: 'Open Sans', sans-serif;
+    border: none;
+    border-radius: 5px;
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212;
+
+    :hover {
+        background: #363636;
+    }
+`;
+
+export const SaveContent = styled.div`
 `;
 
 export const InputTitle = styled.div`

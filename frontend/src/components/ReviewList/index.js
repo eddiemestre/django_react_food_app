@@ -3,7 +3,7 @@ import { ReviewContainer, AddText, MyReviews, TextContainer } from './Styles.js'
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.js";
 import ReviewListModule from "../ReviewListModule/index.js";
 
-const ReviewList = () => {
+const ReviewList = (props) => {
     const [hasReviews, setHasReviews] = useState(false);
     const axiosPrivate = useAxiosPrivate();
     const [reviews, setReviews] = useState([])
@@ -30,14 +30,14 @@ const ReviewList = () => {
                 console.error(err);
             }
         }
-
+        console.log("review list loaded")
         getReviews();
 
         return () => {
             isMounted = false;
             controller.abort();
         }
-    },[])
+    },[props.wasSaved])
 
     // const getReviews = async () => {
     //     // let isMounted = true;

@@ -22,7 +22,7 @@ const useRefreshToken = () => {
                 console.log("new", response.data.access);
                 return { ...prev, accessToken: response.data.access }
             });
-            console.log("access", response.data.access)
+            console.log("new access", response.data.access)
             localStorage.setItem("user", JSON.stringify(auth))
             return response.data.access;
         } catch (err) {
