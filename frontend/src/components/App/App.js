@@ -8,13 +8,14 @@ import Layout from '../Layout/index';
 import Home from '../../pages/Home/Home';
 import Login from '../../pages/Login/Login';
 import SignUp from '../../pages/SignUp/SignUp';
-
+import InAppHeader from '../InAppHeader';
+import ViewReview from '../ViewReview';
 
 function App() {
   return (
     
         <Routes>
-        <Route path="/" element={<Layout />}>
+          <Route path="/" element={<Layout />}>
             {/* public routes */}
             <Route element={<PersistLogin />}>
               <Route path="/login" element={<Login />} />
@@ -24,8 +25,9 @@ function App() {
             {/* private routes */}
             <Route element={<PersistLogin />}>
               <Route element={<RequireAuth />}>
-                <Route path="/home" element={<Home />}/>
-              </Route>
+                <Route exact path="/profile/:email" element={<Home />}/>
+                <Route path="/test" exact element={<ViewReview />} />
+                </Route>
             </Route>
             
             {/* catch all, 404 */}

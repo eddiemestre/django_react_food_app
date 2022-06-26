@@ -22,7 +22,7 @@ const LoginForm = () => {
     const location = useLocation();
 
     // get where user is coming from 
-    const from = location.state?.from?.pathname || "/home";
+    const from =  `/profile/${JSON.parse(localStorage.getItem('email'))}`; // || location.state?.from?.pathname
 
     
 
@@ -43,7 +43,7 @@ const LoginForm = () => {
       console.log(loggedInUser);
     
       if (loggedInUser) {
-        window.location.href = '/home';
+        window.location.href = `/profile/${JSON.parse(localStorage.getItem('email'))}`;
       }
     }, [])
 
@@ -96,7 +96,11 @@ const LoginForm = () => {
 
         // send them back to the from value if they tried to access deeper part of the site
         // otherwise sent to home
+        if (from) {
         navigate(from, { replace: true });
+        } else{
+          
+        }
 
       } catch (err) {
           if(!err?.response) {
@@ -111,33 +115,6 @@ const LoginForm = () => {
 
           // set focus for screen readers
       }
-
-      // set localStorage info
-      // email, username, name, id
-     
-      
-      
-
-  
-      // var { uname, pass } = document.forms[0];
-  
-      // // Find user login info
-      // const userData = database.find((user) => user.username === uname.value);
-  
-      // // Compare user info
-      // if (userData) {
-      //   if (userData.password !== pass.value) {
-      //     // Invalid password
-      //     setErrorMessages({ name: "pass", message: errors.pass });
-      //     setShowErrorMessage(true)
-      //   } else {
-      //     setIsSubmitted(true);
-      //   }
-      // } else {
-      //   // Username not found
-      //   setErrorMessages({ name: "email", message: errors.uname });
-      //   setShowErrorMessage(true)
-      // }
     };
   
     // Generate JSX code for error message
@@ -147,19 +124,19 @@ const LoginForm = () => {
       }
     }
 
-    const sendToHome = (
-        <Navigate push to="/home"/>
-    )
+    // const sendToHome = (
+    //     <Navigate push to="/home"/>
+    // )
 
-    const redirect = () => {
-        setTimeout(() => {
-            window.location.href = '/home';
-        }, 1000);
+    // const redirect = () => {
+    //     setTimeout(() => {
+    //         window.location.href = '/home';
+    //     }, 1000);
 
-        return(
-            <CredentialConfirmation>Logged In! Redirecting to home...</CredentialConfirmation>
-        );
-    };
+    //     return(
+    //         <CredentialConfirmation>Logged In! Redirecting to home...</CredentialConfirmation>
+    //     );
+    // };
   
   
     // JSX code for login form
