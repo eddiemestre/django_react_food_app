@@ -95,7 +95,7 @@ const ReviewModule = (props) => {
 
       try {
         const response = await axiosPrivate.post('/reviews/review/', 
-            JSON.stringify({title: reviewTitle, date: dateValue, review: reviewContent, private: isPrivate, user: 1}),
+            JSON.stringify({title: reviewTitle, date: dateValue, review: reviewContent, private: isPrivate, user: localStorage.getItem('user_id')}),
             {
               headers: {'Content-Type': 'application/json'},
               withCredentials: true,

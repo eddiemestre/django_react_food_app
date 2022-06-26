@@ -1,3 +1,4 @@
+import json
 from django.forms import PasswordInput
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout, get_user_model
@@ -18,6 +19,7 @@ from rest_framework_simplejwt.tokens import RefreshToken, OutstandingToken, Blac
 from rest_framework import status
 from rest_framework.exceptions import APIException
 from rest_framework.authentication import get_authorization_header
+from rest_framework import viewsets
 
 from django.middleware import csrf
 from django.conf import settings
@@ -39,6 +41,22 @@ class RegistrationAPI(generics.CreateAPIView):
     serializer_class = UserRegistration
 
             
+class GetUserID(viewsets.ReadOnlyModelViewSet):
+    # queryset = Account.objects.all()
+    permission_classes = (IsAuthenticated,)
+    serializer_class = UserSerializer
+
+    def get_queryset(self):
+        print(self.request.data)
+        user = self.request.user
+        user_id = user.id
+        print("user:", user)
+
+        if user.is_authenticated:
+            
+            # return user_account.
+            return Account.objects.filter(id=user_id)
+
 
 # see if the above also works
 # explore .save at beginning and at end if possible

@@ -20,6 +20,9 @@ const useLogout = () => {
         console.log("in logout");
         setAuth({});
         localStorage.removeItem('user');
+        localStorage.removeItem('user_id')
+        localStorage.removeItem('username')
+        localStorage.removeItem('name')
     }
 
     return logout;

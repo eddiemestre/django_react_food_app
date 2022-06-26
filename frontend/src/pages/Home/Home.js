@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import { useTransition, animated } from '@react-spring/web';
 import {GlobalStyle, GridContainer, Add, Test1, Test2, Test3, Trans, SvgTest, FaderDiv, FaderDivClose, MenuContainer, MenuBackground } from './Styles.js';
 import "./Styles.css";
@@ -12,6 +12,7 @@ import ReviewModule from "../../components/ReviewModule/index.js";
 import DiscardModal from "../../components/DiscardModal/index.js";
 import MenuModal from "../../components/Menu/index.js";
 import useRefreshToken from "../../hooks/useRefreshToken.js";
+import useAxiosPrivate from "../../hooks/useAxiosPrivate.js";
 
 const Home = () => {
     const [reviewModuleActive, setReviewModuleActive] = useState(false)
@@ -22,6 +23,7 @@ const Home = () => {
     const [discardModal, setDiscardModal] = useState(false)
     const [menuOpened, setMenuOpened] = useState(false)
     const [reviewSaved, setReviewSaved] = useState(false)
+    const axiosPrivate = useAxiosPrivate();
 
     const transition = useTransition(reviewModuleActive, {
 
@@ -48,6 +50,30 @@ const Home = () => {
     //     //    window.scrollTo(0, parseInt(scrollY || '0') * -1);
     //     // }
     // }
+
+    useEffect(() => {
+
+        const getUserData = async () => {
+            try {
+                const response = await axiosPrivate.get('/auth/get_user/')
+        
+                // console.log("in get user response", response?.data[0]);
+                // console.log("email", response?.data[0]?.email)
+
+                localStorage.setItem('email', JSON.stringify(response?.data[0]?.email))
+                localStorage.setItem('user_id', JSON.stringify(response?.data[0]?.id))
+                localStorage.setItem('username', JSON.stringify(response?.data[0]?.username))
+                localStorage.setItem('name', JSON.stringify(response?.data[0]?.name))
+                
+        
+              } catch (err) {
+                console.log(err);
+              }
+        }
+
+        getUserData();
+
+    }, [])
 
     const toggleReviewOn = () => {
         setFill('#C56679')

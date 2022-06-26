@@ -6,6 +6,7 @@ import axios from '../../api/axios';
 import { Link, useNavigate, useLocation} from "react-router-dom";
 import useLocalStorage from "../../hooks/useLocalStorage.js";
 import useInput from "../../hooks/useInput.js";
+import useAxiosPrivate  from "../../hooks/useAxiosPrivate";
 
 /////////
 // error message for special characters in username
@@ -15,6 +16,7 @@ const LOGIN_URL = '/auth/login/';
 const LoginForm = () => {
     // React States
     const { auth, setAuth } = useAuth();
+    const axiosPrivate = useAxiosPrivate();
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -109,6 +111,10 @@ const LoginForm = () => {
 
           // set focus for screen readers
       }
+
+      // set localStorage info
+      // email, username, name, id
+     
       
       
 
