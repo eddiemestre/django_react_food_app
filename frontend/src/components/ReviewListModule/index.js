@@ -4,7 +4,7 @@ import { ReviewModule, ReviewTitle, ReviewDate, ReviewPreview } from './Styles.j
 
 const ReviewListModule = (props) => {
     const reviews = props.value;
-    const [formattedDate, setformattedDate] = useState(reviews.date)
+    const [formattedDate, setformattedDate] = useState(reviews.date || null)
 
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -25,7 +25,11 @@ const ReviewListModule = (props) => {
     }
 
     useEffect(() => {
-        formatDate(formattedDate)
+        if (formattedDate) {
+            formatDate(formattedDate)
+        } else {
+            setformattedDate(null)
+        }
     }, [])
 
     // const listReviews = reviews.map(review) =>

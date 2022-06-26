@@ -94,13 +94,26 @@ const ReviewModule = (props) => {
         event.preventDefault();
 
       try {
-        const response = await axiosPrivate.post('/reviews/review/', 
-            JSON.stringify({title: reviewTitle, date: dateValue, review: reviewContent, private: isPrivate, user: localStorage.getItem('user_id')}),
+        let response;
+        if (startDate) {
+            // post review with all fields
+            response = await axiosPrivate.post('/reviews/review/', 
+                JSON.stringify({title: reviewTitle, date: dateValue, review: reviewContent, private: isPrivate, user: localStorage.getItem('user_id')}),
+                {
+                headers: {'Content-Type': 'application/json'},
+                withCredentials: true,
+                }
+            );
+        } else {
+            // start date is empty
+            response = await axiosPrivate.post('/reviews/review/', 
+            JSON.stringify({title: reviewTitle, review: reviewContent, private: isPrivate, user: localStorage.getItem('user_id')}),
             {
-              headers: {'Content-Type': 'application/json'},
-              withCredentials: true,
+            headers: {'Content-Type': 'application/json'},
+            withCredentials: true,
             }
         );
+        }
 
         console.log(response);
         props.setSaved(true);
