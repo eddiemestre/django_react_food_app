@@ -10,14 +10,15 @@ export const GlobalStyle = createGlobalStyle`
         top: ${props => props.modal_opened || props.menu_opened ? `-${window.scrollY}px` : ""};
         ${'' /* height: 100%;
         width: 100%; */}
+        margin-top: 12%;
     
     }
 `
 
 export const GridContainer = styled.div`
-    display: grid;
-    grid-template-rows: 6% 94%;
-    height: 100%;
+    display: flex;
+    ${'' /* grid-template-rows: 6% 94%; */}
+    ${'' /* height: 100%; */}
     position: relative;
     padding: 0% 5%;
     padding-bottom: 20px;
@@ -191,25 +192,25 @@ export const Test3 = styled(animated.div)`
     z-index: 20000;
 `;
 
-export const MenuContainer = styled(animated.div)`
-    ${'' /* background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212; */}
-    position: fixed;
-    background: white;
-    height: 100%;
-    top: 0;
-    right: 0;
-    width: 75%;
-    border: none;
-    border-radius: 5px 0px 0px 5px;
-    z-index: 20000;
-`;
+// export const MenuContainer = styled(animated.div)`
+//     ${'' /* background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212; */}
+//     position: fixed;
+//     background: white;
+//     height: 100%;
+//     top: 0;
+//     right: 0;
+//     width: 75%;
+//     border: none;
+//     border-radius: 5px 0px 0px 5px;
+//     z-index: 20000;
+// `;
 
-export const MenuBackground = styled(animated.div)`
-    position: fixed;
-    height: 100vh;
-    bottom: 0;
-    right: 0;
-    width: 100vw;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 5000;
-`;
+// export const MenuBackground = styled(animated.div)`
+//     position: fixed;
+//     height: 100vh;
+//     bottom: 0;
+//     right: 0;
+//     width: 100vw;
+//     background: rgba(0, 0, 0, 0.8);
+//     z-index: 5000;
+// `;

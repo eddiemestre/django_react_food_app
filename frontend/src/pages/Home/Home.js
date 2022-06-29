@@ -1,9 +1,11 @@
 import React, {useEffect, useState} from "react";
 import { useTransition, animated } from '@react-spring/web';
-import {GlobalStyle, GridContainer, Add, Test1, Test2, Test3, Trans, SvgTest, FaderDiv, FaderDivClose, MenuContainer, MenuBackground } from './Styles.js';
+import {GlobalStyle, GridContainer, Add, Test1, Test2, Test3, Trans, SvgTest, FaderDiv, FaderDivClose } from './Styles.js';
 import "./Styles.css";
 import {ReactComponent as PlusSvg} from '../../svg/plus_icon.svg';
 import TestSvg from '../../svg/test.svg';
+
+import { useParams } from "react-router-dom";
 
 import LargeScreenView from "../../components/LargeScreen/LargeSCreenView";
 import InAppHeader from "../../components/InAppHeader/index.js";
@@ -24,7 +26,6 @@ const Home = () => {
     const [menuOpened, setMenuOpened] = useState(false)
     const [reviewSaved, setReviewSaved] = useState(false)
     const axiosPrivate = useAxiosPrivate();
-
     const transition = useTransition(reviewModuleActive, {
 
     });
@@ -173,17 +174,17 @@ const Home = () => {
         leave: { opacity: 0, transform: "translateY(-20px)" },
     });
 
-    const menuAppear = useTransition(menuOpened, {
-        from: {x: 500},
-        enter: {x: 0},
-        leave: {x: 500},
-    });
+    // const menuAppear = useTransition(menuOpened, {
+    //     from: {x: 500},
+    //     enter: {x: 0},
+    //     leave: {x: 500},
+    // });
 
-    const fadeMenuBkg = useTransition(menuOpened, {
-        from: { opacity: 0 },
-        enter: {opacity: 0.5},
-        leave: {opacity: 0 },
-    });
+    // const fadeMenuBkg = useTransition(menuOpened, {
+    //     from: { opacity: 0 },
+    //     enter: {opacity: 0.5},
+    //     leave: {opacity: 0 },
+    // });
 
 
     // const style = {
@@ -195,7 +196,7 @@ const Home = () => {
             <GlobalStyle modal_opened={reviewModuleActive} menu_opened={menuOpened}/>
             <LargeScreenView />
             <GridContainer is_hidden={reviewModuleActive} menu_opened={menuOpened}>
-                <InAppHeader openMenu={setMenuOpened} />
+                {/* <InAppHeader openMenu={setMenuOpened} /> */}
                 {listView}
             </GridContainer>
             {fadeAnimation((style, item) =>
@@ -209,12 +210,12 @@ const Home = () => {
              {fadeAnimationTwo((style, item) =>
             item ? <FaderDivClose style={style}/> : '' )}
             {discardModal && (modalAppear((style, item) => item ? <Test3 style={style}><DiscardModal clickYes={clickYes} clickNo={clickNo}/></Test3> : ''))}
-            {fadeMenuBkg((style, item) =>
+            {/* {fadeMenuBkg((style, item) =>
             item ? <MenuBackground style={style}/> : '' )}
             {menuAppear((style, item) => 
             item ? <MenuContainer style={style}>
                         <MenuModal onClick={exitMenu}/>
-                    </MenuContainer> : '')}
+                    </MenuContainer> : '')} */}
         </>
     );
 };

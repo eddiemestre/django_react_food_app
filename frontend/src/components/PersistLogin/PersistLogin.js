@@ -51,12 +51,13 @@ const PersistLogin = () => {
     }, [isLoading])
 
     return (
-        <>
-            {isLoading
-                ? <p>Loading...</p>
-                : <Outlet/>
-            }
-        </>
+        // <>
+        //     {isLoading
+        //         ? <p>Loading...</p>
+        //         : <Outlet/>
+        //     }
+        // </>
+        <Outlet />
     )
 }
 

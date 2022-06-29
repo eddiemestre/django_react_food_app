@@ -1,9 +1,11 @@
 import React from "react";
-import { AppHead } from './Styles.js';
+import { HeadContainer, AppHead } from './Styles.js';
 
 const Header = () => {
     return (
-        <AppHead>The Food App</AppHead>
+        <HeadContainer>
+            <AppHead>The Food App</AppHead>
+        </HeadContainer>
     );
 };
 

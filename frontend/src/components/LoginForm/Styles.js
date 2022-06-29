@@ -8,6 +8,9 @@ export const App = styled.div`
     justify-content: center;
     flex-direction: column;
     gap: 20px;
+    ${'' /* height: 90vh; */}
+    ${'' /* background: blue; */}
+    width: 100%;
 `;
 
 export const LogForm = styled.div`

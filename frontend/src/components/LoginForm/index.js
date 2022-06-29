@@ -1,5 +1,4 @@
 import React, {useRef, useEffect, useState, useContext } from "react";
-import { Navigate } from 'react-router-dom';
 import { App, LogForm, Title, InputContainer, Error, ButtonContainer, InputText, SubmitButton, NoAccount, CredentialConfirmation } from './Styles.js';
 import useAuth from "../../hooks/useAuth.js";
 import axios from '../../api/axios';
@@ -168,7 +167,7 @@ const LoginForm = () => {
             {renderErrorMessage("missing")}
             {renderErrorMessage("failed")}
           </InputContainer>
-          <NoAccount>Don't have an account? Sign up <a href='/register'>here.</a></NoAccount>
+          <NoAccount>Don't have an account? Sign up <Link to="/register">here.</Link></NoAccount>
           <ButtonContainer>
             <SubmitButton>Sign In</SubmitButton>
           </ButtonContainer>

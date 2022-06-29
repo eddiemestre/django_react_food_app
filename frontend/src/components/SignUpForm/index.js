@@ -2,7 +2,7 @@ import React, {useRef, useState, useEffect} from "react";
 import { updateLanguageServiceSourceFile } from "typescript";
 import axios from '../../api/axios';
 import { App, LogForm, Title, InputContainer, Error, ButtonContainer, InputText, SubmitButton, CredentialConfirmation, NoAccount } from '../LoginForm/Styles.js';
-
+import { Link, useNavigate } from "react-router-dom";
 import PasswordValidator from "../PasswordValidator/index.js";
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
@@ -11,10 +11,10 @@ const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,24}$/;
 const REGISTER_URL = '/auth/register/';
 
 
-const SignUpForm = () => {
+const SignUpForm = (props) => {
     // Refs
     const userRef = useRef();
-  
+    const navigate = useNavigate();
     // React States
     const [errorMessages, setErrorMessages] = useState({});
     const [isSubmitted, setIsSubmitted] = useState(false);
@@ -108,6 +108,13 @@ const SignUpForm = () => {
           setEmail('');
           setPassOne('');
           setPassTwo('');
+          try {
+            console.log("setting signedup to true")
+            props.signedUp(true)
+          } catch (err) {
+            console.log(err)
+          }
+          navigate('/login', { replace: true })
 
       } catch (err) {
           if (!err?.response) {
@@ -163,16 +170,16 @@ const SignUpForm = () => {
       // }
     };
 
-    const redirect = () => {
-      console.log("in redirect, woo!")
-        setTimeout(() => {
-            window.location.href = '/login';
-        }, 2500);
+    // const redirect = () => {
+    //   console.log("in redirect, woo!")
+    //     setTimeout(() => {
+    //         navigate("/login", { replace: true });
+    //     }, 2500);
 
-        return(
-            <CredentialConfirmation>Thanks for registering! Redirecting to login...</CredentialConfirmation>
-        );
-    };
+    //     return(
+    //         <CredentialConfirmation>Thanks for registering! Redirecting to login...</CredentialConfirmation>
+    //     );
+    // };
   
     // Generate JSX code for error message
     const renderErrorMessage = (name) =>
@@ -309,7 +316,7 @@ const SignUpForm = () => {
       <App>
         <LogForm>
           <Title>Sign Up</Title>
-          {isSubmitted ? redirect() : renderForm}
+          {renderForm}
         </LogForm>
       </App>
     );

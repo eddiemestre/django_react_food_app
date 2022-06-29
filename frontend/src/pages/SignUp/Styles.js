@@ -2,6 +2,7 @@ import styled, { createGlobalStyle } from "styled-components";
 
 
 export const GlobalStyle = createGlobalStyle`
+    
     body {
         background-color: #121212;
         font-family: 'Open Sans', sans-serif;
@@ -10,9 +11,8 @@ export const GlobalStyle = createGlobalStyle`
 `
 
 export const GridContainer = styled.div`
-    display: grid;
-    grid-template-rows: 12% 78% 10%;
     height: 100%;
+    background: gray;
     position: relative;
 `
 
@@ -27,4 +27,3 @@ export const PageTitle = styled.h1`
         }
     }
 `
-

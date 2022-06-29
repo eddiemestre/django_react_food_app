@@ -2,7 +2,7 @@ import styled from "styled-components"
 
 
 export const ReviewContainer = styled.div`
-    border-top: 1px solid white;
+    ${'' /* border-top: 1px solid white; */}
     display: flex;
     gap: 0.7em;
     height: 100%;

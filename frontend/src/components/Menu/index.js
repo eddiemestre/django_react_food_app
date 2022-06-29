@@ -12,7 +12,9 @@ const MenuModal = (props) => {
     }
 
     const signOut = () => {
+
         logout();
+        closeMenu();
         Navigate('/login');
     };
 

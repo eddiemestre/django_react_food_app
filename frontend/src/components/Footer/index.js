@@ -1,9 +1,11 @@
 import React from "react";
-import { AppFoot } from './Styles.js';
+import { AppFoot, Container } from './Styles.js';
 
 const Footer = () => {
     return (
-        <AppFoot>© The Food App, Inc. 2022</AppFoot>
+        <Container>
+            <AppFoot>© The Food App, Inc. 2022</AppFoot>
+        </Container>
     );
 };
 
