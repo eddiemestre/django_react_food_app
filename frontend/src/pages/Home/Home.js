@@ -199,17 +199,17 @@ const Home = () => {
                 {/* <InAppHeader openMenu={setMenuOpened} /> */}
                 {listView}
             </GridContainer>
-            {fadeAnimation((style, item) =>
+            {/* {fadeAnimation((style, item) =>
                 item ? <FaderDiv style={style}/> : ''
             )}
             {slideAnimation((style, item) => 
                     item ? <Test2 style={style}><ReviewModule setToggle={toggleReviewOff} setSaved={setReviewSaved} setModuleActive={setReviewModuleActive} hasChanged={setInputHasChanged}></ReviewModule></Test2> : ''
-                )}
-            <SvgTest isActive={reviewModuleActive} onClick={() => {ModalConditions()}} id="efXkrK1xpLH1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 640 480" shapeRendering="geometricPrecision" textRendering="geometricPrecision"><ellipse rx="239.999999" ry="239.999999" transform="translate(320 239.999999)" fill={fill} strokeWidth="0"/><line x1="0" y1="-100.45977" x2="0" y2="100.45977" transform="matrix(0 1-1 0 320 240)" fill="none" stroke={stroke} strokeWidth="10"/><line x1="0" y1="-100.45977" x2="0" y2="100.45977" transform="translate(320 239.999999)" fill="none" stroke={stroke} strokeWidth="10"/></SvgTest>
+                )} */}
+            {/* <SvgTest isActive={reviewModuleActive} onClick={() => {ModalConditions()}} id="efXkrK1xpLH1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 640 480" shapeRendering="geometricPrecision" textRendering="geometricPrecision"><ellipse rx="239.999999" ry="239.999999" transform="translate(320 239.999999)" fill={fill} strokeWidth="0"/><line x1="0" y1="-100.45977" x2="0" y2="100.45977" transform="matrix(0 1-1 0 320 240)" fill="none" stroke={stroke} strokeWidth="10"/><line x1="0" y1="-100.45977" x2="0" y2="100.45977" transform="translate(320 239.999999)" fill="none" stroke={stroke} strokeWidth="10"/></SvgTest> */}
             
-             {fadeAnimationTwo((style, item) =>
+             {/* {fadeAnimationTwo((style, item) =>
             item ? <FaderDivClose style={style}/> : '' )}
-            {discardModal && (modalAppear((style, item) => item ? <Test3 style={style}><DiscardModal clickYes={clickYes} clickNo={clickNo}/></Test3> : ''))}
+            {discardModal && (modalAppear((style, item) => item ? <Test3 style={style}><DiscardModal clickYes={clickYes} clickNo={clickNo}/></Test3> : ''))} */}
             {/* {fadeMenuBkg((style, item) =>
             item ? <MenuBackground style={style}/> : '' )}
             {menuAppear((style, item) => 

@@ -16,6 +16,8 @@ export const Container = styled.div`
     padding-left: 5%;
     padding-right: 5%;
     box-size: border-box;
+    position: fixed;
+    width: 90%;
 `;
 
 export const Head = styled.div`

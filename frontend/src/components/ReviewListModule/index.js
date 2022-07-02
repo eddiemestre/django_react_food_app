@@ -1,11 +1,11 @@
 import React, {useEffect, useState} from "react";
 import { ReviewModule, ReviewTitle, ReviewDate, ReviewPreview } from './Styles.js';
-
+import { useNavigate } from "react-router-dom";
 
 const ReviewListModule = (props) => {
     const reviews = props.value;
     const [formattedDate, setformattedDate] = useState(reviews.date || null)
-
+    const navigate = useNavigate();
     const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
     const parseDate = (date) => {
@@ -40,6 +40,7 @@ const ReviewListModule = (props) => {
 
     const handleClick = (event) => {
         console.log(event)
+        navigate(`/profile/${JSON.parse(localStorage.getItem('email'))}/${event}`)
     }
 
     return(

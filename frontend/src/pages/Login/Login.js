@@ -50,7 +50,7 @@ const Login = (props) => {
         // check auth?
       const loggedInUser = localStorage.getItem("refresh")
   
-      console.log("logged in?", loggedInUser);
+    //   console.log("logged in?", loggedInUser);
     
       if (loggedInUser) {
         // window.location.href = `/profile/${JSON.parse(localStorage.getItem('email'))}`;

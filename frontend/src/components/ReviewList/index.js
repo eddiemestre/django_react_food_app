@@ -18,7 +18,7 @@ const ReviewList = (props) => {
                     signal: controller.signal
                 });
 
-                console.log("list data", response?.data);
+                // console.log("list data", response?.data);
                 isMounted && setReviews(response.data)
 
                 if (reviews) {

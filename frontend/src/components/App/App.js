@@ -21,7 +21,7 @@ function App() {
 
 
   useEffect(() => {
-    const loggedInUser = localStorage.getItem("user")
+    const loggedInUser = localStorage.getItem("refresh")
 
    
   
@@ -32,7 +32,7 @@ function App() {
      
     }
 
-    console.log("logged in true?", isLoggedIn);
+    // console.log("logged in true?", isLoggedIn);
   }, [])
 
 

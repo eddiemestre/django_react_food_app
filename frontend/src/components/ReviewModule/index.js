@@ -13,7 +13,8 @@ import { DetailsContainer,
     InsideContainer,
     ContentContainer,
     SaveContent, 
-    FadeText } from './Styles.js';
+    FadeText, 
+    GridContainer } from './Styles.js';
 
 import "react-datepicker/dist/react-datepicker.css";
 import ToggleSwitch from "../ToggleSwitch/index.js";
@@ -21,7 +22,7 @@ import ReviewContent from "../ReviewContent/index.js";
 import './datepicker.scss';
 import { useTransition, animated } from '@react-spring/web';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.js";
-
+import { Link, useNavigate } from "react-router-dom";
 
 const ReviewModule = (props) => {
     const [showDateModule, setShowDateModule] = useState(false);
@@ -32,7 +33,8 @@ const ReviewModule = (props) => {
     const [reviewContent, setReviewContent] = useState('');
     const [reviewTitle, setReviewTitle] = useState('');
     const axiosPrivate = useAxiosPrivate();
-    
+    const navigate = useNavigate();
+
     const setVals = () => {
         setShowDateModule(!showDateModule);
         setDateValue("May 7, 2022");
@@ -125,6 +127,7 @@ const ReviewModule = (props) => {
         setStartDate(null);
         setReviewContent('');
         setReviewTitle('');
+        navigate(`/profile/${JSON.parse(localStorage.getItem('email'))}`)
 
         
       } catch (err) {
@@ -149,6 +152,7 @@ const ReviewModule = (props) => {
     return (
         <DetailsContainer>
             <form onSubmit={handleSubmit}>
+                <GridContainer>
                 <Head>
                     <AddSpot>Add A Spot</AddSpot>
                     <Save>Save</Save>
@@ -181,6 +185,7 @@ const ReviewModule = (props) => {
                 {slideAnimation((style, item) => 
                     item ? <ContentContainer style={style}><ReviewContent saveReview={saveReview} setReview={setReviewContent} title={reviewTitle} editTitle={onTitleChange} review={reviewContent}></ReviewContent></ContentContainer> : ''
                 )}
+                </GridContainer>
             </form>
         </DetailsContainer>
 

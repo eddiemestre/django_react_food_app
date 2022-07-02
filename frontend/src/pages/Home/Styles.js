@@ -10,7 +10,7 @@ export const GlobalStyle = createGlobalStyle`
         top: ${props => props.modal_opened || props.menu_opened ? `-${window.scrollY}px` : ""};
         ${'' /* height: 100%;
         width: 100%; */}
-        margin-top: 12%;
+        ${'' /* margin-top: 12%; */}
     
     }
 `
@@ -22,6 +22,7 @@ export const GridContainer = styled.div`
     position: relative;
     padding: 0% 5%;
     padding-bottom: 20px;
+    margin-top: 12%;
 `
 
 export const PageTitle = styled.h1`
@@ -51,13 +52,6 @@ export const Add = styled.div`
     z-index: 15;
 `
 
-export const ReContainer = styled.div`
-    display: grid;
-    grid-template-rows: 6% 94%;
-    height: 100%;
-    poisition: relative;
-
-`
 
 export const Test1 = styled.div`
     grid-row: 2 / 3;
