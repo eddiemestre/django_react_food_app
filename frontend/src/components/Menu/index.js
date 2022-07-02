@@ -6,16 +6,17 @@ import { Navigate, useNavigate } from "react-router-dom";
 
 const MenuModal = (props) => {
     const logout = useLogout();
+    const navigate = useNavigate();
 
     const closeMenu = () => {
         props.onClick(false)
     }
 
-    const signOut = () => {
-
-        logout();
+    const signOut = async () => {
+        
         closeMenu();
-        Navigate('/login');
+        await logout();
+        navigate('/login', { replace: true });
     };
 
     return (

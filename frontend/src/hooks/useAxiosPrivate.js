@@ -2,13 +2,12 @@ import { axiosPrivate } from "../api/axios";
 import { useEffect, useContext} from "react";
 import useRefreshToken from "./useRefreshToken";
 import useAuth from "./useAuth";
-import AuthContext from "../context/AuthProvider";
+
+
 const useAxiosPrivate = () => {
     const refresh = useRefreshToken();
     const { auth } = useAuth();
-    // const myContext = useContext(AuthContext)
 
-    console.log("inside useAxiosPrivate, auth", auth)
 
 
     useEffect(() => {
@@ -17,9 +16,9 @@ const useAxiosPrivate = () => {
             config => {
                 if (!config.headers['Authorization']) { // first attempt at accessing data
                     // console.log("first attempt at accessing data", auth);
-                    config.headers['Authorization'] = `Bearer ${localStorage.getItem('access')}`;
+                    config.headers['Authorization'] = `Bearer ${auth?.accessToken}`;
                 }
-                console.log("config", config)
+                // console.log("config", config)
                 return config;
             }, (error) => Promise.reject(error)
         );
@@ -29,7 +28,6 @@ const useAxiosPrivate = () => {
             async (error) => {
                 // debug
                 const prevRequest = error?.config;
-                console.log("error", error?.response?.status)
                 if(error?.response?.status === 401 && !prevRequest?.sent) {
                     prevRequest.sent = true;
                     const newAccessToken = await refresh();
@@ -46,6 +44,7 @@ const useAxiosPrivate = () => {
         }
 
     }, [auth, refresh])
+
     return axiosPrivate;
 }
 

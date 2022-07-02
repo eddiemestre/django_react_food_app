@@ -82,52 +82,13 @@ const Login = (props) => {
         onRest: () => PauseAnimation(),
     });
   
-    // const transitions = useTransition(isMounted, {
-    //     from: {opacity: 0, transform: "translate(100%, 0)"},
-    //     enter: {opacity: 1, transform: "translate(0%, 0)"},
-    //     leave: {opacity: 0, transform: "translate(-50%, 0)"}
-    //   })
-
-    //   const pageTransition = {
-    //     initial: {opacity: 0, transform: "translate(100%, 0)"},
-    //     animate: {opacity: 1, transform: "translate(0%, 0)"},
-    //     exit: {opacity: 0, transform: "translate(-50%, 0)"}
-    //   }
-
-
-    // const successAppear = useTransition(test, {
-    //     from: { opacity: 0, transform: "translateY(-20px)" },
-    //     enter: { opacity: 1, transform: "translateY(0px)" },
-    //     leave: { opacity: 0, transform: "translateY(-20px)" },
-    //     config: {duration: 5000},
-    // });
-
-    // const showSuccess = (
-    //     <>    
-    //     {/* {successAppear((style, item) =>
-    //         item ? 
-    //         <NoticeContainer style={style}>
-    //             <NoticeText>Account created successfully!</NoticeText>
-    //         </NoticeContainer>
-    //         : ''
-    //         )}     */}
-    //     {console.log("signup success", props.signUpSuccess)}
-
-    //     </>
-    // )
 
     return (
         
-        // <AbsoluteWrapper>
         <>
             <GlobalStyle />
             <LargeScreenView />
-            {/* <motion.div
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={pageTransition}
-            > */}
+
             {/* {props.signUpSuccess && showSuccess()} */}
             {successAppear((style, item) =>
             item ? 
@@ -139,20 +100,6 @@ const Login = (props) => {
             <GridContainer>
                 <LoginForm />
             </GridContainer>
-
-
-            {/* <GridContainer> */}
-                {/* <Header /> */}
-                {/* {transitions((style, item) =>
-                item ?
-                <LogContainer style={style}><LoginForm/></LogContainer>
-                : '')} */}
-
-            
-                {/* <Footer /> */}
-            {/* </GridContainer> */}
-            {/* </motion.div> */}
-        {/* </AbsoluteWrapper> */}
         </>
     );
 };

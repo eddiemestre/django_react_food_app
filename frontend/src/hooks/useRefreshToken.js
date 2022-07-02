@@ -10,7 +10,7 @@ const useRefreshToken = () => {
 
     const refresh = async () => {
 
-        try {
+        // try {
             const response = await axios.post('/auth/login/refresh/', 
             JSON.stringify({refresh: localStorage.getItem('refresh')}),
             {
@@ -18,22 +18,23 @@ const useRefreshToken = () => {
                 withCredentials: true,   // sends cookie to backend
             });
 
-            console.log("response", response)
+            // console.log("response", response)
 
             setAuth(prev => {
                 console.log("prev", JSON.stringify(prev));
                 console.log("new", response.data.access);
                 return { ...prev, accessToken: response.data.access }
             });
-            console.log("new access", response.data.access)
+            // console.log("new access", response.data.access)
             // localStorage.setItem("user", JSON.stringify(auth))
             return response.data.access;
-        } catch (err) {
-            console.log(err)
-            console.log("refresh token expired")
-            setAuth({})
-            localStorage.removeItem('user');
-        }
+        // } 
+        // catch (err) {
+        //     console.log(err)
+        //     console.log("refresh token expired")
+        //     setAuth({})
+        //     // localStorage.removeItem('user');
+        // }
     }
 
     return refresh;

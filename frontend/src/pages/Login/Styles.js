@@ -54,26 +54,6 @@ export const NoticeContainer = styled(animated.div)`
 export const NoticeText = styled.div` 
 `;
 
-// export const NoticeContainer = styled(animated.div)` 
-//     position: absolute;
-//     display: flex;
-//     justify-content: center;
-//     align-items: center;
-//     width: 80%;
-//     left: 10%;
-//     margin-top: 30%;
-//     background: #03DAC6;
-//     color: black;
-//     z-index: 6000;
-//     border: none;
-//     border-radius: 5px;
-//     font-size: 16px;
-//     font-family: 'Open Sans', sans-serif;
-
-// `
-
-// export const NoticeText = styled.div` 
-// `;
 
 export const LogContainer = styled(animated.div)` 
 `;

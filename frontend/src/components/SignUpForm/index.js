@@ -13,7 +13,6 @@ const REGISTER_URL = '/auth/register/';
 
 const SignUpForm = (props) => {
     // Refs
-    const userRef = useRef();
     const navigate = useNavigate();
     // React States
     const [errorMessages, setErrorMessages] = useState({});
@@ -38,22 +37,6 @@ const SignUpForm = (props) => {
     const [validEmail, setValidEmail] = useState('');
 
 
-    // // User Login info
-    // const database = [
-    //   {
-    //     username: "User1",
-    //     name: "User",
-    //     email: "User@email.com",
-    //     password: "hello!23",
-    //   },
-    //   {
-    //     username: "User2",
-    //     name: "User",
-    //     email: "User2@email.com",
-    //     password: "hello!23"
-    //   }
-    // ];
-  
     // TO DO: add accessibility features for screen readers
     const errors = {
       uname: "Invalid username. Should contain only letters and numbers and be 4 - 23 characters long.",
@@ -78,12 +61,12 @@ const SignUpForm = (props) => {
       const passCheck = PASSWORD_REGEX.test(pass_one);
       const emailCheck = EMAIL_REGEX.test(email)
 
-      console.log("usercheck", userCheck);
-      console.log("passCheck", passCheck);
-      console.log("emailcheck", emailCheck);
+      // console.log("usercheck", userCheck);
+      // console.log("passCheck", passCheck);
+      // console.log("emailcheck", emailCheck);
 
       if (!userCheck || !passCheck || !emailCheck) {
-        console.log("invalid data");
+        // console.log("invalid data");
         return;
       } else {
         console.log("valid data submitted");
@@ -97,9 +80,6 @@ const SignUpForm = (props) => {
               withCredentials: true
             }
           );
-          // console.log("successfully created user")
-          // console.log(response.data);
-          // console.log(JSON.stringify(response))
           setIsSubmitted(true);
 
           // clear input fields, set state back to empty strings
@@ -109,7 +89,7 @@ const SignUpForm = (props) => {
           setPassOne('');
           setPassTwo('');
           try {
-            console.log("setting signedup to true")
+            // console.log("setting signedup to true")
             props.signedUp(true)
           } catch (err) {
             console.log(err)
@@ -140,47 +120,8 @@ const SignUpForm = (props) => {
           }
       }
       
-      
-      // var { name, uname, email, pass, pass2 } = document.forms[0];
-
-      // // Find user login info
-      // const userData = database.find((user) => user.username === uname.value);
-  
-      // // Compare user info
-      // if (userData) {
-      //   if (userData.name !== name.value) {
-      //       setErrorMessages({ name: "name", message: errors.name })
-      //   }
-      //   if (userData.email !== email.value) {
-      //       setErrorMessages({ email: "email", message: errors.email })
-      //   }
-      //   if (userData.password !== pass.value) {
-      //     // Invalid password
-      //     setErrorMessages({ name: "pass", message: errors.pass });
-      //   }
-      //   if (userData.password !== pass2.value) {
-      //       // Invalid password
-      //       setErrorMessages({ name: "pass2", message: errors.pass2 });
-      //     } else {
-      //       setIsSubmitted(true);
-      //     }
-      // } else {
-      //   // Username not found
-      //   setErrorMessages({ name: "uname", message: errors.uname });
-      // }
     };
 
-    // const redirect = () => {
-    //   console.log("in redirect, woo!")
-    //     setTimeout(() => {
-    //         navigate("/login", { replace: true });
-    //     }, 2500);
-
-    //     return(
-    //         <CredentialConfirmation>Thanks for registering! Redirecting to login...</CredentialConfirmation>
-    //     );
-    // };
-  
     // Generate JSX code for error message
     const renderErrorMessage = (name) =>
       name === errorMessages.name && (
@@ -219,16 +160,16 @@ const SignUpForm = (props) => {
     // check for valid username
     useEffect(() => {
       const result = USER_REGEX.test(username);
-      console.log(result);
-      console.log(username);
+      // console.log(result);
+      // console.log(username);
       setValidUsername(result);
     }, [username])
 
     // check for valid email
     useEffect(() => {
       const result = EMAIL_REGEX.test(email);
-      console.log(result);
-      console.log(email);
+      // console.log(result);
+      // console.log(email);
       setValidEmail(result);
     }, [email])
 
@@ -273,7 +214,7 @@ const SignUpForm = (props) => {
 
     useEffect(() => {
       setErrorMessages({});
-      console.log(validUsername, validEmail, validPassword )
+      // console.log(validUsername, validEmail, validPassword )
     }, [username, name, pass_one, pass_two, email, validEmail, validPassword, validUsername])
   
     // JSX code for login form
@@ -281,25 +222,25 @@ const SignUpForm = (props) => {
       <div>
         <form onSubmit={handleSubmit}>
           <InputContainer>
-            <InputText placeholder="name i.e. &quot;John Smith&quot;..." type="text" name="name" onChange={(e) => setName(e.target.value)} required/>
+            <InputText placeholder="name i.e. &quot;John Smith&quot;..." type="text" name="name" autoComplete="on" onChange={(e) => setName(e.target.value)} required/>
             {renderErrorMessage("name")}
           </InputContainer>
           <InputContainer>
-            <InputText placeholder="username i.e. &quot;johnsmith89&quot;..." type="text" name="uname" onChange={(e) => setUsername(e.target.value)}required />
+            <InputText placeholder="username i.e. &quot;johnsmith89&quot;..." type="text" name="uname" autoComplete="on" onChange={(e) => setUsername(e.target.value)}required />
             {renderErrorMessage("uname")}
             {renderErrorMessage("unameTaken")}
           </InputContainer>
           <InputContainer>
-            <InputText placeholder="email..." type="text" name="email" onChange={(e) => setEmail(e.target.value)} required />
+            <InputText placeholder="email..." type="text" name="email" autoComplete="on" onChange={(e) => setEmail(e.target.value)} required />
             {renderErrorMessage("email")}
             {renderErrorMessage("emailTaken")}
           </InputContainer>
           <InputContainer>
-            <InputText placeholder="password..." type="password" name="pass" value={pass_one} onChange={onChangeOne} required />
+            <InputText placeholder="password..." type="password" name="pass" autoComplete="new-password" value={pass_one} onChange={onChangeOne} required />
             {renderErrorMessage("pass")}
           </InputContainer>
           <InputContainer>
-            <InputText placeholder="confirm password..." type="password" name="pass2" value={pass_two} onChange={onChangeTwo} required />
+            <InputText placeholder="confirm password..." type="password" name="pass2" autoComplete="new-password" value={pass_two} onChange={onChangeTwo} required />
             {renderErrorMessage("pass2")}
             {renderErrorMessage("server")}
             {renderErrorMessage("other")}

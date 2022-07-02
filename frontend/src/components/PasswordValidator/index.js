@@ -3,7 +3,7 @@ import { Info, Item, Icon } from './Styles.js';
 
 const PasswordValidator = (props) => {
 
-    console.log("inside validator", props.pass_length_valid)
+    // console.log("inside validator", props.pass_length_valid)
 
 
     return(
