@@ -1,15 +1,18 @@
 import axios from "../api/axios.js";
 import useAuth from "./useAuth.js";
+import AuthContext from "../context/AuthProvider.js";
+import { useContext } from "react";
 
 const useRefreshToken = () => {
-    const { setAuth } = useAuth();
-    const { auth } = useAuth();
+    const { setAuth, auth } = useAuth();
+    // const { auth } = useAuth();
+    // const myContext = useContext(AuthContext);
 
     const refresh = async () => {
 
         try {
             const response = await axios.post('/auth/login/refresh/', 
-            JSON.stringify({refresh: auth?.refreshToken}),
+            JSON.stringify({refresh: localStorage.getItem('refresh')}),
             {
                 headers: {'Content-Type': 'application/json'},
                 withCredentials: true,   // sends cookie to backend
@@ -23,7 +26,7 @@ const useRefreshToken = () => {
                 return { ...prev, accessToken: response.data.access }
             });
             console.log("new access", response.data.access)
-            localStorage.setItem("user", JSON.stringify(auth))
+            // localStorage.setItem("user", JSON.stringify(auth))
             return response.data.access;
         } catch (err) {
             console.log(err)

@@ -1,11 +1,14 @@
 import { axiosPrivate } from "../api/axios";
-import { useEffect, } from "react";
+import { useEffect, useContext} from "react";
 import useRefreshToken from "./useRefreshToken";
 import useAuth from "./useAuth";
-
+import AuthContext from "../context/AuthProvider";
 const useAxiosPrivate = () => {
     const refresh = useRefreshToken();
     const { auth } = useAuth();
+    // const myContext = useContext(AuthContext)
+
+    console.log("inside useAxiosPrivate, auth", auth)
 
 
     useEffect(() => {
@@ -13,7 +16,8 @@ const useAxiosPrivate = () => {
         const requestIntercept = axiosPrivate.interceptors.request.use(
             config => {
                 if (!config.headers['Authorization']) { // first attempt at accessing data
-                    config.headers['Authorization'] = `Bearer ${auth?.accessToken}`;
+                    // console.log("first attempt at accessing data", auth);
+                    config.headers['Authorization'] = `Bearer ${localStorage.getItem('access')}`;
                 }
                 console.log("config", config)
                 return config;

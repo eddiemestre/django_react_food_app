@@ -3,6 +3,8 @@ import { animated } from '@react-spring/web';
 
 export const Container = styled(animated.div)`
     width: 100%;
+    ${'' /* background: blue; */}
+    height: 100%;
 `;
 
 export const NoticeContainer = styled(animated.div)` 

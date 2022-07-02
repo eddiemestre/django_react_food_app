@@ -5,7 +5,7 @@ export const ReviewContainer = styled.div`
     ${'' /* border-top: 1px solid white; */}
     display: flex;
     gap: 0.7em;
-    height: 100%;
+    ${'' /* height: 100%; */}
     flex-direction: column;
     padding-bottom: 2em;
 `;

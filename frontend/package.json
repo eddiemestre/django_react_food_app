@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "core-js": "^3.22.8",
+    "framer-motion": "^6.3.16",
     "jquery": "^3.6.0",
     "node-sass": "^7.0.1",
     "prop-types": "^15.8.1",

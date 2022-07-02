@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useContext } from "react"
+import React, { useContext, useState, useEffect } from "react"
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import RequireAuth from "../RequireAuth/index.js";
 import PersistLogin from '../PersistLogin/PersistLogin';
@@ -16,6 +16,34 @@ import PublicRoutes from '../Routes/PublicRoutes';
 import { useTransition, animated } from '@react-spring/web';
 
 function App() {
+    // const { auth } = useAuth();
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+
+  // useEffect(() => {
+  //   if (auth) {
+  //     setIsLoggedIn(true)
+  //   } else {
+  //     setIsLoggedIn(false)
+  //   }
+
+  //   console.log("is logged in:", isLoggedIn)
+  // }, [auth, isLoggedIn])
+
+
+  useEffect(() => {
+    const loggedInUser = localStorage.getItem("user")
+
+   
+  
+    if (loggedInUser) {
+      setIsLoggedIn(true)
+    } else {
+      setIsLoggedIn(false)
+     
+    }
+
+    console.log("logged in true?", isLoggedIn);
+  }, [])
 
   // const location = useLocation();
   // console.log("location", location.pathname);
@@ -72,6 +100,7 @@ function App() {
               </animated.div>
             )} */}
         <PublicRoutes />
+        <AnimatedRoutes />
 
         {/* <Routes> */}
             {/* <Route path="/" element={<PublicRoutes />}>

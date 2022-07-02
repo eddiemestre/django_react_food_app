@@ -1,5 +1,5 @@
 import styled, { createGlobalStyle } from "styled-components";
-
+import { animated } from '@react-spring/web';
 
 export const GlobalStyle = createGlobalStyle`
     
@@ -27,3 +27,7 @@ export const PageTitle = styled.h1`
         }
     }
 `
+
+
+export const LogContainer = styled(animated.div)` 
+`;

@@ -53,7 +53,7 @@ const Home = () => {
     // }
 
     useEffect(() => {
-
+        // is this what we want here?
         const getUserData = async () => {
             try {
                 const response = await axiosPrivate.get('/auth/get_user/')
