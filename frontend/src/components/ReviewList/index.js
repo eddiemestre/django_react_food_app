@@ -2,23 +2,27 @@ import React, {useState, useEffect} from "react";
 import { ReviewContainer, AddText, MyReviews, TextContainer } from './Styles.js';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.js";
 import ReviewListModule from "../ReviewListModule/index.js";
+import { useParams } from "react-router-dom";
+import axios from "../../api/axios.js";
 
 const ReviewList = (props) => {
     const [hasReviews, setHasReviews] = useState(false);
     const axiosPrivate = useAxiosPrivate();
     const [reviews, setReviews] = useState([])
+    const params = useParams();
+    
 
     useEffect(() => {
         let isMounted = true;
         const controller = new AbortController();
 
-        const getReviews = async () => {
+        const getAuthedReviews = async () => {
             try {
                 const response = await axiosPrivate.get('/reviews/my_reviews/', {
                     signal: controller.signal
                 });
 
-                // console.log("list data", response?.data);
+                console.log("list data", response?.data);
                 isMounted && setReviews(response.data)
 
                 if (reviews) {
@@ -30,8 +34,39 @@ const ReviewList = (props) => {
                 console.error(err);
             }
         }
-        console.log("review list loaded")
-        getReviews();
+
+        const getGuestReviews = async () => {
+            try {
+                const response = await axios.post('http://127.0.0.1:8000/reviews/public/', 
+                JSON.stringify({email: params.email}), 
+                {
+                    headers: {'Content-Type': 'application/json'},
+                    signal: controller.signal
+                });
+                console.log("list data in review list", response?.data);
+                isMounted && setReviews(response.data)
+
+                if (reviews) {
+                    setHasReviews(true)
+                }
+                console.log("reviews data", reviews)
+                console.log("has reviews", hasReviews)
+
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        
+
+        if (params.email === JSON.parse(localStorage.getItem('email'))) {
+            console.log("this is the logged in user")
+            console.log("review list loaded")
+            getAuthedReviews();
+
+        } else {
+            console.log("this is a different user, get their public reviews")
+            getGuestReviews();
+        }
 
         return () => {
             isMounted = false;
@@ -107,10 +142,10 @@ const ReviewList = (props) => {
     // }, [hasReviews, review_data]);
 
 
-    const test = (
+    const AllReviews = (
         reviews.map(review => (
             // <ReviewListModule value={review} key={review.id}/>
-            <ReviewListModule value={review} key={review.id}/>
+            <ReviewListModule value={review} key={review.id} setReview={props.setReview}/>
         ))
     )
 
@@ -127,7 +162,7 @@ const ReviewList = (props) => {
                     <ReviewListModule value={review} key={review.id} />
                 ))
             } */}
-            {hasReviews ? test : AddReviewText}
+            {hasReviews ? AllReviews : AddReviewText}
             {/* <ReviewListModule value={review_data[0]} />
             <ReviewListModule value={review_data[1]} /> */}
         </ReviewContainer>
@@ -148,3 +183,13 @@ const ReviewList = (props) => {
 };
 
 export default ReviewList;
+
+
+// date: "05-10-2022"
+// date_created: "2022-06-25"
+// date_modified: "2022-06-25"
+// id: 24
+// private: true
+// review: ""
+// title: "Test"
+// user: 1

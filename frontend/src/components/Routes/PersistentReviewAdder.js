@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate, useOutletContext, useParams, useLocation } from "react-router-dom";
 import {SvgTest, FaderDivClose, ModalContainer} from './Styles';
 import { useEffect, useState } from 'react';
 import { useTransition, animated } from '@react-spring/web';
@@ -11,7 +11,32 @@ const ReviewAdderTemplate = () => {
     const [discardModal, setDiscardModal] = useState(false)
     const [inputHasChanged, setInputHasChanged] = useState(false)
     const [reviewSaved, setReviewSaved] = useState(false)
+    const [urlIsUser, setUrlIsUser] = useState(true)
+    const params = useParams();
+    const location = useLocation();
+    const [selectedReview, setSelectedReview] = useOutletContext();
 
+    useEffect(() => {
+        if (params.email) {
+            if (params.email === JSON.parse(localStorage.getItem('email'))) {
+                setUrlIsUser(true)
+            } else {
+                setUrlIsUser(false)
+            }
+        }
+        console.log("selectedReview?", selectedReview)
+        console.log("is user?", urlIsUser)
+    }, [params])
+
+    useEffect(() => {
+        if (location.pathname == "/create_review") {
+            toggleReviewOn();
+            setReviewModuleActive(true)
+        } else {
+            toggleReviewOff();
+            setReviewModuleActive(false)
+        }
+    }, [params])
 
     const navigate = useNavigate();
 
@@ -77,9 +102,11 @@ const ReviewAdderTemplate = () => {
 
   return (
     <div> 
-      <Outlet context={[toggleReviewOff, setReviewSaved, reviewModuleActive, setReviewModuleActive, setInputHasChanged ]}/>
+      <Outlet context={[ toggleReviewOff, setReviewSaved, reviewModuleActive, setReviewModuleActive, setInputHasChanged, setSelectedReview ]}/>
       {/* <SvgTest isActive={reviewModuleActive} onClick={() => {ModalConditions()}} id="efXkrK1xpLH1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 640 480" shapeRendering="geometricPrecision" textRendering="geometricPrecision"><ellipse rx="239.999999" ry="239.999999" transform="translate(320 239.999999)" fill={fill} strokeWidth="0"/><line x1="0" y1="-100.45977" x2="0" y2="100.45977" transform="matrix(0 1-1 0 320 240)" fill="none" stroke={stroke} strokeWidth="10"/><line x1="0" y1="-100.45977" x2="0" y2="100.45977" transform="translate(320 239.999999)" fill="none" stroke={stroke} strokeWidth="10"/></SvgTest> */}
+      {urlIsUser ?
       <SvgTest isActive={reviewModuleActive} onClick={() => {ModalConditions()}} id="efXkrK1xpLH1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 640 480" shapeRendering="geometricPrecision" textRendering="geometricPrecision"><ellipse rx="239.999999" ry="239.999999" transform="translate(320 239.999999)" fill={fill} strokeWidth="0"/><line x1="0" y1="-100.45977" x2="0" y2="100.45977" transform="matrix(0 1-1 0 320 240)" fill="none" stroke={stroke} strokeWidth="10"/><line x1="0" y1="-100.45977" x2="0" y2="100.45977" transform="translate(320 239.999999)" fill="none" stroke={stroke} strokeWidth="10"/></SvgTest>
+      : '' }
       {fadeAnimationTwo((style, item) =>
             item ? <FaderDivClose style={style}/> : '' )}
             {discardModal && (modalAppear((style, item) => item ? <ModalContainer style={style}><DiscardModal clickYes={clickYes} clickNo={clickNo}/></ModalContainer> : ''))}

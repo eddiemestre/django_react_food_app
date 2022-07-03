@@ -5,7 +5,7 @@ import "./Styles.css";
 import {ReactComponent as PlusSvg} from '../../svg/plus_icon.svg';
 import TestSvg from '../../svg/test.svg';
 
-import { useParams } from "react-router-dom";
+import { useParams, useOutletContext } from "react-router-dom";
 
 import LargeScreenView from "../../components/LargeScreen/LargeSCreenView";
 import InAppHeader from "../../components/InAppHeader/index.js";
@@ -26,12 +26,12 @@ const Home = () => {
     const [menuOpened, setMenuOpened] = useState(false)
     const [reviewSaved, setReviewSaved] = useState(false)
     const axiosPrivate = useAxiosPrivate();
-    const transition = useTransition(reviewModuleActive, {
+    const params = useParams();
+    const context = useOutletContext();
 
-    });
     const listView = (
         <Test1 is_hidden={reviewModuleActive}>
-            <ReviewList wasSaved={reviewSaved}/>
+            <ReviewList wasSaved={reviewSaved} setReview={context[5]}/>
         </Test1>
     )
 
@@ -54,7 +54,10 @@ const Home = () => {
 
     useEffect(() => {
         // is this what we want here?
+        console.log("context", context[5])
         const getUserData = async () => {
+
+
             try {
                 const response = await axiosPrivate.get('/auth/get_user/')
         
@@ -72,7 +75,9 @@ const Home = () => {
               }
         }
 
-        getUserData();
+        if (!localStorage.getItem('username')) {
+            getUserData();
+        }
 
     }, [])
 

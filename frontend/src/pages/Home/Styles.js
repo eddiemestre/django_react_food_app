@@ -23,6 +23,8 @@ export const GridContainer = styled.div`
     padding: 0% 5%;
     padding-bottom: 20px;
     margin-top: 12%;
+    box-sizing: border-box;
+    width: 100%;
 `
 
 export const PageTitle = styled.h1`
@@ -54,8 +56,9 @@ export const Add = styled.div`
 
 
 export const Test1 = styled.div`
-    grid-row: 2 / 3;
-    grid-column: 1 / 2;
+    width: 100%;
+    ${'' /* grid-row: 2 / 3; */}
+    ${'' /* grid-column: 1 / 2; */}
     ${'' /* overflow: ${props => props.is_hidden ? "auto" : "visible"} */}
 
     ${'' /* &.hide {

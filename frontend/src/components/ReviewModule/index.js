@@ -100,7 +100,7 @@ const ReviewModule = (props) => {
         if (startDate) {
             // post review with all fields
             response = await axiosPrivate.post('/reviews/review/', 
-                JSON.stringify({title: reviewTitle, date: dateValue, review: reviewContent, private: isPrivate, user: localStorage.getItem('user_id')}),
+                JSON.stringify({title: reviewTitle, date: dateValue, review: reviewContent, private: isPrivate, user: JSON.parse(localStorage.getItem('user_id'))}),
                 {
                 headers: {'Content-Type': 'application/json'},
                 withCredentials: true,
@@ -109,7 +109,7 @@ const ReviewModule = (props) => {
         } else {
             // start date is empty
             response = await axiosPrivate.post('/reviews/review/', 
-            JSON.stringify({title: reviewTitle, review: reviewContent, private: isPrivate, user: localStorage.getItem('user_id')}),
+            JSON.stringify({title: reviewTitle, review: reviewContent, private: isPrivate, user: JSON.parse(localStorage.getItem('user_id'))}),
             {
             headers: {'Content-Type': 'application/json'},
             withCredentials: true,

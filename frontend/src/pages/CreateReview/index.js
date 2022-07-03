@@ -9,10 +9,10 @@ const CreateReview = () => {
     // const [reviewSaved, setReviewSaved] = useState(false)
     // const [inputHasChanged, setInputHasChanged] = useState(false)
     const [toggleReviewOff, setReviewSaved, reviewModuleActive, setReviewModuleActive, setInputHasChanged ] = useOutletContext();
+    const context = useOutletContext();
 
     useEffect(() => {
         setReviewModuleActive(true)
-
 
         return () => {
             setReviewModuleActive(false)
