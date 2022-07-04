@@ -16,6 +16,12 @@ export const ReviewTitle = styled.div`
     font-weight: 700;
     padding: 0.2em 0.6em;
     font-size: 0.9em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+        display: -webkit-box;
+   -webkit-line-clamp: 1; /* number of lines to show */
+           line-clamp: 1; 
+   -webkit-box-orient: vertical;
 `;
 
 export const ReviewDate = styled.div`

@@ -1,4 +1,5 @@
 import styled, { createGlobalStyle, css } from "styled-components";
+import { animated } from '@react-spring/web';
 
 export const GlobalStyle = createGlobalStyle`
     body {
@@ -127,9 +128,10 @@ export const Date = styled.div`
 `;
 
 export const Content = styled.div` 
-    padding-top: 2%;
+    padding-top: 5%;
     color: white;
     padding-bottom: 5%;
+    white-space: pre-line;
 `;
 
 export const LastEdited = styled.div`
@@ -137,4 +139,39 @@ export const LastEdited = styled.div`
     font-style: italic;
     font-size: 12px;
 
+`
+
+export const EditButtonPosition = styled.svg`
+    position: fixed;
+    z-index: 15;
+    ${'' /* right: 0;
+    bottom: 0; */}
+    height: 100px;
+    width: 100px;
+    transform: scale(0.74);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
+`;
+
+export const ButtonContainer = styled(animated.div)` 
+    position: fixed;
+    z-index: 15;
+    right: 2%;
+    bottom: 5%;
+    height: 100px;
+    width: 100px;
+`;
+
+export const BackContainer = styled(animated.div)`
+    position: fixed;
+    z-index: 15;
+    left: 2%;
+    bottom: 5%;
+    height: 100px;
+    width: 100px;
 `

@@ -2,17 +2,19 @@ import React, { useEffect, useState } from "react"
 import { useTransition, animated } from '@react-spring/web';
 import { Test2, Container, GlobalStyle } from './Styles.js';
 import ReviewModule from "../../components/ReviewModule/index.js";
-import { useOutletContext } from "react-router-dom";
+import { useOutletContext, useLocation } from "react-router-dom";
 
 const CreateReview = () => {
     // const [reviewModuleActive, setReviewModuleActive] = useState(false)
     // const [reviewSaved, setReviewSaved] = useState(false)
     // const [inputHasChanged, setInputHasChanged] = useState(false)
+    const location = useLocation();
     const [toggleReviewOff, setReviewSaved, reviewModuleActive, setReviewModuleActive, setInputHasChanged ] = useOutletContext();
     const context = useOutletContext();
 
     useEffect(() => {
         setReviewModuleActive(true)
+
 
         return () => {
             setReviewModuleActive(false)

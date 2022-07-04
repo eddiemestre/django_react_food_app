@@ -31,11 +31,13 @@ export const NoticeText = styled.div`
 export const SvgTest = styled.svg`
     position: fixed;
     z-index: 15;
-    right: 2%;
-    bottom: 5%;
+    ${'' /* right: 2%;
+    bottom: 5%; */}
     height: 100px;
     width: 100px;
-    transform: ${props => props.isActive ? "rotate(45deg)" : "rotate(0deg)"};
+    transform-box: center;
+    transform-origin: center;
+    transform: ${props => props.isActive ? "rotate(45deg) scale(0.75)" : "rotate(0deg) scale(0.75)"};
     animiation-delay: 0s;
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -49,25 +51,6 @@ export const SvgTest = styled.svg`
     -ms-transition: transform 0.3s linear; /* IE 10 */
     -moz-transition: transform 0.3s linear; /* Firefox */
     -webkit-transition: transform 0.3s linear; /*safari and chrome */
-    ${'' /* animation-name: shrink;
-    animation-duration: 10s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear;
-    animation-play-state: paused;
-
-    :hover:active {
-        animation-play-state: running;
-    }
-
-    @keyframes shrink {
-        from {
-            transform: scale(1);
-        }
-        to {
-            transform: scale(0.9);
-        }
-    } */}
-
 `;
 
 export const FaderDivClose = styled(animated.div)`
@@ -89,4 +72,13 @@ export const ModalContainer = styled(animated.div)`
     border: none;
     border-radius: 10px;
     z-index: 20000;
+`;
+
+export const ButtonContainer = styled(animated.div)` 
+    position: fixed;
+    z-index: 15;
+    right: 2%;
+    bottom: 5%;
+    height: 100px;
+    width: 100px;
 `;
