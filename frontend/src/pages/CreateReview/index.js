@@ -34,7 +34,7 @@ const CreateReview = () => {
         <>
             <GlobalStyle />
             <Container>
-                <ReviewModule SetToggle={toggleReviewOff} setSaved={setReviewSaved} setModuleActive={setReviewModuleActive} hasChanged={setInputHasChanged}/>
+                <ReviewModule setToggle={toggleReviewOff} setSaved={setReviewSaved} setModuleActive={setReviewModuleActive} hasChanged={setInputHasChanged}/>
             </Container>
         </>
     )

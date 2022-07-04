@@ -77,8 +77,6 @@ export const SubmitButton = styled.button`
 
 export const Error = styled.div`
   color: #B00020;
-  font-size: 0.8em;
-  font-weight: 400;
   font-style: italic;
   font-weight: 400;
   font-size: 12px;

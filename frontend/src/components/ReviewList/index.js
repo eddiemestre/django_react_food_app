@@ -18,7 +18,7 @@ const ReviewList = (props) => {
 
         const getAuthedReviews = async () => {
             try {
-                const response = await axiosPrivate.get('/reviews/my_reviews/', {
+                const response = await axiosPrivate.get('/reviews/auth_reviews/', {
                     signal: controller.signal
                 });
 
@@ -37,7 +37,7 @@ const ReviewList = (props) => {
 
         const getGuestReviews = async () => {
             try {
-                const response = await axios.post('http://127.0.0.1:8000/reviews/public/', 
+                const response = await axios.post('/reviews/account_public_reviews/', 
                 JSON.stringify({email: params.email}), 
                 {
                     headers: {'Content-Type': 'application/json'},

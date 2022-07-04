@@ -3,7 +3,7 @@ from account.models import Account
 
 # Create your models here.
 class ReviewModel(models.Model):
-    title = models.CharField(max_length=120)
+    title = models.CharField(max_length=100)
     date = models.DateTimeField(null=True, blank=True)
     date_modified = models.DateField(auto_now=True)
     date_created = models.DateField(auto_now_add=True)
@@ -14,6 +14,3 @@ class ReviewModel(models.Model):
     def __str__(self):
         return self.title
 
-
-
-        

@@ -8,7 +8,7 @@ import InAppTemplate from "./InAppTemplate";
 import CreateReview from "../../pages/CreateReview";
 import ReviewAdderTemplate from "./PersistentReviewAdder";
 import ReviewViewTemplate from "./ViewReviewTemplate";
-import SingleReviewView from "../../pages/SingleReviewView.js";
+import SingleReviewView from "../../pages/SingleReviewView";
 import ReviewRoutes from "../ReviewStager";
 
 const AnimatedRoutes = () => {
