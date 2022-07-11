@@ -7,11 +7,12 @@ export const parseDate = (date) => {
         temp = date.split('T');
         temp = temp[0]
         // console.log("temp parsed", temp)
-        temp = temp.split('-')
-        temp = `${temp[2]}-${temp[1]}-${temp[0]}`
+
         // console.log("parsed", temp)
     }
-
+    // console.log(temp)
+    temp = temp.split('-')
+    temp = `${temp[2]}-${temp[1]}-${temp[0]}`
     parsed = temp.split('-');
         if (parsed) {
             if (parsed[0][0] === '0') {
@@ -20,7 +21,7 @@ export const parseDate = (date) => {
         }
 
         // console.log("Final parsed", parsed)
-
+    // console.log(parsed)
     return parsed;
 }
 
@@ -31,8 +32,18 @@ export const formatDate = (date) => {
     if (!date) {
         return null
     }
+
+    // if date is formatted correctly, don't reformat
+    if (isLetter(date)) {
+        return date
+    }
+
     const parse = parseDate(date)
     const newDate = `${months[parseInt(parse[1] - 1)]} ${parse[0]}, ${parse[2]}`
     // console.log("new Date", newDate)
     return newDate;
+}
+
+const isLetter = (str) => {
+    return str.length >= 1 && str[0].match(/[a-z]/i);
 }

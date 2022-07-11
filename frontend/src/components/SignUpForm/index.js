@@ -222,7 +222,7 @@ const SignUpForm = (props) => {
       <div>
         <form onSubmit={handleSubmit}>
           <InputContainer>
-            <InputText placeholder="name i.e. &quot;John Smith&quot;..." type="text" name="name" autoComplete="on" onChange={(e) => setName(e.target.value)} required/>
+            <InputText placeholder="name i.e. &quot;John&quot;..." type="text" name="name" autoComplete="on" onChange={(e) => setName(e.target.value)} required/>
             {renderErrorMessage("name")}
           </InputContainer>
           <InputContainer>

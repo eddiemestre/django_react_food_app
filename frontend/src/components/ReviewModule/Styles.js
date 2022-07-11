@@ -8,7 +8,7 @@ export const DetailsContainer = styled(animated.div)`
     border-radius: 5px 5px 0 0;
     margin: 0 -5%;
      */}
-    ${'' /* background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212; */}
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212;
     ${'' /* height: 100%; */}
     ${'' /* overflow: auto; */}
     ${'' /* top: 6%; */}
@@ -187,8 +187,9 @@ export const DatePick = styled(DatePicker)`
 `
 
 export const InsideContainer = styled.div`
-    ${'' /* background: pink; */}
     overflow: scroll;
+    position: relative;
+    width: 100%;
     padding-bottom: 20%;
     ${'' /* height: 100%; */}
     -ms-overflow-style: none; /* for Internet Explorer, Edge */
@@ -239,4 +240,36 @@ export const FadeText = styled.div`
     width: 100%;
     z-index: 10000;
     top: 0;
+`
+
+export const DeleteReview = styled.div` 
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+    color: #B00020;
+    font-size: 12px;
+    font-weight: 700;
+    width: max-content;
+    ${'' /* height: 5%; */}
+    text-align: left;
+    ${'' /* margin-left: -3%; */}
+    ${'' /* position: absolute;
+    top: 85%; */}
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212;
+    border: none;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+
+    :hover {
+        color: #C56679;
+    }
 `

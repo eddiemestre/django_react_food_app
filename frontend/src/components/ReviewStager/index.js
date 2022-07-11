@@ -3,7 +3,7 @@ import useReview from "../../hooks/useReviewStager";
 import React, { useState } from 'react';
 
 const ReviewRoutes = () => {
-    const [selectedReview, setSelectedReview] = useState({hello: "hello"})
+    const [selectedReview, setSelectedReview] = useState({})
 
     return (
         // is the user signed in?

@@ -7,33 +7,38 @@ export const GlobalStyle = createGlobalStyle`
         background-color: #121212;
         font-family: 'Open Sans', sans-serif;
         position: relative;
-        
     }
-`
+`;
 
-export const GridContainer = styled.div`
-    ${'' /* display: flex;
+export const ReviewContainer = styled.div`
+    ${'' /* border-top: 1px solid white; */}
+    display: flex;
+    gap: 0.7em;
+    ${'' /* height: 100%; */}
+    ${'' /* background: green; */}
+    margin-top: 10%;
+    height: 80vh;
     flex-direction: column;
     justify-content: center;
-    background: orange; */}
+    padding-left: 5%;
+    padding-right: 5%;
+`;
+
+export const Container = styled.div`
     height: 100%;
-    ${'' /* background: orange; */}
+    width: 100%;
     display: flex;
     justify-content: center;
-    margin-top: 50%;
-`
+    align-items: center;
+    ${'' /* background: blue; */}
+`;
 
-export const PageTitle = styled.h1`
-    display: none
-
-    @media screen and (max-width: 600px) {
-        PageTitle {
-            font-family: 'Open Sans', sans-serif;
-            color: pink;
-            display: block;
-        }
-    }
-`
+export const MyReviews = styled.div`
+    color: white;
+    align-items: left;
+    font-weight: 700;
+    font-size: 1.5em;
+`;
 
 export const NoticeContainer = styled(animated.div)` 
     position: absolute;
@@ -42,7 +47,7 @@ export const NoticeContainer = styled(animated.div)`
     align-items: center;
     width: 80%;
     left: 10%;
-    margin-top: 40%;
+    margin-top: 15%;
     background: #03DAC6;
     color: black;
     z-index: 6000;
@@ -53,8 +58,4 @@ export const NoticeContainer = styled(animated.div)`
 `;
 
 export const NoticeText = styled.div` 
-`;
-
-
-export const LogContainer = styled(animated.div)` 
 `;

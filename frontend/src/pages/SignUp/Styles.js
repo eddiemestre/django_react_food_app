@@ -11,9 +11,15 @@ export const GlobalStyle = createGlobalStyle`
 `
 
 export const GridContainer = styled.div`
+    ${'' /* display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: orange; */}
     height: 100%;
-    background: gray;
-    position: relative;
+    ${'' /* background: orange; */}
+    display: flex;
+    justify-content: center;
+    margin-top: 20%;
 `
 
 export const PageTitle = styled.h1`

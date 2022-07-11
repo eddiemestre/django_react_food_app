@@ -55,14 +55,13 @@ const Home = () => {
     useEffect(() => {
         // is this what we want here?
         console.log("context", context[5])
+       
         const getUserData = async () => {
-
-
             try {
                 const response = await axiosPrivate.get('/auth/get_user/')
         
-                // console.log("in get user response", response?.data[0]);
-                // console.log("email", response?.data[0]?.email)
+                console.log("in get user response", response?.data[0]);
+                console.log("username", response?.data[0]?.username)
 
                 localStorage.setItem('email', JSON.stringify(response?.data[0]?.email))
                 localStorage.setItem('user_id', JSON.stringify(response?.data[0]?.id))
@@ -72,6 +71,7 @@ const Home = () => {
         
               } catch (err) {
                 console.log(err);
+                
               }
         }
 

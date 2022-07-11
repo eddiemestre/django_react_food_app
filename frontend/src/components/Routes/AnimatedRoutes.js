@@ -10,6 +10,10 @@ import ReviewAdderTemplate from "./PersistentReviewAdder";
 import ReviewViewTemplate from "./ViewReviewTemplate";
 import SingleReviewView from "../../pages/SingleReviewView";
 import ReviewRoutes from "../ReviewStager";
+import EditReview from "../../pages/EditReview";
+import Settings from "../../pages/Settings";
+import UpdatePassword from "../../pages/UpdatePassword";
+import SettingsTemplate from "./SettingsRoute";
 
 const AnimatedRoutes = () => {
 
@@ -20,16 +24,22 @@ const AnimatedRoutes = () => {
                 {/* <Route element={<RequireAuth />}> */}
                 <Route element={<ReviewRoutes />}>
                     <Route element={<ReviewAdderTemplate />}>
-                        <Route exact path="/profile/:email" element={<Home />}/>
+                        <Route exact path="/user/:username" element={<Home />}/>
                         <Route exact path="/create_review" element={<CreateReview />}/>
                     </Route>
                     <Route element={<ReviewViewTemplate />} >
-                        <Route exact path="/profile/:email/:id" element={<SingleReviewView />} />
+                        <Route exact path="/user/:username/:id" element={<SingleReviewView />} />
+                        <Route exact path="/user/:username/:id/edit" element={<EditReview />} />
                     </Route>
                 {/* </Route> */}
                 </Route>
+                <Route element={<SettingsTemplate />}>
+                    <Route exact path="/settings" element={<Settings />} />
+                    <Route exact path="/update-password" element={<UpdatePassword />} />
+                </Route>
             </Route>
         </Route>
+        
       </Routes>
     );
 };

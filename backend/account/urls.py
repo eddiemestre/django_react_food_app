@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework import routers
 from account import views
-from .views import ChangePasswordView, RefreshAPIView, UpdateProfileView, LogoutView, LogoutAllView, LoginView, GetUserID
+from .views import ChangePasswordView, RefreshAPIView, UpdateProfileView, LogoutView, LogoutAllView, LoginView, GetUserID, GetOtherID
 from .views import CookieTokenObtainPairView, CookieTokenRefreshView
 from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 
@@ -11,6 +11,7 @@ from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
 router = routers.DefaultRouter()
 router.register(r'update_profile', UpdateProfileView, 'update_profile')
 router.register(r'get_user', GetUserID, 'get_user')
+router.register(r'get_other_user', GetOtherID, 'get_other')
 
 urlpatterns = [
     path('register/', views.RegistrationAPI.as_view(), name='register'),

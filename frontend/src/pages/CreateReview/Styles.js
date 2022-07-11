@@ -4,7 +4,7 @@ import { animated } from '@react-spring/web';
 
 export const GlobalStyle = createGlobalStyle`
     body {
-        background-color: #121212;
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212;
         font-family: 'Open Sans', sans-serif;
         position: ${props => props.modal_opened || props.menu_opened ? "fixed" : ""};
         overflow: ${props => props.modal_opened || props.menu_opened ? "hidden" : "scroll"};
@@ -17,7 +17,7 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const Container = styled.div`
-    background: #121212; 
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212;
     position: fixed;
     top: 6%;
     ${'' /* height: 100%; */}

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import {PageTitle, 
         GlobalStyle,
-        GridContainer,
         LogContainer } from '../Login/Styles';
-
+        
+import { GridContainer } from "./Styles";
 import LargeScreenView from "../../components/LargeScreen/LargeSCreenView.js";
 import Header from "../../components/Header/index.js";
 import Footer from "../../components/Footer/index.js";

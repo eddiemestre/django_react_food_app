@@ -54,6 +54,17 @@ export const Body = styled.div`
     font-weight: 700;
 `;
 
+export const Body2 = styled.div` 
+    color: white;
+    width: 100%;
+    height: 7.5%;
+    box-sizing: border-box;
+    display: grid;
+    grid-auto-rows: 1fr;
+    grid-auto-columns: 1fr;
+    font-weight: 700;
+`
+
 export const Settings = styled.div` 
     display: flex;
     height: 100%;

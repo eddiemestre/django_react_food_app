@@ -9,7 +9,7 @@ const CreateReview = () => {
     // const [reviewSaved, setReviewSaved] = useState(false)
     // const [inputHasChanged, setInputHasChanged] = useState(false)
     const location = useLocation();
-    const [toggleReviewOff, setReviewSaved, reviewModuleActive, setReviewModuleActive, setInputHasChanged ] = useOutletContext();
+    const [toggleReviewOff, setReviewSaved, reviewModuleActive, setReviewModuleActive, setInputHasChanged, inputHasChanged ] = useOutletContext();
     const context = useOutletContext();
 
     useEffect(() => {
@@ -20,6 +20,8 @@ const CreateReview = () => {
             setReviewModuleActive(false)
         }
     }, [])
+
+
 
 
 
@@ -36,7 +38,7 @@ const CreateReview = () => {
         <>
             <GlobalStyle />
             <Container>
-                <ReviewModule setToggle={toggleReviewOff} setSaved={setReviewSaved} setModuleActive={setReviewModuleActive} hasChanged={setInputHasChanged}/>
+                <ReviewModule setToggle={toggleReviewOff} setSaved={setReviewSaved} setModuleActive={setReviewModuleActive} hasChanged={setInputHasChanged} changed={inputHasChanged}/>
             </Container>
         </>
     )

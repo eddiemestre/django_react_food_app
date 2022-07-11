@@ -19,16 +19,16 @@ const ReviewAdderTemplate = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        if (params.email) {
-            if (params.email === JSON.parse(localStorage.getItem('email'))) {
+        if (params.username) {
+            if (params.username === JSON.parse(localStorage.getItem('username'))) {
                 setUrlIsUser(true)
             } else {
                 setUrlIsUser(false)
             }
         }
-        console.log("selectedReview?", selectedReview)
-        console.log("is user?", urlIsUser)
-        console.log("prev Page?", prevPage)
+        // console.log("selectedReview?", selectedReview)
+        // console.log("is user?", urlIsUser)
+        // console.log("prev Page?", prevPage)
     }, [params])
 
     useEffect(() => {
@@ -73,7 +73,7 @@ const ReviewAdderTemplate = () => {
         enter: { opacity: 1, transform: "translateY(0px)" },
         leave: { opacity: 0, transform: "translateY(20px)" },
         reverse: !prevPage,
-        delay: 1000,
+        delay: 300,
         // onRest: () => PauseAnimation(),
     });
 
@@ -83,10 +83,12 @@ const ReviewAdderTemplate = () => {
         setDiscardModal(false)
         setReviewModuleActive(false)
         setInputHasChanged(false)
+        navigate(`/user/${JSON.parse(localStorage.getItem('username'))}`)
     }
 
     const clickNo = () => {
         setDiscardModal(false)
+        
     }
 
 
@@ -103,7 +105,7 @@ const ReviewAdderTemplate = () => {
                 console.log("reivew modal true, changing to false. No changes detected")
                 toggleReviewOff()
                 setReviewModuleActive(false)
-                navigate(`/profile/${JSON.parse(localStorage.getItem('email'))}`)
+                navigate(`/user/${JSON.parse(localStorage.getItem('username'))}`)
                 
             } else {
                 console.log("Discard Modal false, changing to True")
@@ -135,7 +137,7 @@ const ReviewAdderTemplate = () => {
 
     const TestReviewButton = (animate) => {
         if (!animate) {
-            console.log("button should animate")
+            // console.log("button should animate")
             return (
                 EditAppear((style, item) =>
                 item ? 
@@ -145,7 +147,7 @@ const ReviewAdderTemplate = () => {
                 )
             )
         } else {
-            console.log("button should stay in place")
+            // console.log("button should stay in place")
             return (
                 <ButtonContainer>{createReviewButton()}</ButtonContainer>
             )
@@ -154,14 +156,26 @@ const ReviewAdderTemplate = () => {
 
   return (
     <div> 
-      <Outlet context={[ toggleReviewOff, setReviewSaved, reviewModuleActive, setReviewModuleActive, setInputHasChanged, setSelectedReview]}/>
+        <Outlet context={[ toggleReviewOff, // 0
+                setReviewSaved,             // 1
+                reviewModuleActive,         // 2
+                setReviewModuleActive,      // 3
+                setInputHasChanged,         // 4
+                setSelectedReview,          // 5
+                inputHasChanged ]}/>       {/* 6 */}
       {/* <SvgTest isActive={reviewModuleActive} onClick={() => {ModalConditions()}} id="efXkrK1xpLH1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 640 480" shapeRendering="geometricPrecision" textRendering="geometricPrecision"><ellipse rx="239.999999" ry="239.999999" transform="translate(320 239.999999)" fill={fill} strokeWidth="0"/><line x1="0" y1="-100.45977" x2="0" y2="100.45977" transform="matrix(0 1-1 0 320 240)" fill="none" stroke={stroke} strokeWidth="10"/><line x1="0" y1="-100.45977" x2="0" y2="100.45977" transform="translate(320 239.999999)" fill="none" stroke={stroke} strokeWidth="10"/></SvgTest> */}
-      {urlIsUser ?
+        {urlIsUser ?
             TestReviewButton(prevPage)
-      : '' }
-      {fadeAnimationTwo((style, item) =>
-            item ? <FaderDivClose style={style}/> : '' )}
-            {discardModal && (modalAppear((style, item) => item ? <ModalContainer style={style}><DiscardModal clickYes={clickYes} clickNo={clickNo}/></ModalContainer> : ''))}
+        : '' }
+        {fadeAnimationTwo((style, item) =>
+            item 
+            ? <FaderDivClose style={style}/> 
+            : '' )}
+    
+        {discardModal && (modalAppear((style, item) => 
+            item 
+            ? <ModalContainer style={style}><DiscardModal type="create" clickYes={clickYes} clickNo={clickNo}/></ModalContainer> 
+            : ''))}
            
     </div>
   )

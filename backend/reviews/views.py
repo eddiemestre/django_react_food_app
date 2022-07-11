@@ -23,6 +23,9 @@ class ReviewList(generics.ListAPIView):
         if user.is_authenticated:
             print(user, "Is authed")
             return ReviewModel.objects.filter(user=user).order_by('-date')
+    
+    def delete(self):
+        print("delete")
 
 
 #test list view
@@ -59,13 +62,16 @@ class GetReviewList(viewsets.ReadOnlyModelViewSet):
                         'date_modified': review.date_modified, 
                         'private': review.private,
                         'user': review.user.name,
+                        'username': review.user.username,
                         'email': review.user.email }
 
         return response
+
+    
         
 
-class GetSingleAuthReview(viewsets.ReadOnlyModelViewSet):
-    serializer_class = ReviewListSerializer
+class GetSingleAuthReview(viewsets.ModelViewSet):
+    serializer_class = ReviewSerializer
     permission_classes = (IsAuthenticated,)
 
     # don't need name because it's in localStorage for list view
@@ -98,6 +104,7 @@ class GetSingleAuthReview(viewsets.ReadOnlyModelViewSet):
                         'date_modified': review.date_modified, 
                         'private': review.private,
                         'user': review.user.name,
+                        'username': review.user.username,
                         'email': review.user.email }
 
         # print(test)
@@ -107,6 +114,21 @@ class GetSingleAuthReview(viewsets.ReadOnlyModelViewSet):
         # account = Account.objects.get(id=review.user.name)
         # print(account)
         return response
+
+    def destroy(self, request, pk=None):
+        print("delete", pk)
+        try: 
+            review = ReviewModel.objects.get(id=pk)
+            review.delete()
+        except:
+            raise Http404
+        response = Response()
+        return response
+
+    # def partial_update(self, request, pk=None):
+    #     print("update", pk)
+    #     response = Response()
+    #     return response
 
 
 class GetAuthedReview(generics.ListAPIView):
@@ -189,12 +211,18 @@ class PublicReviewList(viewsets.ReadOnlyModelViewSet):
 
     def post(self, request, format=None):
         data = request.data
-        email = data.get('email', None)
+        username = data.get('username', None)
         print("data", data)
         response = Response()    
         print("inside django get")
-        print("email", email)
-        account = Account.objects.get(email=email)
+        print("username", username)
+        account = ''
+        
+        try:
+            account = Account.objects.get(username=username)
+        except:
+            raise Http404
+ 
         print(account.id)
         reviews = ReviewModel.objects.filter(user=account.id).filter(private=False).order_by('-date')
         
@@ -205,6 +233,7 @@ class PublicReviewList(viewsets.ReadOnlyModelViewSet):
                 'date_modified': review.date_modified, 
                 'private': review.private,
                 'user': review.user.name,
+                'username': review.user.username,
                 'email': review.user.email } for review in reviews]
 
         print(test)

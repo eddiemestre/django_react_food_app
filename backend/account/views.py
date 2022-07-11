@@ -1,5 +1,6 @@
 import json
 from django.forms import PasswordInput
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout, get_user_model
 from django.contrib import messages
@@ -57,6 +58,26 @@ class GetUserID(viewsets.ReadOnlyModelViewSet):
             # return user_account.
             return Account.objects.filter(id=user_id)
 
+class GetOtherID(viewsets.ReadOnlyModelViewSet):
+    serializer_class = UserSerializer
+    permission_classes = (AllowAny,)
+    
+    
+    def retrieve(self, request, *args, **kwargs):
+        username = None
+        print("kwargs", kwargs)
+        if 'pk' in kwargs:
+            username = self.kwargs['pk']
+        userData = Account.objects.get(username=username)
+        print("userData", userData)
+        if not userData:
+            raise Http404
+            
+        response = Response()
+        response.data = {'username': userData.username, 
+                        'name': userData.name }
+
+        return response
 
 # see if the above also works
 # explore .save at beginning and at end if possible

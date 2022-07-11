@@ -22,7 +22,7 @@ const LoginForm = () => {
     const location = useLocation();
 
     // get where user is coming from 
-    const from =  `/profile/${JSON.parse(localStorage.getItem('email'))}`; // || location.state?.from?.pathname
+    const from =  `/user/${JSON.parse(localStorage.getItem('email'))}`; // || location.state?.from?.pathname
 
     
 
@@ -47,14 +47,14 @@ const LoginForm = () => {
     //   console.log("logged in?", loggedInUser);
     
     //   if (loggedInUser) {
-    //     // window.location.href = `/profile/${JSON.parse(localStorage.getItem('email'))}`;
-    //     navigate(`/profile/${JSON.parse(localStorage.getItem('email'))}`)
+    //     // window.location.href = `/user/${JSON.parse(localStorage.getItem('email'))}`;
+    //     navigate(`/user/${JSON.parse(localStorage.getItem('email'))}`)
     //     // GoHome();
     //   }
     // }, [])
 
     // const GoHome = () => {
-    //   navigate(`/profile/${JSON.parse(localStorage.getItem('email'))}`)
+    //   navigate(`/user/${JSON.parse(localStorage.getItem('email'))}`)
     // }
 
     // User Login info

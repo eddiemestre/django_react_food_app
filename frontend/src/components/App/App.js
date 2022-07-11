@@ -3,7 +3,7 @@ import React, { useContext, useState, useEffect } from "react"
 
 import AnimatedRoutes from '../Routes/AnimatedRoutes';
 import PublicRoutes from '../Routes/PublicRoutes';
-
+import NotFoundRoute from '../Routes/NotFoundRoute';
 
 function App() {
     // const { auth } = useAuth();
@@ -41,7 +41,7 @@ function App() {
 
         <PublicRoutes />
         <AnimatedRoutes />
-
+        {/* <NotFoundRoute /> */}
       </>
 
 

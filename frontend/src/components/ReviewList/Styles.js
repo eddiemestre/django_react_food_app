@@ -8,6 +8,7 @@ export const ReviewContainer = styled.div`
     ${'' /* height: 100%; */}
     flex-direction: column;
     padding-bottom: 2em;
+    justify-content: center;
 `;
 
 export const MyReviews = styled.div`
@@ -32,4 +33,5 @@ export const TextContainer = styled.div`
     justify-content: center;
     align-items: center;
     height: 60%;
+    padding-top: 60%;
 `;

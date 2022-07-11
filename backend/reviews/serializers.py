@@ -10,8 +10,15 @@ class ReviewSerializer(serializers.ModelSerializer):
     
     def update(self, instance, validated_data):
         user = self.context['request'].user
+        
+        # print("user pk", user.pk)
+        # print("instance user", instance.user.pk)
 
-        if user.pk != instance.pk: # guarantees current user can only update their own info
+        # if (user.pk == instance.user.pk):
+        #     print(type(user.pk))
+        #     print(type(instance.user.pk))
+
+        if user.pk != instance.user.pk: # guarantees current user can only update their own info
                 raise serializers.ValidationError({"authorize": "You do not have permission to do that."})
 
         if 'title' in validated_data:

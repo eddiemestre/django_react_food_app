@@ -26,8 +26,9 @@ const SingleReviewView = () => {
     const [selectedReview, setSelectedReview] = useOutletContext();
     const [isAuthedUser, setIsAuthedUser] = useState(false);
     const [fromListView, setFromListView] = useState(false);
-    const [formattedDate, setformattedDate] = useState(selectedReview.date || null)
+    const [formattedDate, setformattedDate] = useState('')
     const [rerender, setRerender] = useState(false);
+    const [dateModified, setDateModified] = useState('')
 
     useEffect(() => {
         // check where we came from instead of email
@@ -52,9 +53,13 @@ const SingleReviewView = () => {
                 } else {
                     setformattedDate("Not Dated")
                 }
-                
+                setDateModified(formatDate(response?.data?.date_modified))
+
             } catch (err) {
                 console.log(err)
+                if (err?.response?.status === 404) {
+                    navigate("/*")
+                }
             }    
         }
 
@@ -71,8 +76,13 @@ const SingleReviewView = () => {
                 } else {
                     setformattedDate("Not Dated")
                 }
+                setDateModified(formatDate(response?.data?.date_modified))
+
             } catch (err) {
                 console.error(err);
+                if (err?.response?.status === 404) {
+                    navigate("/*")
+                }
             }
         }
         
@@ -80,13 +90,13 @@ const SingleReviewView = () => {
             console.log("selectedReview state exists")
             setFromListView(true);
 
-            // if this is the authed users review, add email to the data
-            if (params.email === JSON.parse(localStorage.getItem('email'))) {
+            // if this is the authed users review, add username to the data
+            if (params.username === JSON.parse(localStorage.getItem('username'))) {
                 console.log("authed user's info")
                 setIsAuthedUser(true);
                 setSelectedReview(prevState => ({
                     ...prevState,
-                    "email": JSON.parse(localStorage.getItem('email')),
+                    "username": JSON.parse(localStorage.getItem('username')),
                     "user": JSON.parse(localStorage.getItem('name'))
                 }))
 
@@ -94,9 +104,9 @@ const SingleReviewView = () => {
             }
 
         } else {
-            const user = params.email
+            const user = params.username
             const review_id = params.id
-            if (user === JSON.parse(localStorage.getItem('email'))) {
+            if (user === JSON.parse(localStorage.getItem('username'))) {
                 console.log("this is the authed users review, it can be public or private")
                 setIsAuthedUser(true);
                 getAuthedReview(review_id)
@@ -106,6 +116,7 @@ const SingleReviewView = () => {
             }
 
             setformattedDate(formatDate(selectedReview.date))
+            setDateModified(formatDate(selectedReview.date_modified))
             
 
         }
@@ -118,18 +129,57 @@ const SingleReviewView = () => {
             controller.abort();
         }
 
-    }, [])
+    }, [selectedReview])
 
-    useEffect(() => {
-        if (formattedDate) {
-            setformattedDate(formatDate(formattedDate))
-        } else if (selectedReview.date) {
+    useEffect(() => { // this doesn't update the state
+        console.log("in useEffect", selectedReview.date)
+        console.log("formatted Date", formattedDate)
+        
+        if (selectedReview.date) {
             setformattedDate(formatDate(selectedReview.date))
         } else {
             setformattedDate("Not Dated")
         }
+
+        if (selectedReview.date_modified) {
+            setDateModified(formatDate(selectedReview.date_modified))
+        } else {
+            setDateModified("Unknown")
+        }
+        // if (formattedDate) {
+        //     setformattedDate(formatDate(formattedDate))
+        // } else if (selectedReview.date) {
+        //     setformattedDate(formatDate(selectedReview.date))
+        // } else {
+        //     setformattedDate("Not Dated")
+        // }
+
+       
         setRerender(!rerender)  // dummy state
-    }, [])
+    }, [selectedReview])
+
+    // useEffect(() => {
+    //     if (formattedDate && typeof formattedDate === "string") {
+    //         setformattedDate(formatDate(formattedDate))
+            
+    //     } else if (selectedReview.date && typeof formattedDate === "string") {
+    //         setformattedDate(formatDate(selectedReview.date))
+    //     } else {
+    //         console.log(selectedReview.date)
+    //         setformattedDate("Not Dated")
+    //     }
+
+    //     // setDateModified(formatDate(selectedReview.date_modified))
+    //     if (dateModified) {
+    //         setDateModified(formatDate(dateModified))
+    //     } else if (selectedReview.date_modified) {
+    //         setDateModified(formatDate(selectedReview.date_modified))
+    //     }  else {
+    //         setDateModified("Unknown")
+    //     }
+       
+    //     setRerender(!rerender)  // dummy state  
+    // }, [])
 
     
     // const modalAppear = useTransition(discardModal, {
@@ -189,7 +239,7 @@ const SingleReviewView = () => {
         enter: { opacity: 1, transform: "translateY(0px)" },
         leave: { opacity: 0, transform: "translateY(20px)" },
         reverse: isAuthedUser,
-        delay: 1000,
+        delay: 300,
         // onRest: () => PauseAnimation(),
     });
 
@@ -198,17 +248,17 @@ const SingleReviewView = () => {
         enter: { opacity: 1, transform: "translateY(0px)" },
         leave: { opacity: 0, transform: "translateY(20px)" },
         reverse: isAuthedUser,
-        delay: 1100,
+        delay: 400,
         // onRest: () => PauseAnimation(),
     });
 
     const handleEditClick = () => {
-        console.log("to edit page")
+        navigate(`/user/${params.username}/${params.id}/edit`)
     }
 
     const handleBackClick = () => {
         console.log("back a page!")
-        navigate(-1)
+        navigate(`/user/${params.username}/`)
     }
 
     return (
@@ -218,10 +268,10 @@ const SingleReviewView = () => {
                 <InsideContainer>
                     <ContentContainer>
                         <Title>{selectedReview.title}</Title>
-                        <Link to={`/profile/${selectedReview.email}`} style={{textDecoration: 'none'}}><Name>{selectedReview.user}</Name></Link>
+                        <Link to={`/user/${selectedReview.username}`} style={{textDecoration: 'none'}}><Name>{selectedReview.user}</Name></Link>
                         <Date>{formattedDate}</Date>
                         <Content>{selectedReview.review}</Content>
-                        <LastEdited>Last edited on {selectedReview.date_modified}</LastEdited>
+                        <LastEdited>Last edited on {dateModified}</LastEdited>
                     </ContentContainer>
 
                 </InsideContainer>

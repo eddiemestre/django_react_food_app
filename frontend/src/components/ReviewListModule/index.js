@@ -39,8 +39,8 @@ import { formatDate } from "../../utils/FormatDate.js";
 // }
 
 const ReviewListModule = (props) => {
-    const reviews = props.value;
-    const [formattedDate, setformattedDate] = useState(reviews.date || null)
+    const review = props.value;
+    const [formattedDate, setformattedDate] = useState(review.date || null)
     const [rerender, setRerender] = useState(false);
 
     const navigate = useNavigate();
@@ -72,21 +72,21 @@ const ReviewListModule = (props) => {
 
     const handleClick = (event) => {
         console.log(event)
-        props.setReview(reviews)
-        navigate(`/profile/${params.email}/${event}`)
+        props.setReview(review)
+        navigate(`/user/${params.username}/${event}`)
     }
 
     return(
-        <ReviewModule onClick={() => handleClick(reviews.id)}>
+        <ReviewModule onClick={() => handleClick(review.id)}>
         {/* <ReviewModule> */}
             <ReviewTitle>
-                {reviews.title}
+                {review.title}
             </ReviewTitle>
             <ReviewDate>
                 {formattedDate}
             </ReviewDate>
             <ReviewPreview>
-                {reviews.review}
+                {review.review}
             </ReviewPreview>
         </ReviewModule>
         

@@ -53,8 +53,8 @@ const Login = (props) => {
     //   console.log("logged in?", loggedInUser);
     
       if (loggedInUser) {
-        // window.location.href = `/profile/${JSON.parse(localStorage.getItem('email'))}`;
-        navigate(`/profile/${JSON.parse(localStorage.getItem('email'))}`)
+        // window.location.href = `/user/${JSON.parse(localStorage.getItem('username'))}`;
+        navigate(`/user/${JSON.parse(localStorage.getItem('username'))}`)
         // GoHome();
       }
 
