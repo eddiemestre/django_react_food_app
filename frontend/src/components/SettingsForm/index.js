@@ -160,7 +160,7 @@ const SettingsForm = (props) => {
                 <br />
                 <ChoicesContainer>
                     <Save><SaveButton>Save</SaveButton></Save>
-                    <Exit onClick={() => navigate(`/user/${JSON.parse(localStorage.getItem('email'))}/`)}>Exit</Exit>
+                    <Exit onClick={() => navigate(`/user/${JSON.parse(localStorage.getItem('username'))}/`)}>Exit</Exit>
                 </ChoicesContainer>
         </form>
         </Container>

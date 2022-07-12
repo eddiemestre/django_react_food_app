@@ -32,7 +32,7 @@ const InAppHeader = () => {
     });
 
     const handleHeaderClick = () => {
-        if (JSON.parse(localStorage.getItem('email')) && auth) {
+        if (JSON.parse(localStorage.getItem('username')) && auth) {
             console.log("in user logged in handle click")
             window.location.href = `/user/${JSON.parse(localStorage.getItem('username'))}`
         } else {

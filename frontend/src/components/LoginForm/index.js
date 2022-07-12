@@ -22,7 +22,7 @@ const LoginForm = () => {
     const location = useLocation();
 
     // get where user is coming from 
-    const from =  `/user/${JSON.parse(localStorage.getItem('email'))}`; // || location.state?.from?.pathname
+    const from =  `/user/${JSON.parse(localStorage.getItem('user'))}`; // || location.state?.from?.pathname
 
     
 

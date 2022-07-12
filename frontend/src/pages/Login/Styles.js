@@ -42,7 +42,7 @@ export const NoticeContainer = styled(animated.div)`
     align-items: center;
     width: 80%;
     left: 10%;
-    margin-top: 40%;
+    margin-top: -20%;
     background: #03DAC6;
     color: black;
     z-index: 6000;

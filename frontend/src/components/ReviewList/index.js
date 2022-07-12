@@ -16,11 +16,13 @@ const ReviewList = (props) => {
     const [userDetails, setUserDetails] = useState({})
     // const [noReviews, setNoReviews] = useState(false)
     // const [loggedIn, setLoggedIn] = useState(true)
+    const [isLoading, setIsLoading] = useState(true)
 
     var loggedIn = false;
     var noReviews = false;
 
     useEffect(() => {
+        // setIsLoading(true)
         let isMounted = true;
         const controller = new AbortController();
 
@@ -68,6 +70,7 @@ const ReviewList = (props) => {
                 }
                 console.log("reviews data", reviews)
                 console.log("has reviews", hasReviews)
+                setIsLoading(false)
 
             } catch (err) {
                 console.log(err);
@@ -96,6 +99,7 @@ const ReviewList = (props) => {
                 // }
                 // console.log("reviews data", reviews)
                 // console.log("has reviews", hasReviews)
+                setIsLoading(false)
             } catch (err) {
                 console.error(err);
                 if (err?.response?.status === 404) {
@@ -118,23 +122,28 @@ const ReviewList = (props) => {
             loggedIn = false;
             getGuestReviews();
             getUserDetails();
+            
         }
+
+        
 
         return () => {
             isMounted = false;
             controller.abort();
         }
+
+       
     },[props.wasSaved, selectedReview])
 
-    useEffect(() => {
-        console.log("selected review", selectedReview)
-        let isMounted = true;
-        const controller = new AbortController();
+    // useEffect(() => {
+    //     console.log("selected review", selectedReview)
+    //     let isMounted = true;
+    //     const controller = new AbortController();
 
 
         
         
-    })
+    // })
 
     // const getReviews = async () => {
     //     // let isMounted = true;
@@ -226,9 +235,15 @@ const ReviewList = (props) => {
 
     const showReviews = (
         <ReviewContainer>
-        {JSON.parse(localStorage.getItem('username')) 
-        ? <MyReviews>My Reviews</MyReviews>
-        : <MyReviews>{userDetails.name}'s Reviews</MyReviews>}
+            {JSON.parse(localStorage.getItem('username')) 
+                ? <MyReviews>My Reviews</MyReviews>
+                : <MyReviews>{userDetails.name}'s Reviews</MyReviews>}
+{/* 
+                    {JSON.parse(localStorage.getItem('username')) 
+                ? <MyReviews>My Reviews</MyReviews>
+                : isLoading
+                    ? <MyReviews>Loading...</MyReviews>
+                    : <MyReviews>{userDetails.name}'s Reviews</MyReviews>} */}
             
             {/* {
                 review_data.map(review => (

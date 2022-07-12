@@ -20,6 +20,7 @@ const Login = (props) => {
     const { auth, setAuth } = useAuth();
     // const [sendHome, setSendHome] = useState(false)
     const [justSignedUp, setJustSignedUp] = useState(props.signUpSuccess)
+    // const [justSignedUp, setJustSignedUp] = useState(true)
     const [isMounted, setIsMounted] = useState(false)
     // const [justSignedUp, setJustSignedUp] = useState(true)
     const [test, setTest] = useState(true)
