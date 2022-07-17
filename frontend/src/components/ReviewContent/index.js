@@ -4,11 +4,6 @@ import { InputTitle } from "../ReviewModule/Styles.js";
 
 const ReviewContent = (props) => {
 
-    // const editTitle = (event) => {
-    //     props.editTitle(event.target.value);
-    //     console.log(props.title)
-    // }
-
     const getInputValue = (event) => {
         props.setReview(event.target.value)
         console.log(props.review)

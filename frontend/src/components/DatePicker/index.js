@@ -23,8 +23,6 @@ const DatePickerModule = (props) => {
 
 
   return (
-    // <div style={{ padding: "15px" }} className="App">
-    //   <h2>Height Demo</h2>
     <div>
       <div>
         <animated.div style={{ ...slideInStyles, overflow: "hidden" }}>

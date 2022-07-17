@@ -5,7 +5,6 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout, get_user_model
 from django.contrib import messages
 from .authentication import create_access_token, create_refresh_token, decode_access_token, decode_refresh_token
-# from backend.account.authentication import create_access_token
 from .serializers import ChangePasswordSerializer, UserRegistration, UpdateUserSerializer, UserSerializer
 from .models import Account
 from rest_framework.response import Response
@@ -45,7 +44,6 @@ class RegistrationAPI(generics.CreateAPIView):
 
             
 class GetUserID(viewsets.ReadOnlyModelViewSet):
-    # queryset = Account.objects.all()
     permission_classes = (IsAuthenticated,)
     serializer_class = UserSerializer
 
@@ -81,13 +79,6 @@ class GetOtherID(viewsets.ReadOnlyModelViewSet):
 
         return response
 
-# see if the above also works
-# explore .save at beginning and at end if possible
-
-# class LogoutView(APIView):
-#     def post(request):
-#         logout(request)
-#         return redirect('home')
 
 
 class UserAuthentication(authentication.BaseAuthentication):
@@ -127,15 +118,11 @@ class UpdateProfileView(viewsets.ModelViewSet):
 
 
 class LogoutView(APIView):
-    # permission_classes = (IsAuthenticated,)
-
     def post(self, request):
         try:
             refresh_token = request.COOKIES.get('refresh_token')
-            # print(refresh_token)
             response = Response()
             
-            # refresh_token = request.data["refresh_token"]
             token = RefreshToken(refresh_token)
             token.blacklist()
 
@@ -156,26 +143,6 @@ class LogoutAllView(APIView):
             t, _ = BlacklistedToken.objects.get_or_create(token=token)
 
         return Response(status=status.HTTP_205_RESET_CONTENT)
-
-
-# class LoginAPIView(APIView):
-#     def post(self, request):
-#         user = Account.objects.filter(email=request.data['email']).first()
-
-#         if not user:
-#             raise APIException('Invalid credentials')
-    
-#         access_token = create_access_token(user.pk)
-#         refresh_token = create_refresh_token(user.pk)
-
-#         response = Response()
-
-#         response.set_cookie(key='refreshToken', value=refresh_token, httponly=True)
-#         response.data = {
-#             'token': access_token
-#         }
-
-#         return Response
 
         
 class LoginView(APIView):
@@ -206,33 +173,8 @@ class LoginView(APIView):
             return Response({"Invalid" : "Invalid username or password!!"}, status=status.HTTP_404_NOT_FOUND)
 
 
-# class UserAPIView(APIView):
-    
-#     def get(self, request):
-#         auth = get_authorization_header(request).split()
-
-#         print(auth)
-
-#         if auth and len(auth) == 2:
-#             # token = auth[1].decode('utf-8')
-#             # id = decode_access_token(token)
-
-#             response = Response()
-#             response.data = {
-#                 'user_id': id
-#             }
-
-#             return response
-        
-#         else:
-#             return Response({"Invalid" : "Could not complete request"}, status=status.HTTP_404_NOT_FOUND)
-#             user = Account.objects.filter(pk=id).first()
-
-#             return Response(UserSerializer(user).data)
-
 class RefreshAPIView(APIView):
    
-
     def post(self, request):
         refresh_token = request.COOKIES.get('refresh_token')
         id = decode_refresh_token(refresh_token)
@@ -241,91 +183,6 @@ class RefreshAPIView(APIView):
         return Response({
             "access_token": access_token
         })
-
-
-
-# from rest_framework_simplejwt.settings import api_settings
-
-# if api_settings.JWT_AUTH_COOKIE:
-#     from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication
-#     from rest_framework_simplejwt.serializers import TokenRefreshSerializer
-#     from rest_framework_simplejwt.views import TokenRefreshView
-
-#     TokenRefreshSerializer._declared_fields.pop('token')
-
-#     class RefreshJSONWebTokenSerializerCookieBased(TokenRefreshSerializer):
-#         def validate(self, attrs):
-#             if 'token' not in attrs:
-#                 if api_settings.:
-#                     attrs['token'] = JWTTokenUserAuthentication().get_user(self.context['request'])
-#             return super(RefreshJSONWebTokenSerializerCookieBased, self).validate(attrs)
-
-#     TokenRefreshView.serializer_class = RefreshJSONWebTokenSerializerCookieBased
-
-
-# class CookieTokenRefreshSerializer(TokenRefreshSerializer):
-    
-#     refresh = None
-#     def validate(self, attrs):
-#         # print(super().validate(attrs))
-#         # print(self.get_)
-#         print("inside validate cookie refresh serializer")
-#         print("self", self)
-#         print("self.context", self.context)
-#         print("cookies?", self.context['request'].COOKIES)
-#         # print("cookies refresh?", self.context['request'].COOKIES['refresh'])
-#         print("self context request", self.context['request'])
-#         print("self context request data", self.context['request'].data)
-#         # print("self context request data", self.context['data'])
-#         print("self context view", self.context['view'])
-#         # print("self context view", self.context['view'])
-#         print("attr", attrs)
-#         attrs['refresh'] = self.context['request'].COOKIES.get('refresh')
-#         print(attrs)
-#         if attrs['refresh']:
-#             return super().validate(attrs)
-#         else:
-#             raise InvalidToken('No valid token found in cookie \'refresh_token\'')
-
-# class CookieTokenObtainPairView(TokenObtainPairView):
-#   def finalize_response(self, request, response, *args, **kwargs):
-#     print("inside token cookie view")
-#     if response.data.get('refresh'):
-#         cookie_max_age = 3600 * 24 * 14 # 14 days
-#         response.set_cookie(
-#             key='refresh', 
-#             value=response.data['refresh'], 
-#             expires = settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
-#             secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-#             httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-#             samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE'], )
-#         del response.data['refresh']
-#         print("cookie create response", response.data)
-#     return super().finalize_response(request, response, *args, **kwargs)
-
-# class CookieTokenRefreshView(TokenRefreshView):
-#     def finalize_response(self, request, response, *args, **kwargs):
-#         print("inside refresh finalize response")
-#         print("self", self)
-#         print("response", response)
-#         print("response data", response.data)
-#         print("args", *args)
-#         print("kwargs", **kwargs)
-#         print("cookie?", request.COOKIES.get('refresh'))
-#         if response.data.get('refresh'):
-#             print(response.data.get('refresh'))
-#             print("refresh token found")
-#             cookie_max_age = 3600 * 24 * 14 # 14 days
-#             response.set_cookie(
-#                 key='refresh', 
-#                 value=response.data['refresh'], 
-#                 expires = settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
-#                 secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-#                 httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-#                 samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE'],)
-#             del response.data['refresh']
-#         return super().finalize_response(request, response, *args, **kwargs)
-#     serializer_class = CookieTokenRefreshSerializer
 
 
 from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
@@ -349,7 +206,6 @@ class CookieTokenObtainPairView(TokenObtainPairView):
   def finalize_response(self, request, response, *args, **kwargs):
     if response.data.get('refresh'):
         cookie_max_age = 3600 * 24 * 14 # 14 days
-        # response.set_cookie('refresh_token', response.data['refresh'], httponly=True, secure=True, samesite='None')
         response.set_cookie('refresh_token', 
             response.data['refresh'], 
             max_age=cookie_max_age, 

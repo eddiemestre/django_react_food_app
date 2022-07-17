@@ -9,9 +9,6 @@ import Footer from "../../components/Footer/index.js";
 const NotFound = () => {
     
     return (
-        // {slideAnimation((style, item) => 
-        //     item ? <Test2 style={style}><ReviewModule setToggle={toggleReviewOff} setSaved={setReviewSaved} setModuleActive={setReviewModuleActive} hasChanged={setInputHasChanged}></ReviewModule></Test2> : ''
-        // )}
         <>
             <GlobalStyle />
             <Header />

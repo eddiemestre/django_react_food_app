@@ -11,7 +11,6 @@ from account.models import Account
 # List reviews according to authenticated user
 # is this useful?
 class ReviewList(generics.ListAPIView):
-    #queryset = ReviewModel.objects.all()
     serializer_class = ReviewListSerializer
     permission_classes = (IsAuthenticated,)
 
@@ -108,12 +107,6 @@ class GetSingleAuthReview(viewsets.ModelViewSet):
                         'username': review.user.username,
                         'email': review.user.email }
 
-        # print(test)
-
-        # response.data = test
-        # response.data = {"data": self.serializer_class(review).data, "user_name": review.user.name}
-        # account = Account.objects.get(id=review.user.name)
-        # print(account)
         return response
 
     def destroy(self, request, pk=None):
@@ -125,11 +118,6 @@ class GetSingleAuthReview(viewsets.ModelViewSet):
             raise Http404
         response = Response()
         return response
-
-    # def partial_update(self, request, pk=None):
-    #     print("update", pk)
-    #     response = Response()
-    #     return response
 
 
 class GetAuthedReview(generics.ListAPIView):
@@ -150,50 +138,9 @@ class GetAuthedReview(generics.ListAPIView):
             print(user, "Is for this")
             return ReviewModel.objects.filter(user=user).filter(id=review_pk).order_by('-date')
 
-    # def post(self, request, pk):
-    #     print("get pk", pk)
-    #     user = self.request.user
-    #     print("user pk", user)
-    #     if user.is_authenticated:
-    #         print("inside get user authenticated", user)
-    #         review = ReviewModel.objects.filter(user=user).get(pk=pk)
-    #         print(review)
-    #     response = Response()
-    #     return response
-    
-# class GetAuthedReview(viewsets.ReadOnlyModelViewSet):
-#     serializer_class = ReviewListSerializer
-#     permission_classes = (AllowAny,)
-
-#     # def get_queryset(self, pk):
-#     #     user = self.request.user
-#     #     print("user in authed review django", user)
-#     #     return ReviewModel.objects.filter(user=user)
-#     def get_queryset(self):
-#             return ReviewModel.objects.filter(private=False)
-
-
-#     def get(self, request, pk):
-#         user = self.request.user
-#         print("authed???", user.is_authenticated)
-#         response = Response()
-#         response = "hello"
-#         return response
-
-#     # def post(self, request, pk):
-#     #     print("get pk", pk)
-#     #     user = self.request.user
-#     #     print("user pk", user)
-#     #     if user.is_authenticated:
-#     #         print("inside get user authenticated", user)
-#     #         review = ReviewModel.objects.filter(user=user).get(pk=pk)
-#     #         print(review)
-#     #     response = Response()
-#     #     return response
     
 # Create your views here.
 class ReviewView(viewsets.ModelViewSet):
-    #queryset = ReviewModel.objects.all()
     serializer_class = ReviewSerializer
     permission_classes = (IsAuthenticated,)
     
@@ -207,9 +154,6 @@ class ReviewView(viewsets.ModelViewSet):
 class PublicReviewList(viewsets.ReadOnlyModelViewSet):
     serializer_class = ReviewListSerializer
     permission_classes = (AllowAny,)
-  
-    # def get_queryset(self):
-    #         return ReviewModel.objects.filter(private=False)
 
     def post(self, request, format=None):
         data = request.data
@@ -242,12 +186,3 @@ class PublicReviewList(viewsets.ReadOnlyModelViewSet):
 
         response.data = test
         return response
-
-
-    # title = models.CharField(max_length=120)
-    # date = models.DateTimeField(null=True, blank=True)
-    # date_modified = models.DateField(auto_now=True)
-    # date_created = models.DateField(auto_now_add=True)
-    # review = models.TextField(null=True, blank=True)
-    # private = models.BooleanField(default=False)
-    # user =

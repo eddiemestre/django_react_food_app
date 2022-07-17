@@ -6,8 +6,7 @@ const Header = () => {
     const navigate = useNavigate();
 
     const handleOnClick = async () => {
-        navigate("/login", { replace: true})
-        console.log("clicked header")
+        navigate("/login")
     }
 
     return (

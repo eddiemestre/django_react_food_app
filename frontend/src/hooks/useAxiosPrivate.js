@@ -15,10 +15,8 @@ const useAxiosPrivate = () => {
         const requestIntercept = axiosPrivate.interceptors.request.use(
             config => {
                 if (!config.headers['Authorization']) { // first attempt at accessing data
-                    // console.log("first attempt at accessing data", auth);
                     config.headers['Authorization'] = `Bearer ${auth?.accessToken}`;
                 }
-                // console.log("config", config)
                 return config;
             }, (error) => Promise.reject(error)
         );

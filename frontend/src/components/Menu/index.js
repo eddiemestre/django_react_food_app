@@ -12,11 +12,6 @@ const MenuModal = (props) => {
     const [signedIn, setSignedIn] = useState(false)
 
 
-    useEffect(() => {
-        if (auth.accessToken) {
-            setSignedIn(true)
-        }
-    }, [])
     const closeMenu = () => {
         props.onClick(false)
     }

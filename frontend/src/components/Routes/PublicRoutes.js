@@ -5,11 +5,10 @@ import Login from '../../pages/Login/Login';
 import SignUp from '../../pages/SignUp/SignUp';
 import PublicTemplate from "./PublicRouteTemplate";
 
+// NOT USED
 
 const PublicRoutes = () => {
   const [successfulSignUp, setSuccessfulSignUp] = useState(false);
-  // const [successfulSignUp, setSuccessfulSignUp] = useState(true);
-
 
     return (
       <Routes>

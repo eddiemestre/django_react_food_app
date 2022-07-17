@@ -1,9 +1,9 @@
-import React, {useRef, useState, useEffect} from "react";
-import { updateLanguageServiceSourceFile } from "typescript";
+import React, { useState, useEffect, useContext } from "react";
 import axios from '../../api/axios';
-import { App, LogForm, Title, InputContainer, Error, ButtonContainer, InputText, SubmitButton, CredentialConfirmation, NoAccount } from '../LoginForm/Styles.js';
-import { Link, useNavigate } from "react-router-dom";
+import { App, LogForm, Title, InputContainer, Error, ButtonContainer, InputText, SubmitButton } from '../LoginForm/Styles.js';
+import { useNavigate } from "react-router-dom";
 import PasswordValidator from "../PasswordValidator/index.js";
+import RegistrationContext from "../../context/RegistrationContext.js";
 
 const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
 const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -11,38 +11,34 @@ const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,24}$/;
 const REGISTER_URL = '/auth/register/';
 
 
-const SignUpForm = (props) => {
-    // Refs
+const SignUpForm = () => {
+    // hooks
     const navigate = useNavigate();
-    // React States
-    const [errorMessages, setErrorMessages] = useState({});
-    const [isSubmitted, setIsSubmitted] = useState(false);
+    const { setJustSignedUp } = useContext(RegistrationContext);
 
-    const [isShown, setShown] = useState(false);
+    const [errorMessages, setErrorMessages] = useState({});
 
     const [pass_one, setPassOne] = useState('');
     const [pass_two, setPassTwo] = useState('');
+
     const [isEightChar, setIsEightChar] = useState(false);
     const [hasNum, setHasNum] = useState(false);
     const [hasSym, setHasSym] = useState(false);
     const [isPassSame, setIsPassSame] = useState(false);
-    const [validPassword, setValidPassword] = useState(false);
 
     const [username, setUsername] = useState('');
-    const [validUsername, setValidUsername] = useState(false);
 
     const [name, setName] = useState('');
 
     const [email, setEmail] = useState('');
-    const [validEmail, setValidEmail] = useState('');
 
 
-    // TO DO: add accessibility features for screen readers
+//     // TO DO: add accessibility features for screen readers
     const errors = {
       uname: "Invalid username. Should contain only letters and numbers and be 4 - 23 characters long.",
       unameTaken: "Username already taken. Please pick another.",
-      name: "Invalid name.",
-      email: "Invalid email.",
+      name: "Invalid name. Name must be less than 50 characters.",
+      email: "Invalid email. Please try again.",
       emailTaken: "An account with this email already exists. Please use another.",
       pass: "Invalid password.",
       pass2: "Passwords do not match.",
@@ -61,26 +57,29 @@ const SignUpForm = (props) => {
       const passCheck = PASSWORD_REGEX.test(pass_one);
       const emailCheck = EMAIL_REGEX.test(email)
 
-      // console.log("usercheck", userCheck);
-      // console.log("passCheck", passCheck);
-      // console.log("emailcheck", emailCheck);
-
-      if (!userCheck || !passCheck || !emailCheck) {
-        // console.log("invalid data");
+      // catch common registration errors before pinging backend
+      if (!userCheck) {
+        setErrorMessages({name: "uname", message: errors.uname});
         return;
-      } else {
-        console.log("valid data submitted");
-      }
+      } else if (!emailCheck) {
+        setErrorMessages({name: "email", message: errors.email})
+        return
+      } else if (!passCheck) {
+        return // errors below handle this
+      } // else {
+      //   console.log("valid data submitted")
+      // }
 
       try {
-          const response = await axios.post(REGISTER_URL,
+          await axios.post(REGISTER_URL,
             JSON.stringify({email, username, name, password1: pass_one, password2: pass_two}),
             {
               headers: {'Content-Type': 'application/json'},
               withCredentials: true
             }
           );
-          setIsSubmitted(true);
+
+          // console.log(JSON.stringify(response?.data));
 
           // clear input fields, set state back to empty strings
           setName('');
@@ -88,13 +87,8 @@ const SignUpForm = (props) => {
           setEmail('');
           setPassOne('');
           setPassTwo('');
-          try {
-            // console.log("setting signedup to true")
-            props.signedUp(true)
-          } catch (err) {
-            console.log(err)
-          }
-          navigate('/login', { replace: true })
+          setJustSignedUp(true)
+          navigate('/login')
 
       } catch (err) {
           if (!err?.response) {
@@ -113,7 +107,17 @@ const SignUpForm = (props) => {
             else if (err.response.data['email']) {
               const emailError = err.response.data['email'];
               const errorCheck = emailError.at(0);
-              if (errorCheck === "This field must be unique.") { setErrorMessages({name: "emailTaken", message: errors.emailTaken}); }
+              if (errorCheck === "This field must be unique.") { 
+                setErrorMessages({name: "emailTaken", message: errors.emailTaken}); 
+              }
+            }
+            else if (err.response.data['name']) {
+              const nameError = err.response.data['name'];
+              const errorCheck = nameError.at(0);
+              console.log(errorCheck)
+              if (errorCheck) { 
+                  setErrorMessages({name: "name", message: errors.name}); 
+              }
             }
           } else {
             setErrorMessages({name: "other", message: errors.other})
@@ -122,27 +126,27 @@ const SignUpForm = (props) => {
       
     };
 
-    // Generate JSX code for error message
+//     // Generate JSX code for error message
     const renderErrorMessage = (name) =>
       name === errorMessages.name && (
         <Error>{errorMessages.message}</Error>
       );
 
-    // for password show/hide
-    const showHide = () => {
-        const input = document.querySelector('password')
-        showHide.addEventListener('click', ()=> {
-            if (!isShown) {
-                if (input.type === 'password') {
-                    input.type = 'text';
-                    isShown = true;
-                }
-            } else {
-                input.type = 'password';
-                isShown = false;
-            }
-        })
-    }
+//     // for password show/hide
+//     const showHide = () => {
+//         const input = document.querySelector('password')
+//         showHide.addEventListener('click', ()=> {
+//             if (!isShown) {
+//                 if (input.type === 'password') {
+//                     input.type = 'text';
+//                     isShown = true;
+//                 }
+//             } else {
+//                 input.type = 'password';
+//                 isShown = false;
+//             }
+//         })
+//     }
 
     const onChangeOne = (event) => {
         setPassOne(event.target.value);
@@ -152,26 +156,6 @@ const SignUpForm = (props) => {
         setPassTwo(event.target.value);
     }
     
-    // focus user input field
-    useEffect(() => {
-        // userRef.current.focus();
-    }, [username])
-
-    // check for valid username
-    useEffect(() => {
-      const result = USER_REGEX.test(username);
-      // console.log(result);
-      // console.log(username);
-      setValidUsername(result);
-    }, [username])
-
-    // check for valid email
-    useEffect(() => {
-      const result = EMAIL_REGEX.test(email);
-      // console.log(result);
-      // console.log(email);
-      setValidEmail(result);
-    }, [email])
 
     // check for valid password
     useEffect(() => {
@@ -203,19 +187,8 @@ const SignUpForm = (props) => {
             setIsPassSame(false);
         }
 
-        if (isEightChar && hasNum && hasSym && isPassSame) {
-            setValidPassword(true);
-        } else {
-            setValidPassword(false);
-        }
-
 
     }, [pass_one, pass_two, isEightChar, hasNum, hasSym, isPassSame]);
-
-    useEffect(() => {
-      setErrorMessages({});
-      // console.log(validUsername, validEmail, validPassword )
-    }, [username, name, pass_one, pass_two, email, validEmail, validPassword, validUsername])
   
     // JSX code for login form
     const renderForm = (

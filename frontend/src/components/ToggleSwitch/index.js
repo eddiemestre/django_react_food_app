@@ -6,24 +6,8 @@ const ToggleSwitch = (props) => {
     const [selectedReview, setSelectedReview] = useOutletContext();
     const [isPrivate, setIsPrivate] = useState(selectedReview.private ? true : false || false)
 
-    // function toggle(checked) {
-    //     var elm = document.getElementsByClassName('checkbox');
-    //     if (checked != elm.checked) {
-    //         elm.click()
-    //     }
-    // }
-
-    useEffect(() => {
-        console.log("inside toggle", selectedReview.private)
-        console.log("is checked", isPrivate)
-    }, [isPrivate])
-    
-    // document.getElementByClassName('checkbox').checked = true;
-
-    // const [isPublic, setIsPublic] = useState(!selectedReview.private || true);
 
     const triggerToggle = () => {
-        // setIsPublic(!isPublic);
         setIsPrivate(!isPrivate)
         props.setIsPrivate(!isPrivate);
         console.log(isPrivate);

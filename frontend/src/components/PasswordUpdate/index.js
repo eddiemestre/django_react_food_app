@@ -33,9 +33,6 @@ const PasswordUpdate = (props) => {
         console.log("Submit password change")
         const passCheck = PASSWORD_REGEX.test(passNew);
 
-        // // set the state of the password successful notifier here
-        // navigate(`/settings/`)
-
         try {
             const response = await axiosPrivate.put(`/auth/change_password/${JSON.parse(localStorage.getItem('user_id'))}/`,
               JSON.stringify({old_password: oldPass, password: passNew, password2: passNewConfirm}),
@@ -44,19 +41,12 @@ const PasswordUpdate = (props) => {
                 withCredentials: true
               }
             );
-            // setIsSubmitted(true);
   
             // clear input fields, set state back to empty strings
             setOldPass('');
             setPassNew('');
             setPassNewConfirm('');
 
-            // try {
-            //   // console.log("setting signedup to true")
-            //   props.signedUp(true)
-            // } catch (err) {
-            //   console.log(err)
-            // }
             props.setUpdatedPassword(true)
             navigate('/settings')
   
@@ -64,17 +54,6 @@ const PasswordUpdate = (props) => {
             if (!err?.response) {
               setErrorMessages({name: "server", message: errors.server});
             } else if (err.response?.status === 400) {
-              
-              // username must be unique backend check
-            //   if (err.response.data['username']) {
-            //     const usernameError = err.response.data['username'];
-            //     const errorCheck = usernameError.at(0);
-            //     if (errorCheck === "This field must be unique.") { 
-            //         setErrorMessages({name: "unameTaken", message: errors.unameTaken}); 
-            //     }
-            //   } 
-              // 
-            
               if (err.response.data['old_password']) {
                 console.log(err.response.data)
                 const PasswordError = err.response.data['old_password'];

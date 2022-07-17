@@ -1,80 +1,25 @@
-import React, { useEffect, useState, useContext } from "react";
-import {PageTitle, 
-        GlobalStyle,
+import React, { useContext } from "react";
+import {GlobalStyle,
         GridContainer,
         NoticeContainer,
-        NoticeText,
-        LogContainer } from './Styles.js'
-import useAuth from "../../hooks/useAuth.js";
-import { Navigate, useNavigate } from "react-router-dom";
-import { useTransition, animated } from '@react-spring/web';
-
+        NoticeText } from './Styles.js'
+import { useTransition } from '@react-spring/web'
 import LargeScreenView from "../../components/LargeScreen/LargeSCreenView.js";
-import Header from "../../components/Header/index.js";
-import Footer from "../../components/Footer/index.js";
 import LoginForm from "../../components/LoginForm/index.js";
-import AbsoluteWrapper from "../../components/Wrapper/index.js";
-import {motion} from "framer-motion";
-import AuthenticatedContext from "../../context/AuthContext.js";
+import RegistrationContext from "../../context/RegistrationContext.js";
+
+// import useAuth from "../../hooks/useAuth.js";
+// import { Navigate, useNavigate } from "react-router-dom";
+// import AbsoluteWrapper from "../../components/Wrapper/index.js";
+// import AuthenticatedContext from "../../context/AuthContext.js";
+// import Header from "../../components/Header/index.js";
+// import Footer from "../../components/Footer/index.js";
+
+
 
 const Login = (props) => {
-    const { authenticated, setAuthenticated} = useContext(AuthenticatedContext)
-    const { auth, setAuth } = useAuth();
-    // const [sendHome, setSendHome] = useState(false)
-    const [justSignedUp, setJustSignedUp] = useState(props.signUpSuccess)
-    // const [justSignedUp, setJustSignedUp] = useState(true)
-    const [isMounted, setIsMounted] = useState(false)
-    // const [justSignedUp, setJustSignedUp] = useState(true)
-    const [test, setTest] = useState(true)
     const delay = ms => new Promise(res => setTimeout(res, ms));
-    const navigate = useNavigate();
-    // useEffect(() => {
-    //     // const loggedInUser = localStorage.getItem("user")
-
-    //     // console.log(loggedInUser);
-    
-    //     // if (loggedInUser) {
-    //     //     Navigate('/home');
-    //     // }
-    //     console.log("hello")
-    //     const loggedInUser = localStorage.getItem("user");
-    //     console.log(loggedInUser);
-
-    //     if (loggedInUser) {
-    //         setSendHome(true)
-    //     }
-    // }, [sendHome])
-
-    // if (sendHome) {
-    //     Navigate('/home');
-    // }
-
-    useEffect(() => {
-        // check auth?
-    //   const loggedInUser = localStorage.getItem("refresh")
-  
-    // //   console.log("logged in?", loggedInUser);
-    
-    //   if (loggedInUser) {
-    //     // window.location.href = `/user/${JSON.parse(localStorage.getItem('username'))}`;
-    //     navigate(`/user/${JSON.parse(localStorage.getItem('username'))}`)
-    //     // GoHome();
-    //   }
-
-    if (authenticated?.accessToken) {
-      navigate(`/user/${authenticated?.username}/`)
-    }
-
-
-    }, [])
-
-    // useEffect(() => {
-    //     setIsMounted(true);
-
-    //     return function cleanup() {
-    //         setIsMounted(false)
-    //     }
-    // }, [])
+    const { justSignedUp, setJustSignedUp } = useContext(RegistrationContext);
 
     const PauseAnimation = async () => {
         await delay(5000);
@@ -95,17 +40,16 @@ const Login = (props) => {
         <>
             <GlobalStyle />
             <LargeScreenView />
-
-            {/* {props.signUpSuccess && showSuccess()} */}
             {successAppear((style, item) =>
-            item ? 
-            <NoticeContainer style={style}>
-                <NoticeText>Account created successfully!</NoticeText>
-            </NoticeContainer>
-            : ''
+                item 
+                ? 
+                    <NoticeContainer style={style}>
+                        <NoticeText>Account created successfully!</NoticeText>
+                    </NoticeContainer>
+                : ''
             )}  
-            <GridContainer>
-                <LoginForm />
+           <GridContainer>
+               <LoginForm />
             </GridContainer>
         </>
     );

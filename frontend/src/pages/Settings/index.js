@@ -8,10 +8,11 @@ import AuthenticatedContext from "../../context/AuthContext.js";
 const Settings = () => {
     const [updatedPassword, setUpdatedPassword] = useOutletContext();
     const [updatedSettings, setUpdatedSettings] = useState(false);
-    // const [updatedPassword, setUpdatedPassword] = useState(true);
+    const [isLoading, setIsLoading] = useState(false)
+    
     const delay = ms => new Promise(res => setTimeout(res, ms));
     const { authenticated, setAuthenticated} = useContext(AuthenticatedContext)
-    const [isLoading, setIsLoading] = useState(false)
+
 
     const PausePasswordAnimation = async () => {
         await delay(5000);
@@ -38,12 +39,6 @@ const Settings = () => {
         delay: 500,
         onRest: () => PauseSettingsAnimation(),
     });
-
-    useEffect(() => {
-        setIsLoading(true)
-        console.log("in settings use effect", authenticated)
-        setIsLoading(false)
-    }, [updatedSettings, authenticated])
 
     return (
         <>

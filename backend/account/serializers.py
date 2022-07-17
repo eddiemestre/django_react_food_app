@@ -47,27 +47,6 @@ class UserRegistration(serializers.ModelSerializer):
         user.save()
 
         return user
-    
-# class AccountAuthentication(serializers.Serializer):
-#     password = serializers.CharField()
-
-#     class Meta:
-#         model = Account
-#         fields = ('email', 'password')
-    
-#     def validate(self, attrs):
-#         user = Account.objects.filter(email=attrs['email'])
-#         if attrs['password'] == user.get(password)
-
-# class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
-    
-#     @classmethod
-#     def get_token(cls, user):
-#         token = super(MyTokenObtainPairSerializer, cls).get_token(user)
-
-#         # Add custom claims
-#         token['username'] = user.username
-#         return token
 
 
 class ChangePasswordSerializer(serializers.ModelSerializer):

@@ -18,29 +18,6 @@ const ReviewAdderTemplate = () => {
     const [selectedReview, setSelectedReview] = useOutletContext();
     const navigate = useNavigate();
 
-    useEffect(() => {
-        if (params.username) {
-            if (params.username === JSON.parse(localStorage.getItem('username'))) {
-                setUrlIsUser(true)
-            } else {
-                setUrlIsUser(false)
-            }
-        }
-        // console.log("selectedReview?", selectedReview)
-        // console.log("is user?", urlIsUser)
-        // console.log("prev Page?", prevPage)
-    }, [params])
-
-    useEffect(() => {
-        if (location.pathname == "/create_review") {
-            toggleReviewOn();
-            setReviewModuleActive(true)
-            setPrevPage(true)
-        } else {
-            toggleReviewOff();
-            setReviewModuleActive(false)
-        }
-    }, [params])
 
     
 
@@ -87,10 +64,8 @@ const ReviewAdderTemplate = () => {
     }
 
     const clickNo = () => {
-        setDiscardModal(false)
-        
+        setDiscardModal(false) 
     }
-
 
     const ModalConditions = () => {
 
@@ -137,17 +112,14 @@ const ReviewAdderTemplate = () => {
 
     const TestReviewButton = (animate) => {
         if (!animate) {
-            // console.log("button should animate")
             return (
                 EditAppear((style, item) =>
                 item ? 
                 <ButtonContainer style={style}>{createReviewButton()}</ButtonContainer>
                 : ''
-                // <ButtonContainer>{createReviewButton()}</ButtonContainer>
                 )
             )
         } else {
-            // console.log("button should stay in place")
             return (
                 <ButtonContainer>{createReviewButton()}</ButtonContainer>
             )
@@ -163,7 +135,6 @@ const ReviewAdderTemplate = () => {
                 setInputHasChanged,         // 4
                 setSelectedReview,          // 5
                 inputHasChanged ]}/>       {/* 6 */}
-      {/* <SvgTest isActive={reviewModuleActive} onClick={() => {ModalConditions()}} id="efXkrK1xpLH1" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" viewBox="0 0 640 480" shapeRendering="geometricPrecision" textRendering="geometricPrecision"><ellipse rx="239.999999" ry="239.999999" transform="translate(320 239.999999)" fill={fill} strokeWidth="0"/><line x1="0" y1="-100.45977" x2="0" y2="100.45977" transform="matrix(0 1-1 0 320 240)" fill="none" stroke={stroke} strokeWidth="10"/><line x1="0" y1="-100.45977" x2="0" y2="100.45977" transform="translate(320 239.999999)" fill="none" stroke={stroke} strokeWidth="10"/></SvgTest> */}
         {urlIsUser ?
             TestReviewButton(prevPage)
         : '' }
