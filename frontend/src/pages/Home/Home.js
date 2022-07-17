@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useContext } from "react";
 import { useTransition, animated } from '@react-spring/web';
 import {GlobalStyle, GridContainer, Add, Test1, Test2, Test3, Trans, SvgTest, FaderDiv, FaderDivClose } from './Styles.js';
 import "./Styles.css";
@@ -15,6 +15,7 @@ import DiscardModal from "../../components/DiscardModal/index.js";
 import MenuModal from "../../components/Menu/index.js";
 import useRefreshToken from "../../hooks/useRefreshToken.js";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.js";
+import AuthenticatedContext from "../../context/AuthContext.js";
 
 const Home = () => {
     const [reviewModuleActive, setReviewModuleActive] = useState(false)
@@ -28,6 +29,7 @@ const Home = () => {
     const axiosPrivate = useAxiosPrivate();
     const params = useParams();
     const context = useOutletContext();
+    const { authenticated, setAuthenticated} = useContext(AuthenticatedContext)
 
     const listView = (
         <Test1 is_hidden={reviewModuleActive}>
@@ -54,6 +56,7 @@ const Home = () => {
 
     useEffect(() => {
         // is this what we want here?
+        console.log("authenticated", authenticated)
         console.log("context", context[5])
        
         const getUserData = async () => {

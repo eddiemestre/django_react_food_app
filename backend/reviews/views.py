@@ -76,6 +76,7 @@ class GetSingleAuthReview(viewsets.ModelViewSet):
 
     # don't need name because it's in localStorage for list view
     def get_queryset(self):
+        print("cookies?", self.request.COOKIES)
         print(self.request.data)
         user = self.request.user
         print("user:", user)
@@ -137,6 +138,7 @@ class GetAuthedReview(generics.ListAPIView):
 
     def get_queryset(self):
         print("self", self.kwargs)
+        print("cookies?", self.request.COOKIES)
         review_pk = None
         if 'pk' in self.kwargs:
             print(self.kwargs['pk'])

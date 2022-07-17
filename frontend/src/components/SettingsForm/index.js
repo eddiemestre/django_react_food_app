@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
 import {Container, 
         InputTitle, 
@@ -13,21 +13,30 @@ import {Container,
         PasswordContainer,
         SaveButton } from "./Styles";
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import AuthenticatedContext from '../../context/AuthContext';
 
     const USER_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
     const EMAIL_REGEX = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 
 const SettingsForm = (props) => {
+    const { authenticated, setAuthenticated } = useContext(AuthenticatedContext);
     const [errorMessages, setErrorMessages] = useState({});
-    const [name, setName] = useState(JSON.parse(localStorage.getItem('name')));
-    const [username, setUsername] = useState(JSON.parse(localStorage.getItem('username')));
-    const [email, setEmail] = useState(JSON.parse(localStorage.getItem('email')));
-    const [orName, setOrName] = useState(JSON.parse(localStorage.getItem('name')));
-    const [orUsername, setOrUsername] = useState(JSON.parse(localStorage.getItem('username')));
-    const [orEmail, setOrEmail] = useState(JSON.parse(localStorage.getItem('email')));
+    const [name, setName] = useState('');
+    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
+    const [orName, setOrName] = useState('');
+    const [orUsername, setOrUsername] = useState('');
+    const [orEmail, setOrEmail] = useState('');
+    // const [name, setName] = useState(JSON.parse(localStorage.getItem('name')) || '');
+    // const [username, setUsername] = useState(JSON.parse(localStorage.getItem('username')) || '');
+    // const [email, setEmail] = useState(JSON.parse(localStorage.getItem('email')) || '');
+    // const [orName, setOrName] = useState(JSON.parse(localStorage.getItem('name')) || '');
+    // const [orUsername, setOrUsername] = useState(JSON.parse(localStorage.getItem('username')) || '');
+    // const [orEmail, setOrEmail] = useState(JSON.parse(localStorage.getItem('email')) || '');
     const axiosPrivate = useAxiosPrivate();
     const navigate = useNavigate();
+    const [isLoading, setIsLoading] = useState(false)
 
     const errors = {
         uname: "Invalid username. Should contain only letters and numbers and be 4 - 23 characters long.",
@@ -38,6 +47,20 @@ const SettingsForm = (props) => {
         server: "No server response.",
         other: "Failed to update user settings. Please try again.",
       };
+
+    useEffect(() => {
+        setIsLoading(true)
+        console.log("in settings form use effect", authenticated)
+        setName(authenticated?.name || '')
+        setUsername(authenticated?.username || '')
+        setEmail(authenticated?.email || '')
+        setOrName(authenticated?.name || '')
+        setOrUsername(authenticated?.username || '')
+        setOrEmail(authenticated?.email || '')
+        if (authenticated?.name) {
+            setIsLoading(false)
+        }
+    }, [authenticated])
 
     
     const handleSubmit = async (event) => {
@@ -60,13 +83,36 @@ const SettingsForm = (props) => {
         }
 
         try {
-            const response = await axiosPrivate.patch(`auth/update_profile/${JSON.parse(localStorage.getItem('user_id'))}/`,
+            // const response = await axiosPrivate.patch(`auth/update_profile/${JSON.parse(localStorage.getItem('user_id'))}/`,
+            //   JSON.stringify(data),
+            //   {
+            //     headers: {'Content-Type': 'application/json'},
+            //     withCredentials: true
+            //   }
+            // );
+  
+            // // set localStorage variables
+            // localStorage.setItem('email', JSON.stringify(email));
+            // localStorage.setItem('username', JSON.stringify(username));
+            // localStorage.setItem('name', JSON.stringify(name));
+
+            // // set notice prop
+            // props.setUpdatedSettings(true)
+            const response = await axiosPrivate.patch(`auth/update_profile/${authenticated?.user_id}/`,
               JSON.stringify(data),
               {
                 headers: {'Content-Type': 'application/json'},
                 withCredentials: true
               }
             );
+
+            setAuthenticated(prevState => ({
+                ...prevState,
+                "username": username,
+                "email": email,
+                "name": name
+              }))
+
   
             // set localStorage variables
             localStorage.setItem('email', JSON.stringify(email));
@@ -135,7 +181,7 @@ const SettingsForm = (props) => {
         </SvgArrow>
     )
 
-    return (
+    const Components = (
         <Container>
         <form onSubmit={handleSubmit}>
             
@@ -164,6 +210,40 @@ const SettingsForm = (props) => {
                 </ChoicesContainer>
         </form>
         </Container>
+    )
+
+    return (
+        <>
+            {!isLoading && Components}
+        </>
+        // <Container>
+        // <form onSubmit={handleSubmit}>
+            
+        //         <InputTitle>Full Name</InputTitle>
+        //         <InputText placeholder="name i.e. &quot;John&quot;..." value={name} type="text" name="name" onChange={(e) => OnNameChange(e)} />
+        //         {renderErrorMessage("name")}
+        //         <InputTitle>Username</InputTitle>
+        //         <InputText placeholder="username i.e. &quot;johnsmith89&quot;..." value={username} type="text" name="uname" onChange={(e) => OnUsernameChange(e)} />
+        //         {renderErrorMessage("uname")}
+        //         {renderErrorMessage("unameTaken")}
+        //         <InputTitle>Email</InputTitle>
+        //         <InputText placeholder="email..." value={email} type="text" name="email" onChange={(e) => OnEmailChange(e)} />
+        //         {renderErrorMessage("email")}
+        //         {renderErrorMessage("emailTaken")}    
+        //         <InputTitle>Password</InputTitle>
+        //         <PasswordContainer onClick={() => navigate(`/update-password/`)}>
+        //             <PasswordText value="change password" type="text" readOnly />
+        //             {RightArrow}
+        //         </PasswordContainer>
+                
+        //         <FieldDetailText>Password saved separately</FieldDetailText>
+        //         <br />
+        //         <ChoicesContainer>
+        //             <Save><SaveButton>Save</SaveButton></Save>
+        //             <Exit onClick={() => navigate(`/user/${JSON.parse(localStorage.getItem('username'))}/`)}>Exit</Exit>
+        //         </ChoicesContainer>
+        // </form>
+        // </Container>
     )
 }
 

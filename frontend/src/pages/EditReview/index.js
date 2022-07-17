@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import { useTransition, animated } from '@react-spring/web';
 import { Test2, Container, GlobalStyle, SvgTest, ButtonContainer, FaderDivClose, ModalContainer } from './Styles.js';
 import ReviewModule from "../../components/ReviewModule/index.js";
 import { useOutletContext, useLocation, useNavigate, useParams } from "react-router-dom";
 import DiscardModal from "../../components/DiscardModal/index.js";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.js";
+import AuthenticatedContext from "../../context/AuthContext.js";
 
 const EditReview = () => {
     // const [reviewModuleActive, setReviewModuleActive] = useState(false)
@@ -24,8 +25,10 @@ const EditReview = () => {
     const axiosPrivate = useAxiosPrivate();
     const context = useOutletContext();
     const navigate = useNavigate();
+    const { authenticated, setAuthenticated} = useContext(AuthenticatedContext)
 
     useEffect(() => {
+        console.log("in edit", authenticated)
         setReviewModuleActive(true)
 
         console.log("inside edit review", selectedReview)

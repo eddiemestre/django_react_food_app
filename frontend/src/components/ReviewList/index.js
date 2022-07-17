@@ -22,7 +22,7 @@ const ReviewList = (props) => {
     var noReviews = false;
 
     useEffect(() => {
-        // setIsLoading(true)
+        setIsLoading(true)
         let isMounted = true;
         const controller = new AbortController();
 
@@ -49,6 +49,8 @@ const ReviewList = (props) => {
                 if (err?.response?.status === 404) {
                     setHasReviews(false)
                 }
+            } finally {
+                setIsLoading(false)
             }
         }
 
@@ -70,7 +72,6 @@ const ReviewList = (props) => {
                 }
                 console.log("reviews data", reviews)
                 console.log("has reviews", hasReviews)
-                setIsLoading(false)
 
             } catch (err) {
                 console.log(err);
@@ -78,6 +79,8 @@ const ReviewList = (props) => {
                     setHasReviews(false)
                 }
                 
+            } finally {
+                setIsLoading(false)
             }
         }
 
@@ -99,12 +102,14 @@ const ReviewList = (props) => {
                 // }
                 // console.log("reviews data", reviews)
                 // console.log("has reviews", hasReviews)
-                setIsLoading(false)
+                
             } catch (err) {
                 console.error(err);
                 if (err?.response?.status === 404) {
                     console.log("404 getting anon user details")
                 }
+            } finally {
+                setIsLoading(false)
             }
         }
         
@@ -266,7 +271,8 @@ const ReviewList = (props) => {
     return (
         <div>
             {/* {hasReviews ? showReviews : AddReviewText} */}
-            {showReviews}
+            {!isLoading && showReviews}
+            {/* {showReviews} */}
         </div>
     );
 };

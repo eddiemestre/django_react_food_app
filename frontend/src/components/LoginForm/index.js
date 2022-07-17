@@ -6,6 +6,7 @@ import { Link, useNavigate, useLocation} from "react-router-dom";
 import useLocalStorage from "../../hooks/useLocalStorage.js";
 import useInput from "../../hooks/useInput.js";
 import useAxiosPrivate  from "../../hooks/useAxiosPrivate";
+import AuthenticatedContext from "../../context/AuthContext.js";
 // import AuthContext from "../../context/AuthProvider.js";
 
 /////////
@@ -17,12 +18,14 @@ const LoginForm = () => {
     // React States
     const { auth, setAuth } = useAuth();
     const axiosPrivate = useAxiosPrivate();
+    const { authenticated, setAuthenticated} = useContext(AuthenticatedContext)
 
     const navigate = useNavigate();
     const location = useLocation();
 
     // get where user is coming from 
-    const from =  `/user/${JSON.parse(localStorage.getItem('user'))}`; // || location.state?.from?.pathname
+    // const from =  `/user/${JSON.parse(localStorage.getItem('user'))}`; // || location.state?.from?.pathname
+    const from =  `/user/admin`; // || location.state?.from?.pathname
 
     
 
@@ -76,11 +79,7 @@ const LoginForm = () => {
       failed: "Login failed. Please try again."
     };
 
-  
-    const handleSubmit = async (event) => {
-      //Prevent page reload
-      event.preventDefault();
-
+    const PostLogin = async () => {
       try {
         const response = await axios.post(LOGIN_URL, 
             JSON.stringify({email, password}),
@@ -100,6 +99,7 @@ const LoginForm = () => {
         // console.log("from", from);
         //console.log(email, accessToken, refreshToken);
         setAuth({email, accessToken});
+        setAuthenticated({"email": email, "accessToken": accessToken})
         //setEmail('');
         resetEmail();
         setPassword('');
@@ -109,8 +109,8 @@ const LoginForm = () => {
 
         // send them back to the from value if they tried to access deeper part of the site
         // otherwise sent to home
-        navigate(from, { replace: true });
-
+        return accessToken
+        // navigate(from, { replace: true });
 
       } catch (err) {
           if(!err?.response) {
@@ -125,6 +125,97 @@ const LoginForm = () => {
 
           // set focus for screen readers
       }
+    }
+
+    const GetAuthedUser = async (access) => {
+      try {
+        const response = await axiosPrivate.get('/auth/get_user/', {
+          headers: {
+            'Authorization': `Bearer ${access}`
+          }
+        })
+
+        console.log("in login form getauthuser", response?.data[0]);
+       
+        // set in AuthContext
+        setAuthenticated(prevState => ({
+          ...prevState,
+          "username": response?.data[0]?.username,
+          "user_id": response?.data[0]?.id,
+          "name": response?.data[0]?.name
+        }))
+
+        // set in localStorage
+        localStorage.setItem('email', JSON.stringify(response?.data[0]?.email))
+        localStorage.setItem('user_id', JSON.stringify(response?.data[0]?.id))
+        localStorage.setItem('username', JSON.stringify(response?.data[0]?.username))
+        localStorage.setItem('name', JSON.stringify(response?.data[0]?.name))
+        
+
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+  
+    const handleSubmit = async (event) => {
+      //Prevent page reload
+      event.preventDefault();
+
+      // sign in and return the promise result
+      let accessToken = await PostLogin();
+
+      // use the accessToken to get user details
+      await GetAuthedUser(accessToken);
+
+      console.log("accessToken handle Submit", accessToken)
+
+      navigate(`/user/${JSON.parse(localStorage.getItem("username"))}`);
+
+      // try {
+      //   const response = await axios.post(LOGIN_URL, 
+      //       JSON.stringify({email, password}),
+      //       {
+      //         headers: {'Content-Type': 'application/json'},
+      //         withCredentials: true,
+      //       }
+      //   );
+
+      //   //console.log("data:", JSON.stringify(response?.data))
+
+      //   const accessToken = response?.data?.access;
+      //   const refreshToken = response?.data?.refresh;
+
+      //   // console.log("refresh:", refreshToken);
+          
+      //   // console.log("from", from);
+      //   //console.log(email, accessToken, refreshToken);
+      //   setAuth({email, accessToken});
+      //   setAuthenticated({"email": email, "accessToken": accessToken})
+      //   //setEmail('');
+      //   resetEmail();
+      //   setPassword('');
+      //   localStorage.setItem("refresh", refreshToken)
+      //   // localStorage.setItem("access", accessToken)
+      //   // localStorage.setItem("user", JSON.stringify({email, accessToken, refreshToken}))
+
+      //   // send them back to the from value if they tried to access deeper part of the site
+      //   // otherwise sent to home
+      //   navigate(from, { replace: true });
+
+      // } catch (err) {
+      //     if(!err?.response) {
+      //       setErrorMessages({name: "server", message: errors.server});
+      //     } else if (err.response?.status === 400) {
+      //       setErrorMessages({name: "missing", message: errors.missing});
+      //     } else if (err.response?.status === 401) {
+      //       setErrorMessages({name: "emailPass", message: errors.emailPass});
+      //     } else {
+      //       setErrorMessages({name: "failed", message: errors.failed});
+      //     }
+
+      //     // set focus for screen readers
+      // }
     };
   
     // Generate JSX code for error message

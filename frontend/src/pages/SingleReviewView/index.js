@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { GlobalStyle, 
     Container,  
     InsideContainer, 
@@ -17,6 +17,7 @@ import axios from '../../api/axios';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.js";
 import { useTransition, animated } from '@react-spring/web';
 import { formatDate } from '../../utils/FormatDate';
+import AuthenticatedContext from '../../context/AuthContext';
 
 const SingleReviewView = () => {
     const { auth } = useAuth();
@@ -29,11 +30,13 @@ const SingleReviewView = () => {
     const [formattedDate, setformattedDate] = useState('')
     const [rerender, setRerender] = useState(false);
     const [dateModified, setDateModified] = useState('')
+    const { authenticated, setAuthenticated} = useContext(AuthenticatedContext)
 
     useEffect(() => {
         // check where we came from instead of email
         //
         //
+        console.log("single review authenticated", authenticated)
         let isMounted = true;
         const controller = new AbortController();
 
@@ -129,7 +132,7 @@ const SingleReviewView = () => {
             controller.abort();
         }
 
-    }, [selectedReview])
+    }, [])
 
     useEffect(() => { // this doesn't update the state
         console.log("in useEffect", selectedReview.date)

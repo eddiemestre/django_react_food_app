@@ -22,6 +22,8 @@ from rest_framework.exceptions import APIException
 from rest_framework.authentication import get_authorization_header
 from rest_framework import viewsets
 
+
+
 from django.middleware import csrf
 from django.conf import settings
 
@@ -242,43 +244,128 @@ class RefreshAPIView(APIView):
 
 
 
+# from rest_framework_simplejwt.settings import api_settings
+
+# if api_settings.JWT_AUTH_COOKIE:
+#     from rest_framework_simplejwt.authentication import JWTTokenUserAuthentication
+#     from rest_framework_simplejwt.serializers import TokenRefreshSerializer
+#     from rest_framework_simplejwt.views import TokenRefreshView
+
+#     TokenRefreshSerializer._declared_fields.pop('token')
+
+#     class RefreshJSONWebTokenSerializerCookieBased(TokenRefreshSerializer):
+#         def validate(self, attrs):
+#             if 'token' not in attrs:
+#                 if api_settings.:
+#                     attrs['token'] = JWTTokenUserAuthentication().get_user(self.context['request'])
+#             return super(RefreshJSONWebTokenSerializerCookieBased, self).validate(attrs)
+
+#     TokenRefreshView.serializer_class = RefreshJSONWebTokenSerializerCookieBased
+
+
+# class CookieTokenRefreshSerializer(TokenRefreshSerializer):
+    
+#     refresh = None
+#     def validate(self, attrs):
+#         # print(super().validate(attrs))
+#         # print(self.get_)
+#         print("inside validate cookie refresh serializer")
+#         print("self", self)
+#         print("self.context", self.context)
+#         print("cookies?", self.context['request'].COOKIES)
+#         # print("cookies refresh?", self.context['request'].COOKIES['refresh'])
+#         print("self context request", self.context['request'])
+#         print("self context request data", self.context['request'].data)
+#         # print("self context request data", self.context['data'])
+#         print("self context view", self.context['view'])
+#         # print("self context view", self.context['view'])
+#         print("attr", attrs)
+#         attrs['refresh'] = self.context['request'].COOKIES.get('refresh')
+#         print(attrs)
+#         if attrs['refresh']:
+#             return super().validate(attrs)
+#         else:
+#             raise InvalidToken('No valid token found in cookie \'refresh_token\'')
+
+# class CookieTokenObtainPairView(TokenObtainPairView):
+#   def finalize_response(self, request, response, *args, **kwargs):
+#     print("inside token cookie view")
+#     if response.data.get('refresh'):
+#         cookie_max_age = 3600 * 24 * 14 # 14 days
+#         response.set_cookie(
+#             key='refresh', 
+#             value=response.data['refresh'], 
+#             expires = settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
+#             secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+#             httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+#             samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE'], )
+#         del response.data['refresh']
+#         print("cookie create response", response.data)
+#     return super().finalize_response(request, response, *args, **kwargs)
+
+# class CookieTokenRefreshView(TokenRefreshView):
+#     def finalize_response(self, request, response, *args, **kwargs):
+#         print("inside refresh finalize response")
+#         print("self", self)
+#         print("response", response)
+#         print("response data", response.data)
+#         print("args", *args)
+#         print("kwargs", **kwargs)
+#         print("cookie?", request.COOKIES.get('refresh'))
+#         if response.data.get('refresh'):
+#             print(response.data.get('refresh'))
+#             print("refresh token found")
+#             cookie_max_age = 3600 * 24 * 14 # 14 days
+#             response.set_cookie(
+#                 key='refresh', 
+#                 value=response.data['refresh'], 
+#                 expires = settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
+#                 secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
+#                 httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
+#                 samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE'],)
+#             del response.data['refresh']
+#         return super().finalize_response(request, response, *args, **kwargs)
+#     serializer_class = CookieTokenRefreshSerializer
+
+
+from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
+from rest_framework_simplejwt.serializers import TokenRefreshSerializer
+from rest_framework_simplejwt.exceptions import InvalidToken
 
 class CookieTokenRefreshSerializer(TokenRefreshSerializer):
     refresh = None
     def validate(self, attrs):
-        
+        print("cookie? in token serializer", self.context['request'].COOKIES.get('refresh_token'))
         attrs['refresh'] = self.context['request'].COOKIES.get('refresh_token')
-        print(attrs)
+        print("attrs refresh", attrs['refresh'])
         if attrs['refresh']:
+            print("in refresh if statement", super().validate(attrs))
             return super().validate(attrs)
         else:
+            print("inside else")
             raise InvalidToken('No valid token found in cookie \'refresh_token\'')
 
 class CookieTokenObtainPairView(TokenObtainPairView):
   def finalize_response(self, request, response, *args, **kwargs):
     if response.data.get('refresh'):
         cookie_max_age = 3600 * 24 * 14 # 14 days
-        response.set_cookie(
-            key='refresh_token', 
-            value=response.data['refresh'], 
-            expires = settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
-            secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-            httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-            samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE'], )
+        # response.set_cookie('refresh_token', response.data['refresh'], httponly=True, secure=True, samesite='None')
+        response.set_cookie('refresh_token', 
+            response.data['refresh'], 
+            max_age=cookie_max_age, 
+            httponly=True, 
+            secure=True, 
+            samesite='None')
         del response.data['refresh']
     return super().finalize_response(request, response, *args, **kwargs)
 
 class CookieTokenRefreshView(TokenRefreshView):
-    def finalize_response(self, request, response, *args, **kwargs):
-        if response.data.get('refresh'):
-            cookie_max_age = 3600 * 24 * 14 # 14 days
-            response.set_cookie(
-                key='refresh_token', 
-                value=response.data['refresh'], 
-                expires = settings.SIMPLE_JWT['ACCESS_TOKEN_LIFETIME'],
-                secure = settings.SIMPLE_JWT['AUTH_COOKIE_SECURE'],
-                httponly = settings.SIMPLE_JWT['AUTH_COOKIE_HTTP_ONLY'],
-                samesite = settings.SIMPLE_JWT['AUTH_COOKIE_SAMESITE'],)
-            del response.data['refresh']
-        return super().finalize_response(request, response, *args, **kwargs)
     serializer_class = CookieTokenRefreshSerializer
+    
+    def finalize_response(self, request, response, *args, **kwargs):
+        # if token hasn't expired, run this function, otherwise return error
+        if response.data.get('access'):
+            print("inside finalize response access")
+            return super().finalize_response(request, response, *args, **kwargs)
+        else:
+            raise Http404

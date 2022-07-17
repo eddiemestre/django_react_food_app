@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {PageTitle, 
         GlobalStyle,
         GridContainer,
@@ -14,9 +14,11 @@ import Header from "../../components/Header/index.js";
 import Footer from "../../components/Footer/index.js";
 import LoginForm from "../../components/LoginForm/index.js";
 import AbsoluteWrapper from "../../components/Wrapper/index.js";
-import {motion} from "framer-motion";  
+import {motion} from "framer-motion";
+import AuthenticatedContext from "../../context/AuthContext.js";
 
 const Login = (props) => {
+    const { authenticated, setAuthenticated} = useContext(AuthenticatedContext)
     const { auth, setAuth } = useAuth();
     // const [sendHome, setSendHome] = useState(false)
     const [justSignedUp, setJustSignedUp] = useState(props.signUpSuccess)
@@ -49,15 +51,19 @@ const Login = (props) => {
 
     useEffect(() => {
         // check auth?
-      const loggedInUser = localStorage.getItem("refresh")
+    //   const loggedInUser = localStorage.getItem("refresh")
   
-    //   console.log("logged in?", loggedInUser);
+    // //   console.log("logged in?", loggedInUser);
     
-      if (loggedInUser) {
-        // window.location.href = `/user/${JSON.parse(localStorage.getItem('username'))}`;
-        navigate(`/user/${JSON.parse(localStorage.getItem('username'))}`)
-        // GoHome();
-      }
+    //   if (loggedInUser) {
+    //     // window.location.href = `/user/${JSON.parse(localStorage.getItem('username'))}`;
+    //     navigate(`/user/${JSON.parse(localStorage.getItem('username'))}`)
+    //     // GoHome();
+    //   }
+
+    if (authenticated?.accessToken) {
+      navigate(`/user/${authenticated?.username}/`)
+    }
 
 
     }, [])

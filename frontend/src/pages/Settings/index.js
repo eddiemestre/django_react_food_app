@@ -1,14 +1,17 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useContext } from "react"
 import { useTransition, animated } from '@react-spring/web';
 import { GlobalStyle, Container, MyReviews, ReviewContainer, NoticeContainer, NoticeText} from './Styles.js';
 import SettingsForm from "../../components/SettingsForm/index.js";
 import { useOutletContext } from "react-router-dom";
+import AuthenticatedContext from "../../context/AuthContext.js";
 
 const Settings = () => {
     const [updatedPassword, setUpdatedPassword] = useOutletContext();
     const [updatedSettings, setUpdatedSettings] = useState(false);
     // const [updatedPassword, setUpdatedPassword] = useState(true);
     const delay = ms => new Promise(res => setTimeout(res, ms));
+    const { authenticated, setAuthenticated} = useContext(AuthenticatedContext)
+    const [isLoading, setIsLoading] = useState(false)
 
     const PausePasswordAnimation = async () => {
         await delay(5000);
@@ -37,8 +40,10 @@ const Settings = () => {
     });
 
     useEffect(() => {
-
-    }, [updatedSettings])
+        setIsLoading(true)
+        console.log("in settings use effect", authenticated)
+        setIsLoading(false)
+    }, [updatedSettings, authenticated])
 
     return (
         <>
@@ -60,7 +65,7 @@ const Settings = () => {
             <ReviewContainer>
                 <MyReviews>Settings</MyReviews>
                 <Container>
-                    <SettingsForm setUpdatedSettings={setUpdatedSettings} />
+                    { !isLoading && <SettingsForm setUpdatedSettings={setUpdatedSettings} />}
                 </Container>
             </ReviewContainer>
         </>
