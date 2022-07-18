@@ -114,7 +114,7 @@ const LoginForm = () => {
       // // use the accessToken to get user details
       const username = await GetAuthedUser(accessToken);
 
-      setIsLoggedIn(true)
+      // setIsLoggedIn(true)
       navigate(`/user/${username}/`);
     };
   

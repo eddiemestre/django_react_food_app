@@ -6,21 +6,20 @@ const DataContext = createContext({});
 
 export const DataProvider = ({ children }) => {
     const [reviews, setReviews] = useState([])
-    const [isLoggedIn, setIsLoggedIn] = useState(false)
-    const params = useParams();
+    // const [isLoggedIn, setIsLoggedIn] = useState(false)
 
-    console.log(params)
+    // console.log(params)
 
-    const { data, fetchError, isLoading } = useAxiosFetchReviews(params.username);
+    // const { data, fetchError, isLoading } = useAxiosFetchReviews(params.username);
 
-    useEffect(() => {
-        console.log("log in changed")
-        setReviews(data)
-    }, [data])
+    // useEffect(() => {
+    //     console.log("log in changed")
+    //     setReviews(data)
+    // }, [data])
     
     return (
         <DataContext.Provider value={{ 
-                reviews, setReviews, isLoggedIn, setIsLoggedIn
+                reviews, setReviews
         }}>
             { children }
         </DataContext.Provider>
