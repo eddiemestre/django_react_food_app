@@ -4,7 +4,6 @@ import {GlobalStyle,
         NoticeContainer,
         NoticeText } from './Styles.js'
 import { useTransition } from '@react-spring/web'
-import LargeScreenView from "../../components/LargeScreen/LargeSCreenView.js";
 import LoginForm from "../../components/LoginForm/index.js";
 import RegistrationContext from "../../context/RegistrationContext.js";
 
@@ -17,7 +16,7 @@ import RegistrationContext from "../../context/RegistrationContext.js";
 
 
 
-const Login = (props) => {
+const Login = () => {
     const delay = ms => new Promise(res => setTimeout(res, ms));
     const { justSignedUp, setJustSignedUp } = useContext(RegistrationContext);
 
@@ -39,7 +38,6 @@ const Login = (props) => {
         
         <>
             <GlobalStyle />
-            <LargeScreenView />
             {successAppear((style, item) =>
                 item 
                 ? 

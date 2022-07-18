@@ -1,9 +1,9 @@
 from django.urls import path, include
 from rest_framework import routers
 from account import views
-from .views import ChangePasswordView, RefreshAPIView, UpdateProfileView, LogoutView, LogoutAllView, LoginView, GetUserID, GetOtherID
+from .views import ChangePasswordView, RefreshAPIView, UpdateProfileView, CookieBlackListView, LogoutView, LogoutAllView, LoginView, GetUserID, GetOtherID
 from .views import CookieTokenObtainPairView, CookieTokenRefreshView
-from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView
+from rest_framework_simplejwt.views import TokenRefreshView, TokenObtainPairView, TokenBlacklistView
 
 
 
@@ -19,7 +19,8 @@ urlpatterns = [
     path('login/', CookieTokenObtainPairView.as_view(), name='cookie_token_obtain_pair'),
     path('refresh/', CookieTokenRefreshView.as_view(), name='token_refresh'),
     path('change_password/<int:pk>/', ChangePasswordView.as_view(), name='change_password'),
-    path('', include(router.urls), name='update_profile')
+    path('', include(router.urls), name='update_profile'),
+    path('blacklist/', CookieBlackListView.as_view(), name="token_blacklist")
     # path('login/', TokenObtainPairView.as_view(), name='token_obtain_pair'), # previous 
     # path('login/refresh/', TokenRefreshView.as_view(), name='token_refresh'), # previous
     # path('get_user/', GetUserID.as_view(), name="get_user"),

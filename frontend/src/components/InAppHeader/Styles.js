@@ -2,7 +2,8 @@ import styled from "styled-components"
 import { animated } from '@react-spring/web';
 export const HeadContainer = styled.div`
     display: flex;
-    height: 6%;
+    ${'' /* height: 6%; */}
+    height: 50px;
     width: 100%;
     position: fixed;
     color: white;

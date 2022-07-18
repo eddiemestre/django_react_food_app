@@ -1,16 +1,21 @@
 import React, {useEffect, useState, useContext } from "react";
-import { GlobalStyle } from "./Styles";
+import {GlobalStyle, GridContainer, FeedContainer, Add, Test1, Test2, Test3, Trans, SvgTest, FaderDiv, FaderDivClose } from './Styles.js';
+import ReviewList from "../../components/ReviewList/index.js";
+import DataContext from "../../context/DataContext.js";
+
+import { useParams } from "react-router-dom";
+import useAxiosFetchReviews from "../../hooks/useAxiosFetch.js";
+import useAuth from "../../hooks/useAuth.js";
+
 // import { useTransition, animated } from '@react-spring/web';
-// import {GlobalStyle, GridContainer, Add, Test1, Test2, Test3, Trans, SvgTest, FaderDiv, FaderDivClose } from './Styles.js';
 // import "./Styles.css";
 // import {ReactComponent as PlusSvg} from '../../svg/plus_icon.svg';
 // import TestSvg from '../../svg/test.svg';
 
 // import { useParams, useOutletContext } from "react-router-dom";
 
-// import LargeScreenView from "../../components/LargeScreen/LargeSCreenView";
 // import InAppHeader from "../../components/InAppHeader/index.js";
-// import ReviewList from "../../components/ReviewList/index.js";
+
 // import ReviewModule from "../../components/ReviewModule/index.js";
 // import DiscardModal from "../../components/DiscardModal/index.js";
 // import MenuModal from "../../components/Menu/index.js";
@@ -19,13 +24,15 @@ import { GlobalStyle } from "./Styles";
 // import AuthenticatedContext from "../../context/AuthContext.js";
 
 const Home = () => {
+    const { reviews, setReviews, isLoading } = useContext(DataContext);
+    const { auth, anonUser } = useAuth();
+    const params = useParams();
+    // const { data, fetchError, isLoading } = useAxiosFetchReviews(params.username);
 
-//     const listView = (
-//         <Test1 is_hidden={reviewModuleActive}>
-//             <ReviewList wasSaved={reviewSaved} setReview={context[5]}/>
-//         </Test1>
-//     )
-
+    // useEffect(() => {
+    //     console.log("set data")
+    //     setReviews(data)
+    // }, [data])
 //     const backgroundDiv = (
 //         <FaderDiv modal_opened={reviewModuleActive} />
 //     )
@@ -103,17 +110,17 @@ const Home = () => {
 //         leave: { opacity: 0, transform: "translateY(-20px)" },
 //     });
 
+
+
     return (
         <>
-            {/* <GlobalStyle modal_opened={reviewModuleActive} menu_opened={menuOpened}/>
-            <LargeScreenView />
-            <GridContainer is_hidden={reviewModuleActive} menu_opened={menuOpened}>
-                {listView}
-            </GridContainer> */}
+            {/* <GlobalStyle modal_opened={reviewModuleActive} menu_opened={menuOpened}/> */}
             <GlobalStyle />
-            <div style={{color: "white"}}>
-                Home
-            </div>
+            {!isLoading && 
+            <GridContainer >
+                <ReviewList reviews={reviews} auth={auth} anonUser={anonUser}/>
+            </GridContainer>}
+            {isLoading && <p>Loading...</p>}
         </>
     );
 };

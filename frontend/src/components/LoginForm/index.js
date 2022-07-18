@@ -13,16 +13,14 @@ import useInput from "../../hooks/useInput.js";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth.js";
 import axios, { axiosPrivate } from '../../api/axios';
-// import useLocalStorage from "../../hooks/useLocalStorage.js";
-
-// import useAxiosPrivate  from "../../hooks/useAxiosPrivate";
-// import AuthenticatedContext from "../../context/AuthContext.js";
+import DataContext from "../../context/DataContext.js";
 
 const LOGIN_URL = '/auth/login/';
 
 const LoginForm = () => {
     const { auth, setAuth } = useAuth();
     const navigate = useNavigate();
+  const { setIsLoggedIn } = useContext(DataContext)
 
     const [errorMessages, setErrorMessages] = useState({});
 
@@ -110,18 +108,14 @@ const LoginForm = () => {
       //Prevent page reload
       event.preventDefault();
 
-      // sign in and return the promise result
+      // sign in and get accessToken
       const accessToken = await PostLogin();
-
-      console.log("handle submit", accessToken)
 
       // // use the accessToken to get user details
       const username = await GetAuthedUser(accessToken);
 
-      console.log("username handle Submit", username)
-
+      setIsLoggedIn(true)
       navigate(`/user/${username}/`);
-
     };
   
     // Generate JSX code for error message

@@ -20,7 +20,7 @@ export const GridContainer = styled.div`
     ${'' /* background: orange; */}
     display: flex;
     justify-content: center;
-    margin-top: 50%;
+    ${'' /* margin-top: 50%; */}
 `
 
 export const PageTitle = styled.h1`
@@ -42,7 +42,7 @@ export const NoticeContainer = styled(animated.div)`
     align-items: center;
     width: 80%;
     left: 10%;
-    margin-top: -20%;
+    margin-top: 30%;
     background: #03DAC6;
     color: black;
     z-index: 6000;

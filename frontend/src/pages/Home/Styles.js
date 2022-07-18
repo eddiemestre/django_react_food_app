@@ -5,9 +5,12 @@ export const GlobalStyle = createGlobalStyle`
     body {
         background-color: #121212;
         font-family: 'Open Sans', sans-serif;
-        position: ${props => props.modal_opened || props.menu_opened ? "fixed" : ""};
+        position: fixed;
+        overflow: hidden;
+        width: 100%;
+        ${'' /* position: ${props => props.modal_opened || props.menu_opened ? "fixed" : ""};
         overflow: ${props => props.modal_opened || props.menu_opened ? "hidden" : "scroll"};
-        top: ${props => props.modal_opened || props.menu_opened ? `-${window.scrollY}px` : ""};
+        top: ${props => props.modal_opened || props.menu_opened ? `-${window.scrollY}px` : ""}; */}
         ${'' /* height: 100%;
         width: 100%; */}
         ${'' /* margin-top: 12%; */}
@@ -19,12 +22,15 @@ export const GridContainer = styled.div`
     display: flex;
     ${'' /* grid-template-rows: 6% 94%; */}
     ${'' /* height: 100%; */}
-    position: relative;
-    padding: 0% 5%;
-    padding-bottom: 20px;
-    margin-top: 12%;
+    ${'' /* position: fixed; */}
+    ${'' /* padding: 0% 5%; */}
+    margin-top: 50px;
     box-sizing: border-box;
     width: 100%;
+    height: calc(100% - 50px);
+    background: pink;
+    display: flex;
+    align-items: center;
 `
 
 export const PageTitle = styled.h1`
@@ -55,16 +61,10 @@ export const Add = styled.div`
 `
 
 
-export const Test1 = styled.div`
+export const FeedContainer = styled.div`
     width: 100%;
-    ${'' /* grid-row: 2 / 3; */}
-    ${'' /* grid-column: 1 / 2; */}
-    ${'' /* overflow: ${props => props.is_hidden ? "auto" : "visible"} */}
-
-    ${'' /* &.hide {
-        overflow: ${(props) => props.is_hidden ? "auto" : "visible"};
-    } */}
-
+    height: 100%;
+    ${'' /* background: red; */}
 `;
 
 // export const Test1 = styled(animated.div)`

@@ -3,12 +3,12 @@
     /* height: 100%; */
 }
 
-html, body {
+/* html, body {
     height: 100%;
     background:white;
     overflow-x: hidden;
     overflow-y: auto;
-}
+} */
 
 @media screen and (min-width: 601px) {
     body {
@@ -77,10 +77,10 @@ html, body {
 }
 
 
-/*Mobile View */
+/* Mobile View
 @media screen and (max-width: 600px) {
 
   .grid-container {
     display: none
   }
-}
+} */

@@ -11,8 +11,8 @@ from rest_framework.response import Response
 from rest_framework import generics, authentication, exceptions
 from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
-from rest_framework_simplejwt.serializers import TokenRefreshSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenBlacklistView
+from rest_framework_simplejwt.serializers import TokenRefreshSerializer, TokenBlacklistSerializer
 from rest_framework_simplejwt.exceptions import InvalidToken
 from rest_framework import viewsets
 from rest_framework_simplejwt.tokens import RefreshToken, OutstandingToken, BlacklistedToken, AccessToken
@@ -48,10 +48,8 @@ class GetUserID(viewsets.ReadOnlyModelViewSet):
     serializer_class = UserSerializer
 
     def get_queryset(self):
-        print(self.request.data)
         user = self.request.user
         user_id = user.id
-        print("user:", user)
 
         if user.is_authenticated:
             
@@ -65,11 +63,9 @@ class GetOtherID(viewsets.ReadOnlyModelViewSet):
     
     def retrieve(self, request, *args, **kwargs):
         username = None
-        print("kwargs", kwargs)
         if 'pk' in kwargs:
             username = self.kwargs['pk']
         userData = Account.objects.get(username=username)
-        print("userData", userData)
         if not userData:
             raise Http404
             
@@ -119,19 +115,22 @@ class UpdateProfileView(viewsets.ModelViewSet):
 
 class LogoutView(APIView):
     def post(self, request):
+        print(request.data.get('refresh_token'))
+        print(request.COOKIES.get('refresh_token'))
         try:
+            print("cookies?", self.request.COOKIES)
             refresh_token = request.COOKIES.get('refresh_token')
+            print("logout refresh", refresh_token)
             response = Response()
             
             token = RefreshToken(refresh_token)
             token.blacklist()
 
-            # this isn't working?
+
             response.delete_cookie("refresh_token")
 
             return Response({'message': 'successfully logged out.'}, status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
-            print(e)
             return Response( status=status.HTTP_400_BAD_REQUEST)
 
 class LogoutAllView(APIView):
@@ -192,14 +191,10 @@ from rest_framework_simplejwt.exceptions import InvalidToken
 class CookieTokenRefreshSerializer(TokenRefreshSerializer):
     refresh = None
     def validate(self, attrs):
-        print("cookie? in token serializer", self.context['request'].COOKIES.get('refresh_token'))
         attrs['refresh'] = self.context['request'].COOKIES.get('refresh_token')
-        print("attrs refresh", attrs['refresh'])
         if attrs['refresh']:
-            print("in refresh if statement", super().validate(attrs))
             return super().validate(attrs)
         else:
-            print("inside else")
             raise InvalidToken('No valid token found in cookie \'refresh_token\'')
 
 class CookieTokenObtainPairView(TokenObtainPairView):
@@ -221,7 +216,26 @@ class CookieTokenRefreshView(TokenRefreshView):
     def finalize_response(self, request, response, *args, **kwargs):
         # if token hasn't expired, run this function, otherwise return error
         if response.data.get('access'):
-            print("inside finalize response access")
             return super().finalize_response(request, response, *args, **kwargs)
         else:
+            raise Http404
+
+
+class CookieBlackListSerializer(TokenBlacklistSerializer):
+    refresh = None
+    def validate(self, attrs):
+        attrs['refresh'] = self.context['request'].COOKIES.get('refresh_token')
+        if attrs['refresh']:
+            return super().validate(attrs)
+        else:
+            raise InvalidToken('No valid token found in cookie \'refresh_token\'')
+
+
+class CookieBlackListView(TokenBlacklistView):
+    serializer_class = CookieBlackListSerializer
+
+    def finalize_response(self, request, response, *args, **kwargs):
+        try:
+            return super().finalize_response(request, response, *args, **kwargs)
+        except:
             raise Http404

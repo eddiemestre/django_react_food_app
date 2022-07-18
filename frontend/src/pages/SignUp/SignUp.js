@@ -1,6 +1,5 @@
 import React from "react";
 import { GlobalStyle, GridContainer } from "./Styles";
-import LargeScreenView from "../../components/LargeScreen/LargeSCreenView.js";
 import SignUpForm from "../../components/SignUpForm/index.js";
 
 // import AbsoluteWrapper from "../../components/Wrapper/index.js";
@@ -12,10 +11,7 @@ const SignUp = () => {
 
     return (
         <>
-
             <GlobalStyle />
-            <LargeScreenView />
-
             <GridContainer>
                 <SignUpForm />
             </GridContainer>

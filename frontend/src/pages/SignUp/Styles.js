@@ -19,7 +19,7 @@ export const GridContainer = styled.div`
     ${'' /* background: orange; */}
     display: flex;
     justify-content: center;
-    margin-top: 20%;
+    ${'' /* margin-top: 20%; */}
 `
 
 export const PageTitle = styled.h1`

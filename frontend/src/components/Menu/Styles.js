@@ -54,18 +54,8 @@ export const Body = styled.div`
     font-weight: 700;
 `;
 
-export const Body2 = styled.div` 
-    color: white;
-    width: 100%;
-    height: 7.5%;
-    box-sizing: border-box;
-    display: grid;
-    grid-auto-rows: 1fr;
-    grid-auto-columns: 1fr;
-    font-weight: 700;
-`
 
-export const Settings = styled.div` 
+export const TextContainer = styled.div` 
     display: flex;
     height: 100%;
     justify-content: center;
@@ -88,14 +78,6 @@ export const Text = styled.div`
 
 `
 
-export const SignOut = styled.div` 
-    display: flex;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-`;
-
 export const Footer = styled.div` 
     width: 100%;
     box-sizing: border-box;
@@ -106,7 +88,4 @@ export const Footer = styled.div`
     color: white;
     font-size: 0.75em;
     font-style: italic;
-`;
-
-export const FooterText = styled.div` 
 `;

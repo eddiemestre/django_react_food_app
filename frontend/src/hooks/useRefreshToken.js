@@ -1,25 +1,18 @@
-import axios from "../api/axios.js";
+import { axiosPrivate } from "../api/axios.js";
 import useAuth from "./useAuth.js";
-import AuthContext from "../context/AuthProvider.js";
-import { useContext, useEffect } from "react";
-import AuthenticatedContext from "../context/AuthContext.js";
-import useAuthentication from "./useAuthentication.js";
 
 const useRefreshToken = () => {
-    const { setAuth, auth } = useAuth();
-    const { setAuthenticated } = useAuthentication();
+    const { setAuth } = useAuth();
 
 
     const refresh = async () => {
 
-            const response = await axios.post('/auth/login/refresh/', 
-            JSON.stringify({refresh: localStorage.getItem('refresh')}),
+            const response = await axiosPrivate.post('/auth/refresh/',
             {
-                headers: {'Content-Type': 'application/json'},
                 withCredentials: true,   // sends cookie to backend
             });
 
-            setAuthenticated(prevState => {
+            setAuth(prevState => {
                 console.log("prev", JSON.stringify(prevState));
                 console.log("new", response.data.access);
                 return { ...prevState, accessToken: response.data.access }

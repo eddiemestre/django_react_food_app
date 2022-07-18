@@ -11,7 +11,11 @@ import InAppTemplate from '../Routes/InAppTemplate';
 import Login from '../../pages/Login/Login';
 import SignUp from '../../pages/SignUp/SignUp';
 import Home from '../../pages/Home/Home';
+import SingleReviewView from '../../pages/SingleReviewView';
 
+import useWindowSize from '../../hooks/useWindowSize';
+import LargeScreenView from '../LargeScreenView';
+import { DataProvider } from '../../context/DataContext';
 
 
 // import AnimatedRoutes from '../Routes/AnimatedRoutes';
@@ -21,24 +25,32 @@ import Home from '../../pages/Home/Home';
 
 
 function App() {
-
+  const { width } = useWindowSize();
 
   return (
       <AuthProvider>
-        <RegistrationProvider>
-          <Routes>
-            <Route element={<PublicTemplate />}>
-              <Route exact path="/login" element={<Login />} />
-              <Route exact path="/register" element={<SignUp />} />
-            </Route>
-          </Routes>
-        </RegistrationProvider>
+        { width < 601 ?
+          <>
+          <DataProvider>
+            <RegistrationProvider>
+              <Routes>
+                <Route element={<PublicTemplate />}>
+                  <Route exact path="/login" element={<Login />} />
+                  <Route exact path="/register" element={<SignUp />} />
+                </Route>
+              </Routes>
+            </RegistrationProvider>
 
-        <Routes>
-          <Route element={<InAppTemplate />}>
-            <Route path="/user/:username" element={<Home />} />
-          </Route>
-        </Routes>
+            
+              <Routes>
+                <Route element={<InAppTemplate />}>
+                  <Route path="/user/:username" element={<Home />} />
+                  <Route path="/user/:username/:id" element={<SingleReviewView />} />
+                </Route>
+              </Routes>
+            </DataProvider>
+          </>
+          : <LargeScreenView />}
       </AuthProvider>
 
       /* <PublicRoutes /> */

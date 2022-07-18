@@ -5,9 +5,14 @@ export const GlobalStyle = createGlobalStyle`
     body {
         background-color: #121212;
         font-family: 'Open Sans', sans-serif;
-        position: ${props => props.modal_opened || props.menu_opened ? "fixed" : ""};
+        background-color: #121212;
+        font-family: 'Open Sans', sans-serif;
+        position: fixed;
+        overflow: hidden;
+        width: 100%;
+        ${'' /* position: ${props => props.modal_opened || props.menu_opened ? "fixed" : ""};
         overflow: ${props => props.modal_opened || props.menu_opened ? "hidden" : "scroll"};
-        top: ${props => props.modal_opened || props.menu_opened ? `-${window.scrollY}px` : ""};
+        top: ${props => props.modal_opened || props.menu_opened ? `-${window.scrollY}px` : ""}; */}
         ${'' /* height: 100%;
         width: 100%; */}
         ${'' /* margin-top: 10%; */}
@@ -44,15 +49,28 @@ export const GlobalStyle = createGlobalStyle`
 
 
 export const Container = styled.div`
-    display: flex;
     ${'' /* grid-template-rows: 6% 94%; */}
     ${'' /* height: 100%; */}
-    position: relative;
+    ${'' /* position: relative;
     padding: 0% 5%;
     padding-bottom: 20px;
     margin-top: 12%;
     box-sizing: border-box;
+    width: 100%; */}
+
+    ${'' /* grid-template-rows: 6% 94%; */}
+    ${'' /* height: 100%; */}
+    ${'' /* position: fixed; */}
+    ${'' /* padding: 0% 5%; */}
+    display: flex;
+    margin-top: 50px;
+    box-sizing: border-box;
     width: 100%;
+    height: calc(100% - 50px);
+    background: pink;
+    display: flex;
+    align-items: center;
+    color: white;
 `;
 
 export const Head = styled.div`
