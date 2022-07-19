@@ -16,7 +16,7 @@ export const ReviewContainer = styled.div`
     height: 100%;
     width: 100%;
     overflow: auto;
-    background: green;
+    ${'' /* background: green; */}
     box-sizing: border-box;
 `;
 
@@ -31,7 +31,7 @@ export const MyReviews = styled.div`
 export const UserReviewsTitle = styled.div` 
     height: 100%;
     width: 100%;
-    background: orange;
+    ${'' /* background: orange; */}
     display: flex;
     align-items: center;
 `;
@@ -42,7 +42,7 @@ export const ReviewFeedContainer = styled.div`
     gap: 0.7em; 
     height: 100%;
     width: 100%;
-    background: red;
+    ${'' /* background: red; */}
 `;
 
 export const AddText = styled.div`
@@ -59,7 +59,7 @@ export const TextContainer = styled.div`
     align-items: center;
     height: 100%;
     width: 100%;
-    padding-bottom: 5%;
-    background: blue;
+    ${'' /* padding-bottom: 5%;
+    background: blue; */}
     ${'' /* padding-top: 60%; */}
 `;

@@ -30,7 +30,7 @@ export const formatDate = (date) => {
     // console.log("Format date", date)
     // console.log("inside formatted date", date)
     if (!date) {
-        return null
+        return "No Date"
     }
 
     // if date is formatted correctly, don't reformat

@@ -1,11 +1,13 @@
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import { ReviewModule, ReviewTitle, ReviewDate, ReviewPreview } from './Styles.js';
 import { useNavigate, useParams } from "react-router-dom";
 import { formatDate } from "../../utils/FormatDate.js";
+import DataContext from "../../context/DataContext.js";
 
 const ReviewListModule = ({ review }) => {
     const [formattedDate, setformattedDate] = useState(review.date || null)
     const [rerender, setRerender] = useState(false);
+    const { setFromReviewFeed } = useContext(DataContext)
     const navigate = useNavigate();
     const params = useParams();
 
@@ -22,6 +24,7 @@ const ReviewListModule = ({ review }) => {
 
     const handleClick = (event) => {
         console.log(event)
+        setFromReviewFeed(true)
         navigate(`/user/${params.username}/${event}`)
     }
 

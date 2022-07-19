@@ -6,6 +6,7 @@ const DataContext = createContext({});
 
 export const DataProvider = ({ children }) => {
     const [reviews, setReviews] = useState([])
+    const [fromReviewFeed, setFromReviewFeed] = useState(false)
     // const [isLoggedIn, setIsLoggedIn] = useState(false)
 
     // console.log(params)
@@ -19,7 +20,7 @@ export const DataProvider = ({ children }) => {
     
     return (
         <DataContext.Provider value={{ 
-                reviews, setReviews
+                reviews, setReviews, fromReviewFeed, setFromReviewFeed
         }}>
             { children }
         </DataContext.Provider>

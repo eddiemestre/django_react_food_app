@@ -4,25 +4,29 @@ import { GlobalStyle,
     InsideContainer, 
     ContentContainer, 
     Title, 
+    TitleContainer,
     Name, 
     Date, 
     Content, 
     LastEdited,
-    EditButtonPosition,
+    ButtonPosition,
     ButtonContainer,
-    BackContainer } from './Styles';
+    BackContainer,
+    OuterContainer } from './Styles';
 import { useParams, useOutletContext, Link, useNavigate } from 'react-router-dom';
 import useAuth from '../../hooks/useAuth';
 import axios from '../../api/axios';
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.js";
-import { useTransition, animated } from '@react-spring/web';
+import { useTransition } from '@react-spring/web';
 import { formatDate } from '../../utils/FormatDate';
 import AuthenticatedContext from '../../context/AuthContext';
 import DataContext from '../../context/DataContext';
+
 const SingleReviewView = () => {
     const { auth } = useAuth();
-    const { id } = useParams();
-    const { reviews, setReviews } = useContext(DataContext)
+    const { username, id } = useParams();
+    const navigate = useNavigate();
+    const { reviews, setReviews, fromReviewFeed } = useContext(DataContext)
     const [review, setReview] = useState(reviews.find(review => (review.id).toString() === id) || {})
 
     //       setAuth(prevState => ({
@@ -65,7 +69,7 @@ const SingleReviewView = () => {
 
     // const EditButton = () => {
     //     return (
-    //         <EditButtonPosition
+    //         <ButtonPosition
     //           xmlns="http://www.w3.org/2000/svg"
     //           width="60"
     //           height="60"
@@ -81,28 +85,28 @@ const SingleReviewView = () => {
     //             fill="#03DAC6"
     //             d="M35 24.08l1.325 1.325L35 26.73l-1.317-1.325L35 24.08zM24.925 34.164L32.5 26.58l1.325 1.325-7.583 7.584-1.759.433.442-1.758z"
     //           ></path>
-    //         </EditButtonPosition>
+    //         </ButtonPosition>
     //     );
     // }
 
-    // const BackButton = () => {
-    //     return (
-    //         <EditButtonPosition
-    //         xmlns="http://www.w3.org/2000/svg"
-    //         width="60"
-    //         height="60"
-    //         fill="none"
-    //         viewBox="0 0 60 60"
-    //       >
-    //         <circle cx="30" cy="30" r="30" fill="#121212"></circle>
-    //         <circle cx="30" cy="30" r="30" fill="#fff" fillOpacity="0.08"></circle>
-    //         <path
-    //           fill="#fff"
-    //           d="M35.383 21.325l-1.917-1.918L22.74 30.132l10.725 10.725 1.917-1.917-8.807-8.808 8.807-8.807z"
-    //         ></path>
-    //       </EditButtonPosition>
-    //     );
-    // }
+    const BackButton = () => {
+        return (
+            <ButtonPosition
+            xmlns="http://www.w3.org/2000/svg"
+            width="60"
+            height="60"
+            fill="none"
+            viewBox="0 0 60 60"
+          >
+            <circle cx="30" cy="30" r="30" fill="#121212"></circle>
+            <circle cx="30" cy="30" r="30" fill="#fff" fillOpacity="0.08"></circle>
+            <path
+              fill="#fff"
+              d="M35.383 21.325l-1.917-1.918L22.74 30.132l10.725 10.725 1.917-1.917-8.807-8.808 8.807-8.807z"
+            ></path>
+          </ButtonPosition>
+        );
+    }
 
     //   const EditAppear = useTransition(isAuthedUser, {
     //     from: { opacity: 0, transform: "translateY(20px)" },
@@ -113,41 +117,40 @@ const SingleReviewView = () => {
     //     // onRest: () => PauseAnimation(),
     // });
 
-    // const BackAppear = useTransition(fromListView, {
-    //     from: { opacity: 0, transform: "translateY(20px)" },
-    //     enter: { opacity: 1, transform: "translateY(0px)" },
-    //     leave: { opacity: 0, transform: "translateY(20px)" },
-    //     reverse: isAuthedUser,
-    //     delay: 400,
-    //     // onRest: () => PauseAnimation(),
-    // });
+    const BackAppear = useTransition(fromReviewFeed, {
+        from: { opacity: 0, transform: "translateY(20px)" },
+        enter: { opacity: 1, transform: "translateY(0px)" },
+        leave: { opacity: 0, transform: "translateY(20px)" },
+        // reverse: isAuthedUser,
+        delay: 400,
+    });
 
     // const handleEditClick = () => {
     //     navigate(`/user/${params.username}/${params.id}/edit`)
     // }
 
-    // const handleBackClick = () => {
-    //     console.log("back a page!")
-    //     navigate(`/user/${params.username}/`)
-    // }
+    const handleBackClick = () => {
+        console.log("back a page!")
+        navigate(`/user/${username}/`)
+    }
 
     return (
         <>
             <GlobalStyle />
-            <Container>
-                <InsideContainer>
-                    <ContentContainer>
-                        <Title>{review.title}</Title>
-                        <Link to={`/user/${review.username}`} style={{textDecoration: 'none'}}><Name>{review.name}</Name></Link>
-                        {/* <Date>{formattedDate}</Date> */}
-                        <Date>{review.date}</Date>
-                        <Content>{review.review}</Content>
-                        {/* <LastEdited>Last edited on {dateModified}</LastEdited> */}
-                        <LastEdited>Last edited on {review.date_modified}</LastEdited>
-                    </ContentContainer>
-
-                </InsideContainer>
-            </Container>
+            <OuterContainer>
+              <Container>
+                <TitleContainer>
+                  <Title>{review.title}</Title>
+                </TitleContainer>
+                <ContentContainer>
+                    <Link to={`/user/${review.username}`} style={{textDecoration: 'none'}}><Name>{review.name}</Name></Link>
+                    <Date>{review.date}</Date>
+                    <Content>{review.review}</Content>
+                    {/* <LastEdited>Last edited on {dateModified}</LastEdited> */}
+                    <LastEdited>Last edited on {review.date_modified}</LastEdited>
+                </ContentContainer>
+              </Container>
+            </OuterContainer>
             {/* show button for editing if isAuthedUser is true */}
             {/* {isAuthedUser && 
                 EditAppear((style, item) =>
@@ -157,13 +160,13 @@ const SingleReviewView = () => {
                     )
             } */}
             {/* show button for going back if fromListView is true */}
-            {/* {fromListView && 
+            {fromReviewFeed && 
                 BackAppear((style, item) =>
                     item ? 
                     <BackContainer style={style} onClick={() => handleBackClick()}>{BackButton()}</BackContainer>
                     : ''
                     )
-            } */}
+            }
         </>
     );
 }

@@ -19,7 +19,6 @@ export const GlobalStyle = createGlobalStyle`
 `
 
 export const GridContainer = styled.div`
-    display: flex;
     ${'' /* grid-template-rows: 6% 94%; */}
     ${'' /* height: 100%; */}
     ${'' /* position: fixed; */}
@@ -28,7 +27,7 @@ export const GridContainer = styled.div`
     box-sizing: border-box;
     width: 100%;
     height: calc(100% - 50px);
-    background: pink;
+    ${'' /* background: pink; */}
     display: flex;
     align-items: center;
 `
