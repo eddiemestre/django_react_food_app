@@ -14,7 +14,7 @@ const ReviewListModule = ({ review }) => {
         if (formattedDate) {
             setformattedDate(formatDate(formattedDate))
         } else {
-            setformattedDate(null)
+            setformattedDate('No Date')
         }
         setRerender(!rerender)  // dummy state
     }, [])

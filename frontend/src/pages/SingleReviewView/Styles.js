@@ -51,18 +51,18 @@ export const GlobalStyle = createGlobalStyle`
 export const Container = styled.div`
     ${'' /* grid-template-rows: 6% 94%; */}
     ${'' /* height: 100%; */}
-    ${'' /* position: relative;
+    position: relative;
     padding: 0% 5%;
     padding-bottom: 20px;
-    margin-top: 12%;
+    margin-top: 50px;
     box-sizing: border-box;
-    width: 100%; */}
+    width: 100%;
 
     ${'' /* grid-template-rows: 6% 94%; */}
     ${'' /* height: 100%; */}
     ${'' /* position: fixed; */}
     ${'' /* padding: 0% 5%; */}
-    display: flex;
+    ${'' /* display: flex;
     margin-top: 50px;
     box-sizing: border-box;
     width: 100%;
@@ -70,7 +70,7 @@ export const Container = styled.div`
     background: pink;
     display: flex;
     align-items: center;
-    color: white;
+    color: white; */}
 `;
 
 export const Head = styled.div`

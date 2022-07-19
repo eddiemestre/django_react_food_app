@@ -52,7 +52,7 @@ class GetReviewList(viewsets.ReadOnlyModelViewSet):
                         'date': review.date, 
                         'date_modified': review.date_modified, 
                         'private': review.private,
-                        'user': review.user.name,
+                        'name': review.user.name,
                         'username': review.user.username,
                         'email': review.user.email }
 
@@ -67,12 +67,14 @@ class GetSingleAuthReview(viewsets.ModelViewSet):
 
     # don't need name because it's in localStorage for list view
     def get_queryset(self):
+        print("in get queryset")
         user = self.request.user
         if user.is_authenticated:
             return ReviewModel.objects.filter(user=user).order_by('-date')
 
     # retrieve all necessary review info
     def retrieve(self, request, *args, **kwargs):
+        print("in retrieve")
         current_user = request.user
         review_pk = None
         if 'pk' in kwargs:
@@ -90,7 +92,7 @@ class GetSingleAuthReview(viewsets.ModelViewSet):
                         'date': review.date, 
                         'date_modified': review.date_modified, 
                         'private': review.private,
-                        'user': review.user.name,
+                        'name': review.user.name,
                         'username': review.user.username,
                         'email': review.user.email }
 
@@ -155,7 +157,7 @@ class PublicReviewList(viewsets.ReadOnlyModelViewSet):
                 'date': review.date, 
                 'date_modified': review.date_modified, 
                 'private': review.private,
-                'user': review.user.name,
+                'name': review.user.name,
                 'username': review.user.username,
                 'email': review.user.email } for review in reviews]
 

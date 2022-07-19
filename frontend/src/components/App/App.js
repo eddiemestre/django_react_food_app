@@ -18,6 +18,7 @@ import LargeScreenView from '../LargeScreenView';
 import { DataProvider } from '../../context/DataContext';
 
 
+import PersistLogin from '../PersistLogin/PersistLogin';
 // import AnimatedRoutes from '../Routes/AnimatedRoutes';
 // import PublicRoutes from '../Routes/PublicRoutes';
 // import NotFoundRoute from '../Routes/NotFoundRoute';
@@ -43,9 +44,11 @@ function App() {
 
             
               <Routes>
-                <Route element={<InAppTemplate />}>
-                  <Route path="/user/:username" element={<Home />} />
-                  <Route path="/user/:username/:id" element={<SingleReviewView />} />
+                <Route element={<PersistLogin />}>
+                  <Route element={<InAppTemplate />}>
+                    <Route path="/user/:username" element={<Home />} />
+                    <Route path="/user/:username/:id" element={<SingleReviewView />} />
+                  </Route>
                 </Route>
               </Routes>
             </DataProvider>

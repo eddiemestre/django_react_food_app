@@ -18,10 +18,41 @@ import useAxiosPrivate from "../../hooks/useAxiosPrivate.js";
 import { useTransition, animated } from '@react-spring/web';
 import { formatDate } from '../../utils/FormatDate';
 import AuthenticatedContext from '../../context/AuthContext';
-
+import DataContext from '../../context/DataContext';
 const SingleReviewView = () => {
-    // const { auth } = useAuth();
-    const params = useParams();
+    const { auth } = useAuth();
+    const { id } = useParams();
+    const { reviews, setReviews } = useContext(DataContext)
+    const [review, setReview] = useState(reviews.find(review => (review.id).toString() === id) || {})
+
+    //       setAuth(prevState => ({
+//         ...prevState,
+//         "username": response?.data[0]?.username,
+//         "user_id": response?.data[0]?.id,
+//         "name": response?.data[0]?.name,
+//         "email": response?.data[0]?.email
+//       }))
+
+    useEffect(() => {
+      console.log("trigger")
+      if (auth.username) {
+        setReview(prevState => ({
+          ...prevState,
+          "username": auth.username,
+          "name": auth.name,
+          "date": formatDate(review.date),
+          "date_modified": formatDate(review.date_modified)
+        }))
+      } else {
+        console.log("No auth")
+        setReview(prevState => ({
+          ...prevState,
+          "date": formatDate(review.date),
+          "date_modified": formatDate(review.date_modified)
+        }))
+      }
+    }, [auth, review.date, review.date_modified])
+
     // const axiosPrivate = useAxiosPrivate();
     // const navigate = useNavigate();
     // const [selectedReview, setSelectedReview] = useOutletContext();
@@ -104,17 +135,18 @@ const SingleReviewView = () => {
         <>
             <GlobalStyle />
             <Container>
-              <p>Hello {params.id}</p>
-                {/* <InsideContainer>
+                <InsideContainer>
                     <ContentContainer>
-                        <Title>{selectedReview.title}</Title>
-                        <Link to={`/user/${selectedReview.username}`} style={{textDecoration: 'none'}}><Name>{selectedReview.user}</Name></Link>
-                        <Date>{formattedDate}</Date>
-                        <Content>{selectedReview.review}</Content>
-                        <LastEdited>Last edited on {dateModified}</LastEdited>
+                        <Title>{review.title}</Title>
+                        <Link to={`/user/${review.username}`} style={{textDecoration: 'none'}}><Name>{review.name}</Name></Link>
+                        {/* <Date>{formattedDate}</Date> */}
+                        <Date>{review.date}</Date>
+                        <Content>{review.review}</Content>
+                        {/* <LastEdited>Last edited on {dateModified}</LastEdited> */}
+                        <LastEdited>Last edited on {review.date_modified}</LastEdited>
                     </ContentContainer>
 
-                </InsideContainer> */}
+                </InsideContainer>
             </Container>
             {/* show button for editing if isAuthedUser is true */}
             {/* {isAuthedUser && 
