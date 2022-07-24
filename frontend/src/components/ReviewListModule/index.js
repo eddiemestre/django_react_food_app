@@ -23,7 +23,6 @@ const ReviewListModule = ({ review }) => {
 
 
     const handleClick = (event) => {
-        console.log(event)
         setFromReviewFeed(true)
         navigate(`/user/${params.username}/${event}`)
     }

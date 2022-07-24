@@ -42,6 +42,7 @@ export const ReviewFeedContainer = styled.div`
     gap: 0.7em; 
     height: 100%;
     width: 100%;
+    padding-bottom: 75px;
     ${'' /* background: red; */}
 `;
 

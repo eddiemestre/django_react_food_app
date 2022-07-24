@@ -1,17 +1,13 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import "./Styles.css";
-import { useOutletContext } from "react-router-dom";
 
-const ToggleSwitch = (props) => {
-    const [selectedReview, setSelectedReview] = useOutletContext();
-    const [isPrivate, setIsPrivate] = useState(selectedReview.private ? true : false || false)
-
+const ToggleSwitch = ({ isPrivate, setIsPrivate, setInputHasChanged, label }) => {
 
     const triggerToggle = () => {
         setIsPrivate(!isPrivate)
-        props.setIsPrivate(!isPrivate);
+        setIsPrivate(!isPrivate);
         console.log(isPrivate);
-        props.change(true)
+        setInputHasChanged(true)
     }
 
 
@@ -19,8 +15,8 @@ const ToggleSwitch = (props) => {
         <div className="container">
         <div className="toggle-switch">
             <input checked={isPrivate} onChange={triggerToggle} type="checkbox" className="checkbox"
-                name={props.label} id={props.label}/>
-            <label className="label" htmlFor={props.label}>
+                name={label} id={label}/>
+            <label className="label" htmlFor={label}>
                 <span className="inner" />
                 <span className="switch" />
             </label>

@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { animated } from '@react-spring/web';
 
 export const Container = styled(animated.div)`
@@ -28,7 +28,7 @@ export const NoticeContainer = styled(animated.div)`
 export const NoticeText = styled.div` 
 `;
 
-export const SvgTest = styled.svg`
+export const SvgComponent = styled.svg`
     position: fixed;
     z-index: 15;
     ${'' /* right: 2%;

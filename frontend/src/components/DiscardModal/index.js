@@ -1,15 +1,21 @@
-// import React, {useState, useEffect} from "react";
-// import { CloseModalContainer, Discard, Yes, No } from './Styles.js';
+import React from "react";
+import { CloseModalContainer, Discard, Yes, No } from './Styles.js';
 
-// const DiscardModal = (props) => {
+const DiscardModal = ({type, clickYes, clickNo}) => {
 
-//     return (
-//         <CloseModalContainer>
-//             <Discard>{modalText}</Discard>
-//             <Yes onClick={() => props.clickYes()}>Yes</Yes>
-//             <No onClick={() => props.clickNo()}>No</No>
-//         </CloseModalContainer>
-//     );
-// };
+    const messages = {
+        create: "Discard review?",
+        edit: "Discard changes?",
+        delete: "Delete review? This cannot be undone."
+      };
 
-// export default DiscardModal;
+    return (
+        <CloseModalContainer>
+            <Discard>{messages[type]}</Discard>
+            <Yes onClick={() => clickYes()}>Yes</Yes>
+            <No onClick={() => clickNo()}>No</No>
+        </CloseModalContainer>
+    );
+};
+
+export default DiscardModal;

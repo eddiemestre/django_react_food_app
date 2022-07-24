@@ -9,6 +9,11 @@ export const DetailsContainer = styled(animated.div)`
     margin: 0 -5%;
      */}
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212;
+    border-radius: 10px 10px 0px 0px;
+    font-family: 'Open Sans', sans-serif;
+    z-index: 10;
+    height: 100%;
+    
     ${'' /* height: 100%; */}
     ${'' /* overflow: auto; */}
     ${'' /* top: 6%; */}
@@ -17,31 +22,30 @@ export const DetailsContainer = styled(animated.div)`
 
     grid-template-rows: 6% 100px;
     border: none; */}
-    border-radius: 10px 10px 0px 0px;
-    font-family: 'Open Sans', sans-serif;
-    z-index: 10;
+
     ${'' /* box-size: border-box; */}
-    height: 100vh;
+
     ${'' /* position: fixed; */}
 `;
 
 export const GridContainer = styled.div` 
-    ${'' /* background: blue; */}
     display: grid;
-    ${'' /* height: 100%; */}
-    ${'' /* overflow: auto; */}
-    ${'' /* top: 6%; */}
-    grid-template-rows: 6% auto;
-    border: none;
-    border-radius: 10px 10px 0px 0px;
+    grid-template-rows: 7% auto;
     font-family: 'Open Sans', sans-serif;
-    z-index: 10;
     padding-left: 5%;
     padding-right: 5%;
     box-size: border-box;
-    height: 100vh;
+    height: 100%;
     position: fixed;
     width: 90%;
+
+    ${'' /* background: blue; */}
+    ${'' /* height: 100%; */}
+    ${'' /* overflow: auto; */}
+    ${'' /* top: 6%; */}
+    ${'' /* z-index: 10; */}
+    ${'' /* border: none; */}
+    ${'' /* border-radius: 10px 10px 0px 0px; */}
 `
 
 
@@ -190,7 +194,7 @@ export const InsideContainer = styled.div`
     overflow: scroll;
     position: relative;
     width: 100%;
-    padding-bottom: 20%;
+    ${'' /* padding-bottom: 20%; */}
     ${'' /* height: 100%; */}
     -ms-overflow-style: none; /* for Internet Explorer, Edge */
     scrollbar-width: none; /* for Firefox */

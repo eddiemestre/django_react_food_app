@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle, css } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { animated } from '@react-spring/web';
 
 
@@ -17,17 +17,37 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const Container = styled.div`
-    background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212;
+    background: #121212;
+
     position: fixed;
+    z-index: 10;
+    margin-top: 50px;
+    box-sizing: border-box;
+    width: 100%;
+    height: calc(100% - 50px);
+    display: flex;
+    flex-direction: column;
+
+
+    ${'' /* position: fixed;
     top: 6%;
+    color: white;
+    z-index: 10;
+    display: flex;
+    width: 100%;
+    flex-direction: column; */}
+
+
+
+    ${'' /* background: pink; */}
+    
+    ${'' /* align-items: center; */}
+
     ${'' /* height: 100%; */}
     ${'' /* width: 100%; */}
     ${'' /* border: none; */}
     ${'' /* border-radius: 10px 10px 0px 0px; */}
-    z-index: 10;
-    display: flex;
-    width: 100%;
-    flex-direction: column;
+
     ${'' /* bottom: 0; */}
     ${'' /* display: grid;
     grid-template-rows: 100%; */}
@@ -41,3 +61,6 @@ export const Container = styled.div`
     margin-top: 10%;
     background: blue; */}
 `;
+
+
+

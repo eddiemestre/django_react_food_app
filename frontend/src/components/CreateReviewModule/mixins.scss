@@ -8,12 +8,6 @@
     position: absolute;
     top: 6px;
     width: 9px;
-  
-    &--disabled,
-    &--disabled:hover {
-      border-color: $datepicker__navigation-disabled-color;
-      cursor: default;
-    }
   }
   
   %triangle-arrow {
@@ -39,6 +33,7 @@
     }
   }
   
+  // triangle alignment
   %triangle-arrow-up {
     @extend %triangle-arrow;
   
@@ -57,30 +52,6 @@
   
     &::before {
       top: 0px;
-    //   border-bottom-color: purple;
       border: none;
-    }
-  }
-  
-  %triangle-arrow-down {
-    @extend %triangle-arrow;
-  
-    bottom: 0;
-    margin-bottom: -$datepicker__triangle-size;
-  
-    &::before,
-    &::after {
-    border: none;
-    //   border-top-color: purple;
-    }
-  
-    &::after {
-      bottom: 0;
-    }
-  
-    &::before {
-      bottom: 0px;
-      border: none;
-    //   border-top-color: purple;
     }
   }

@@ -4,7 +4,7 @@ import { animated } from '@react-spring/web';
 
 export const GlobalStyle = createGlobalStyle`
     body {
-        background-color: #121212;
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212;
         font-family: 'Open Sans', sans-serif;
         position: ${props => props.modal_opened || props.menu_opened ? "fixed" : ""};
         overflow: ${props => props.modal_opened || props.menu_opened ? "hidden" : "scroll"};
@@ -17,32 +17,19 @@ export const GlobalStyle = createGlobalStyle`
 `;
 
 export const Container = styled.div`
-    background: #121212; 
+    background: #121212;
+    color: white;
     position: fixed;
-    top: 6%;
-    ${'' /* height: 100%; */}
-    ${'' /* width: 100%; */}
-    ${'' /* border: none; */}
-    ${'' /* border-radius: 10px 10px 0px 0px; */}
     z-index: 10;
-    display: flex;
+    margin-top: 50px;
+    box-sizing: border-box;
     width: 100%;
+    height: calc(100% - 50px);
+    display: flex;
     flex-direction: column;
-    ${'' /* bottom: 0; */}
-    ${'' /* display: grid;
-    grid-template-rows: 100%; */}
-
-    
-    ${'' /* grid-template-rows: 6% 94%; */}
-    ${'' /* height: 100%; */}
-    ${'' /* display: flex;
-    position: fixed;
-    padding-bottom: 20px;
-    margin-top: 10%;
-    background: blue; */}
 `;
 
-export const SvgTest = styled.svg`
+export const SvgContent = styled.svg`
     position: fixed;
     z-index: 15;
     ${'' /* right: 2%;
@@ -51,7 +38,7 @@ export const SvgTest = styled.svg`
     width: 100px;
     transform-box: center;
     transform-origin: center;
-    transform: ${props => props.isActive ? "rotate(45deg) scale(0.75)" : "rotate(0deg) scale(0.75)"};
+    transform: rotate(45deg) scale(0.75);
     animiation-delay: 0s;
     -webkit-touch-callout: none;
     -webkit-user-select: none;

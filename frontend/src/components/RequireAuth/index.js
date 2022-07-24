@@ -1,7 +1,27 @@
-import { useLocation, Navigate, Outlet } from "react-router-dom";
+import { useLocation, Navigate, Outlet, useOutletContext } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
-const RequireAuth = () => {
+export const RequireAuthCreate = () => {
+    const { toggleReviewOff,
+            setReviewModuleActive,
+            setInputHasChanged,
+            inputHasChanged } = useOutletContext();
+    const { auth } = useAuth();
+    const location = useLocation();
+
+    return (
+        auth?.accessToken
+        ? <Outlet context={{ 
+            toggleReviewOff,
+            setReviewModuleActive,
+            setInputHasChanged,
+            inputHasChanged }}
+        />
+        : <Navigate to="/login" state={{ from: location }} replace />
+    );
+}
+
+export const RequireAuthEdit = () => {
     const { auth } = useAuth();
     const location = useLocation();
 
@@ -11,5 +31,3 @@ const RequireAuth = () => {
         : <Navigate to="/login" state={{ from: location }} replace />
     );
 }
-
-export default RequireAuth;

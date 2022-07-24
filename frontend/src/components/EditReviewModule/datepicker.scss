@@ -1,0 +1,115 @@
+// scss
+@import "variables.scss";
+@import "mixins.scss";
+
+// overrides default date picker stylings for select elements
+
+// background and border
+.react-datepicker {
+  font-family: $datepicker__font-family;
+  font-size: $datepicker__font-size;
+  background-color: #363636;
+  color: $datepicker__text-color;
+  border: none;
+  border-radius: $datepicker__border-radius;
+}
+
+
+// triangle
+.react-datepicker-popper {
+  &[data-placement^="bottom"] {
+    .react-datepicker__triangle {
+      @extend %triangle-arrow-up;
+    }
+  }
+}
+
+// header background color and border
+.react-datepicker__header {
+  background-color: $datepicker__background-color;
+  border-bottom: 1px solid $datepicker__border-radius;
+}
+
+// header color
+.react-datepicker__current-month,
+.react-datepicker-time__header,
+.react-datepicker-year-header {
+  color: $datepicker__header-color;
+}
+
+// the back button color for months
+.react-datepicker__navigation {
+  &:hover {
+    *::before {
+      border-color: $datepicker__header-color;
+    }
+  }
+}
+
+// color of non-selected chevron when going through months
+.react-datepicker__navigation-icon {
+  &::before {
+    @extend %navigation-chevron;
+  }
+}
+
+// date abbreviation and date color
+.react-datepicker__day-name,
+.react-datepicker__day,
+.react-datepicker__time-name {
+  color: $datepicker__text-color;
+}
+
+
+.react-datepicker__day,
+.react-datepicker__month-text,
+.react-datepicker__quarter-text,
+.react-datepicker__year-text {
+  // cursor: pointer;
+
+//   hover on click
+  &:hover {
+    border-radius: $datepicker__border-radius;
+    background-color: #018786;
+  }
+
+//   today color
+  &--today {
+    font-weight: bold;
+    color: #03DAC6;
+  }
+
+  // selected date background, color, and weight
+  &--selected,
+  &--in-selecting-range,
+  &--in-range {
+    background-color: $datepicker__selected-color;
+    color: black;
+    font-weight: 700;
+  }
+
+  // highlighted date background and text color
+  &--keyboard-selected {
+    border-radius: $datepicker__border-radius;
+    background-color: lighten($datepicker__selected-color, 5%);
+    color: $datepicker__text-selected-color;
+  }
+
+  // disabled colors
+  &--disabled {
+    color: $datepicker__muted-color;
+
+    // background color of disabled dates
+    &:hover {
+      background-color: transparent;
+    }
+  }
+}
+
+// close + clear date icon
+.react-datepicker__close-icon {
+  &::after {
+    background-color: $datepicker__clear-date-background-color;
+    color: $datepicker__text-color;
+  }
+}

@@ -1,25 +1,52 @@
-import { Outlet, useNavigate, useOutletContext, useParams, useLocation } from "react-router-dom";
-import {SvgTest, FaderDivClose, ModalContainer, Outer, ButtonContainer} from './Styles';
+import { Outlet, useNavigate, useParams, useLocation } from "react-router-dom";
+import {SvgComponent, FaderDivClose, ModalContainer, ButtonContainer} from './Styles';
 import { useEffect, useState } from 'react';
-import { useTransition, animated } from '@react-spring/web';
+import { useTransition} from '@react-spring/web';
 import DiscardModal from "../DiscardModal";
+import useAuth from "../../hooks/useAuth.js";
 
 const ReviewAdderTemplate = () => {
     const [fill, setFill] = useState('#03dac6')
     const [stroke, setStroke] = useState('black')
-    const [reviewModuleActive, setReviewModuleActive] = useState(false)
-    const [discardModal, setDiscardModal] = useState(false)
-    const [inputHasChanged, setInputHasChanged] = useState(false)
-    const [prevPage, setPrevPage] = useState(false)
-    const [reviewSaved, setReviewSaved] = useState(false)
-    const [urlIsUser, setUrlIsUser] = useState(true)
+
+    const [reviewModuleActive, setReviewModuleActive] = useState(false)     // sets rotation of button
+    const [discardModal, setDiscardModal] = useState(false)     // animates discard modal in and out
+    const [inputHasChanged, setInputHasChanged] = useState(false)   // determines if discard modal should animate
+    const [animateButton, setAnimateButton] = useState(true)     // animates review adder/discarder button
+    const [urlIsUser, setUrlIsUser] = useState(true)    // ensures button only appears when on the logged in user's feed
+    
+    // hooks
+    const { auth } = useAuth();
     const params = useParams();
     const location = useLocation();
-    const [selectedReview, setSelectedReview] = useOutletContext();
     const navigate = useNavigate();
 
+    // check if we are on the logged in user's feed
+    useEffect(() => {
+        if (params?.username) {
+            if (params.username === auth?.username) {
+                setUrlIsUser(true)
+            } else {
+                setUrlIsUser(false)
+            }
+        }
+    }, [params, auth])
 
-    
+    // changes review toggle mode depending on page
+    useEffect(() => {
+        if (location.pathname === "/create-review") {
+            toggleReviewOn();
+            setReviewModuleActive(true)
+        } else {
+            toggleReviewOff()
+            setReviewModuleActive(false)
+        }
+    }, [params, location])
+
+    // animate button on first load or refresh
+    useEffect(() => {
+        setAnimateButton(true)
+    }, [])
 
     const toggleReviewOn = () => {
         setFill('#C56679')
@@ -33,7 +60,7 @@ const ReviewAdderTemplate = () => {
         window.scrollTo(0, parseInt(scrollY || '0') * -1);
     }
 
-    const fadeAnimationTwo = useTransition(discardModal, {
+    const backgroundOverlay = useTransition(discardModal, {
         from: { opacity: 0 },
         enter: {opacity: 0.5},
         leave: {opacity: 0 },
@@ -45,13 +72,12 @@ const ReviewAdderTemplate = () => {
         leave: { opacity: 0, transform: "translateY(-20px)" },
     });
 
-    const EditAppear = useTransition(!prevPage, {
+    const animateButtonAppear = useTransition(animateButton, {
         from: { opacity: 0, transform: "translateY(20px)" },
         enter: { opacity: 1, transform: "translateY(0px)" },
         leave: { opacity: 0, transform: "translateY(20px)" },
-        reverse: !prevPage,
+        reverse: !animateButton,
         delay: 300,
-        // onRest: () => PauseAnimation(),
     });
 
 
@@ -60,7 +86,7 @@ const ReviewAdderTemplate = () => {
         setDiscardModal(false)
         setReviewModuleActive(false)
         setInputHasChanged(false)
-        navigate(`/user/${JSON.parse(localStorage.getItem('username'))}`)
+        navigate(`/user/${auth?.username}`)
     }
 
     const clickNo = () => {
@@ -70,27 +96,27 @@ const ReviewAdderTemplate = () => {
     const ModalConditions = () => {
 
         if (reviewModuleActive === false) {
-            console.log("review modal false, changing to true")
+            // console.log("review modal false, changing to true")
             toggleReviewOn()
             setReviewModuleActive(true)
-            navigate('/create_review');
+            navigate('/create-review');
             
         } else {
             if (inputHasChanged === false) {
-                console.log("reivew modal true, changing to false. No changes detected")
+                // console.log("review modal true, changing to false. No changes detected")
                 toggleReviewOff()
                 setReviewModuleActive(false)
-                navigate(`/user/${JSON.parse(localStorage.getItem('username'))}`)
+                navigate(`/user/${auth?.username}`)
                 
             } else {
-                console.log("Discard Modal false, changing to True")
+                // console.log("Discard Modal false, changing to True")
                 setDiscardModal(true)
             }
         }
     }
 
     const createReviewButton = () => (
-        <SvgTest isActive={reviewModuleActive} onClick={() => {ModalConditions()}}
+        <SvgComponent isActive={reviewModuleActive} onClick={() => {ModalConditions()}}
             xmlns="http://www.w3.org/2000/svg"
             width="61"
             height="61"
@@ -107,19 +133,21 @@ const ReviewAdderTemplate = () => {
                 d="M21.398 31.738H23.467V50.358999999999995H21.398z"
                 transform="rotate(-90 21.398 31.738)"
             ></path>
-        </SvgTest>
+        </SvgComponent>
     )
 
-    const TestReviewButton = (animate) => {
-        if (!animate) {
+    const AnimateReviewButton = (animate) => {
+        if (animate) {
+            // console.log("animating review button")
             return (
-                EditAppear((style, item) =>
+                animateButtonAppear((style, item) =>
                 item ? 
                 <ButtonContainer style={style}>{createReviewButton()}</ButtonContainer>
                 : ''
                 )
             )
         } else {
+            // console.log("not animating review button")
             return (
                 <ButtonContainer>{createReviewButton()}</ButtonContainer>
             )
@@ -127,18 +155,17 @@ const ReviewAdderTemplate = () => {
     }
 
   return (
-    <div> 
-        <Outlet context={[ toggleReviewOff, // 0
-                setReviewSaved,             // 1
-                reviewModuleActive,         // 2
-                setReviewModuleActive,      // 3
-                setInputHasChanged,         // 4
-                setSelectedReview,          // 5
-                inputHasChanged ]}/>       {/* 6 */}
+    <>
+        <Outlet context={{ 
+                toggleReviewOff,
+                setReviewModuleActive,
+                setInputHasChanged,
+                inputHasChanged }}
+        />
         {urlIsUser ?
-            TestReviewButton(prevPage)
+            AnimateReviewButton(animateButton)
         : '' }
-        {fadeAnimationTwo((style, item) =>
+        {backgroundOverlay((style, item) =>
             item 
             ? <FaderDivClose style={style}/> 
             : '' )}
@@ -146,10 +173,9 @@ const ReviewAdderTemplate = () => {
         {discardModal && (modalAppear((style, item) => 
             item 
             ? <ModalContainer style={style}><DiscardModal type="create" clickYes={clickYes} clickNo={clickNo}/></ModalContainer> 
-            : ''))}
-           
-    </div>
+            : ''))}    
+    </>
   )
-  }
+}
 
   export default ReviewAdderTemplate;

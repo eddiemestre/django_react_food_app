@@ -1,6 +1,5 @@
 import React from "react";
 import { Container, Head, AddSpot, Done, Content, InsideContainer, Title } from './Styles.js';
-import { InputTitle } from "../ReviewModule/Styles.js";
 
 const ReviewContent = (props) => {
 

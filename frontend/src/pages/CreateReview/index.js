@@ -1,10 +1,14 @@
-// import React, { useEffect, useState } from "react"
+import React from "react"
 // import { useTransition, animated } from '@react-spring/web';
-// import { Test2, Container, GlobalStyle } from './Styles.js';
-// import ReviewModule from "../../components/ReviewModule/index.js";
-// import { useOutletContext, useLocation } from "react-router-dom";
+import { Container, GlobalStyle } from './Styles.js';
+import CreateReviewModule from "../../components/CreateReviewModule/index.js";
+import { useOutletContext } from "react-router-dom";
 
-// const CreateReview = () => {
+const CreateReview = () => {
+    const { toggleReviewOff,
+            setReviewModuleActive,
+            setInputHasChanged,
+            inputHasChanged } = useOutletContext();
 
 //     const slideAnimation = useTransition(reviewModuleActive,  {
 //         from: {y: 1000},
@@ -12,15 +16,20 @@
 //         leave: {y: 1000},
 //     });
 
-//     return (
-//         <>
-//             <GlobalStyle />
-//             <Container>
-//                 <ReviewModule setToggle={toggleReviewOff} setSaved={setReviewSaved} setModuleActive={setReviewModuleActive} hasChanged={setInputHasChanged} changed={inputHasChanged}/>
-//             </Container>
-//         </>
-//     )
+    return (
+        <>
+           <GlobalStyle />
+           <Container>
+               <CreateReviewModule    
+                    toggleReviewOff={toggleReviewOff} 
+                    setReviewModuleActive={setReviewModuleActive} 
+                    setInputHasChanged={setInputHasChanged} 
+                    inputHasChanged={inputHasChanged}
+                />
+             </Container>
+        </>
+    )
 
-// }
+}
 
-// export default CreateReview;
+export default CreateReview;
