@@ -30,7 +30,7 @@ export const GridContainer = styled.div`
     ${'' /* background: pink; */}
     display: flex;
     align-items: center;
-`
+`;
 
 export const PageTitle = styled.h1`
     display: none

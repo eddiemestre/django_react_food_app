@@ -27,9 +27,9 @@ const SingleReviewView = () => {
     const navigate = useNavigate();
     const { reviews, setReviews, fromReviewFeed } = useContext(DataContext)
     const [review, setReview] = useState({})
-    const [isAuthedUser, setIsAuthedUser] = useState(false)
     const axiosPrivate = useAxiosPrivate();
     const [isLoading, setIsLoading] = useState(false)
+    const [isAuthedUser, setIsAuthedUser] = useState(false)
     const [reviewUpdated, setReviewUpdated] = useState(false)
 
 

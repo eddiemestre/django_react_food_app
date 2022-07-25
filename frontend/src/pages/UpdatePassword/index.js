@@ -1,20 +1,30 @@
 import React, { useEffect, useState } from "react"
 import { useTransition, animated } from '@react-spring/web';
-import { GlobalStyle, Container, MyReviews, ReviewContainer} from './Styles.js';
+import {    GlobalStyle,
+            OuterContainer,
+            SettingsContainer,
+            PageTitle,
+            Container, 
+            MyReviews, 
+            ReviewContainer} from './Styles.js';
 import PasswordUpdate from "../../components/PasswordUpdate/index.js";
 import { useOutletContext } from "react-router-dom";
 
 const UpdatePassword = () => {
-    const [updatedPassword, setUpdatedPassword] = useOutletContext();
+    const { setUpdatedPassword } = useOutletContext();
     return (
         <>
             <GlobalStyle />
-            <ReviewContainer>
-                <MyReviews>Settings</MyReviews>
-                <Container>
-                    <PasswordUpdate setUpdatedPassword={setUpdatedPassword} />
-                </Container>
-            </ReviewContainer>
+            <OuterContainer>
+                <SettingsContainer>
+                    <PageTitle>
+                        <MyReviews>Settings</MyReviews>
+                    </PageTitle>
+                    <Container>
+                        <PasswordUpdate setUpdatedPassword={setUpdatedPassword} />
+                    </Container>
+                </SettingsContainer>
+            </OuterContainer>
         </>
     )
 

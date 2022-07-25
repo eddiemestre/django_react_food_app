@@ -6,12 +6,13 @@ export const Container = styled.div`
     width: 100%;
     height: 105%;
     display: flex;
-    margin-top: -15%;
+    margin-top: 5%;
     flex-direction: column;
     justify-content: center;
     ${'' /* padding-left: 5%;
     padding-right: 5%; */}
 `;
+
 
 export const InputTitle = styled.div`
     color: white;

@@ -1,21 +1,41 @@
 import styled from "styled-components"
 
 
-
-export const Container = styled.div`
-    background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212;
-    display: grid;
-    height: 100vh;
-    ${'' /* overflow: auto; */}
-    ${'' /* top: 6%; */}
-     grid-template-rows: 6% auto;
+export const DetailsContainer = styled.div`
+    ${'' /* background: blue;
     border: none;
+    border-radius: 5px 5px 0 0;
+    margin: 0 -5%;
+     */}
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212;
     border-radius: 10px 10px 0px 0px;
     font-family: 'Open Sans', sans-serif;
     z-index: 10;
+    height: 100%;
+    
+    ${'' /* height: 100%; */}
+    ${'' /* overflow: auto; */}
+    ${'' /* top: 6%; */}
+    ${'' /* background: blue;
+    display: grid;
+
+    grid-template-rows: 6% 100px;
+    border: none; */}
+
+    ${'' /* box-size: border-box; */}
+
+    ${'' /* position: fixed; */}
+`;
+
+
+export const Container = styled.div`
+    display: grid;
+    grid-template-rows: 7% auto;
+    font-family: 'Open Sans', sans-serif;
     padding-left: 5%;
     padding-right: 5%;
     box-size: border-box;
+    height: 100%;
     position: fixed;
     width: 90%;
 `;
@@ -99,6 +119,7 @@ export const Content = styled.textarea`
 
 export const InsideContainer = styled.div`
     ${'' /* background: pink; */}
+    width: 100%;
     padding-top: 2%;
     overflow: scroll;
     padding-bottom: 30%;

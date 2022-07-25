@@ -14,6 +14,8 @@ import Home from '../../pages/Home/Home';
 import SingleReviewView from '../../pages/SingleReviewView';
 import CreateReview from '../../pages/CreateReview';
 import EditReview from '../../pages/EditReview';
+import Settings from '../../pages/Settings';
+import UpdatePassword from '../../pages/UpdatePassword';
 
 import useWindowSize from '../../hooks/useWindowSize';
 import LargeScreenView from '../LargeScreenView';
@@ -22,8 +24,7 @@ import { DataProvider } from '../../context/DataContext';
 import ReviewAdderTemplate from '../Routes/PersistentReviewAdder';
 
 import PersistLogin from '../PersistLogin/PersistLogin';
-import { RequireAuthCreate } from '../RequireAuth';
-import { RequireAuthEdit } from '../RequireAuth';
+import { RequireAuthCreate, RequireAuthEdit, RequireAuthSettings } from '../RequireAuth';
 
 // import AnimatedRoutes from '../Routes/AnimatedRoutes';
 // import PublicRoutes from '../Routes/PublicRoutes';
@@ -54,33 +55,18 @@ function App() {
                   <Route element={<InAppTemplate />}>
                     <Route element={<ReviewAdderTemplate />}>
                       <Route path="/user/:username" element={<Home />} />
-                      {/* <Route element={<RequireAuthCreate />}> */}
+                      <Route element={<RequireAuthCreate />}>
                         <Route path="/create-review" element={<CreateReview />} />
-                      {/* </Route> */}
+                      </Route>
                     </Route>
                     <Route path="/user/:username/:id" element={<SingleReviewView />} />
-                    {/* <Route element={<RequireAuthEdit />}> */}
+                    <Route element={<RequireAuthEdit />}>
                       <Route path="/user/:username/:id/edit" element={<EditReview/>} />
-                    {/* </Route> */}
-                      {/* Outer adder template */}
-                      {/*  Create a data context jsut for the shared functions between create review and home? */}
-                        {/* Home */}
-                        {/*  Require auth */}
-                          {/* Create review */}
-                          {/*  edit review */}
-                      {/*  Require auth */}
-                        {/* Settings */}
-                        {/* Change Password */}
-
-
-                        {/* <Route element={<ReviewAdderTemplate />}>
-                        <Route exact path="/user/:username" element={<Home />}/>
-                        <Route exact path="/create_review" element={<CreateReview />}/>
                     </Route>
-                    <Route element={<ReviewViewTemplate />} >
-                        <Route exact path="/user/:username/:id" element={<SingleReviewView />} />
-                        <Route exact path="/user/:username/:id/edit" element={<EditReview />} />
-                    </Route> */}
+                    <Route element={<RequireAuthSettings />}>
+                      <Route path="/settings" element={<Settings />} />
+                      <Route path="/update-password" element={<UpdatePassword />} />
+                    </Route>
                   </Route>
                 </Route>
               </Routes>

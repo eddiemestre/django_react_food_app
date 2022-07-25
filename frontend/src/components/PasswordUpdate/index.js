@@ -6,7 +6,7 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,24}$/;
 
 
-const PasswordUpdate = (props) => {
+const PasswordUpdate = ({ setUpdatedPassword }) => {
     const [oldPass, setOldPass] = useState('');
     const [passNew, setPassNew] = useState('');
     const [passNewConfirm, setPassNewConfirm] = useState('');
@@ -47,7 +47,7 @@ const PasswordUpdate = (props) => {
             setPassNew('');
             setPassNewConfirm('');
 
-            props.setUpdatedPassword(true)
+            setUpdatedPassword(true)
             navigate('/settings')
   
         } catch (err) {
@@ -102,9 +102,6 @@ const PasswordUpdate = (props) => {
         </SvgArrow>
     )
 
-    const ChangePassword = () => {
-
-    }
 
     // check for valid password
     useEffect(() => {
@@ -163,7 +160,7 @@ const PasswordUpdate = (props) => {
                 <br />
                 <ChoicesContainer>
                     <Save><ChangeButton>Change Password</ChangeButton></Save>
-                    <Exit onClick={() => navigate(`/settings/`)}>Cancel</Exit>
+                    <Exit onClick={() => navigate(`/settings`)}>Cancel</Exit>
                 </ChoicesContainer>
         </form>
         </Container>

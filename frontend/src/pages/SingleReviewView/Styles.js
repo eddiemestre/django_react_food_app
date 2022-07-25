@@ -58,8 +58,9 @@ export const ContentContainer = styled.div`
     display: flex;
     flex-direction: column;
     gap: 0.7em; 
-    height: 100%;
+    height: max-content;
     width: 100%;
+    padding-bottom: 150px;
     ${'' /* background: red; */}
 `;
 
