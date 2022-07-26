@@ -1,4 +1,3 @@
-import axios from "../api/axios";
 import useAuth from "./useAuth";
 import DataContext from "../context/DataContext";
 import { useContext } from "react";
