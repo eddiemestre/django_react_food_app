@@ -36,7 +36,7 @@ const EditReviewModule = ({ setInputHasChanged, inputHasChanged, setDiscardModal
 
     // state
     const [writeReviewModal, setWriteReviewModal] = useState(false);
-
+    const [isLoading, setIsLoading] = useState(true)
     const [dateValue, setDateValue] = useState('');
     const [isPrivate, setIsPrivate] = useState(false);
     const [startDate, setStartDate] = useState('');
@@ -62,6 +62,7 @@ const EditReviewModule = ({ setInputHasChanged, inputHasChanged, setDiscardModal
             setOriginalDate(review.date)
             setOriginalReviewContent(review.review)
             setOriginalReviewTitle(review.title)
+            setIsLoading(false)
         }
     }, [review])
 
@@ -222,47 +223,50 @@ const EditReviewModule = ({ setInputHasChanged, inputHasChanged, setDiscardModal
     }
 
     return (
-        <DetailsContainer>
-            <form onSubmit={handleSubmit}>
-                <GridContainer>
-                <Head>
-                    <AddSpot>Add A Spot</AddSpot>
-                    <Save>Save</Save>
-                </Head>
-                <InsideContainer>
-                    <InputTitle>I Went To</InputTitle>
-                    <InputText placeholder="restaurant, cafe, bar..." value={reviewTitle} type="text" name="uname" onChange={onTitleChange} required />
-                    <InputTitle>On</InputTitle>
-                    <DatePick
-                        selected={startDate ? formatUTC(new Date(startDate)) : null}
-                        onChange={(date) => onChangeDate(date)}
-                        maxDate={(new Date())}
-                        // locale="en-US"
-                        dateFormat="MMM d, yyyy"
-                        isClearable
-                        placeholderText="enter date..."
-                        calendarClassName="datepicker"
-                    />
-                    <InputTitle>My Thoughts</InputTitle>
-                    <LargeInputText placeholder= "add review..." type="text" name="review" value={reviewContent} onClick={onThoughtsClick} readOnly="readOnly">
-                    </LargeInputText>
-                    <FieldDetailText>Last edited on {formatDate(review?.date_modified)}</FieldDetailText>
-                    <InputTitle>Make Private?</InputTitle>
-                    <SwitchContainer>
-                        <ToggleSwitch label="label" isPrivate={isPrivate} setIsPrivate={setIsPrivate} setInputHasChanged={setInputHasChanged}/>
-                    </SwitchContainer>
-                    <VisibilityToggle>{checkPrivate()}</VisibilityToggle>
-                    <br/>
-                    <DeleteReview onClick={() => ClickToDelete()}>Delete this review</DeleteReview>
-                    <br/><br/><br/><br/><br/><br/>
-                </InsideContainer>
-                {slideAnimation((style, item) => 
-                    item ? <ContentContainer style={style}><ReviewContent saveReview={saveReview} setReview={setReviewContent} title={reviewTitle} editTitle={onTitleChange} review={reviewContent}></ReviewContent></ContentContainer> : ''
-                )}
-                </GridContainer>
-            </form>
-        </DetailsContainer>
-
+        <>
+        {!isLoading && 
+            <DetailsContainer>
+                <form onSubmit={handleSubmit}>
+                    <GridContainer>
+                    <Head>
+                        <AddSpot>Add A Spot</AddSpot>
+                        <Save>Save</Save>
+                    </Head>
+                    <InsideContainer>
+                        <InputTitle>I Went To</InputTitle>
+                        <InputText placeholder="restaurant, cafe, bar..." value={reviewTitle} type="text" name="uname" onChange={onTitleChange} required />
+                        <InputTitle>On</InputTitle>
+                        <DatePick
+                            selected={startDate ? formatUTC(new Date(startDate)) : null}
+                            onChange={(date) => onChangeDate(date)}
+                            maxDate={(new Date())}
+                            // locale="en-US"
+                            dateFormat="MMM d, yyyy"
+                            isClearable
+                            placeholderText="enter date..."
+                            calendarClassName="datepicker"
+                        />
+                        <InputTitle>My Thoughts</InputTitle>
+                        <LargeInputText placeholder= "add review..." type="text" name="review" value={reviewContent} onClick={onThoughtsClick} readOnly="readOnly">
+                        </LargeInputText>
+                        <FieldDetailText>Last edited on {formatDate(review?.date_modified)}</FieldDetailText>
+                        <InputTitle>Make Private?</InputTitle>
+                        <SwitchContainer>
+                            <ToggleSwitch label="label" isPrivate={isPrivate} setIsPrivate={setIsPrivate} setInputHasChanged={setInputHasChanged}/>
+                        </SwitchContainer>
+                        <VisibilityToggle>{checkPrivate()}</VisibilityToggle>
+                        <br/>
+                        <DeleteReview onClick={() => ClickToDelete()}>Delete this review</DeleteReview>
+                        <br/><br/><br/><br/><br/><br/>
+                    </InsideContainer>
+                    {slideAnimation((style, item) => 
+                        item ? <ContentContainer style={style}><ReviewContent saveReview={saveReview} setReview={setReviewContent} title={reviewTitle} editTitle={onTitleChange} review={reviewContent}></ReviewContent></ContentContainer> : ''
+                    )}
+                    </GridContainer>
+                </form>
+            </DetailsContainer>
+        }
+    </>
     );
 };
 

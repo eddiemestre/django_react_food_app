@@ -28,7 +28,7 @@ const SingleReviewView = () => {
     const { reviews, setReviews, fromReviewFeed } = useContext(DataContext)
     const [review, setReview] = useState({})
     const axiosPrivate = useAxiosPrivate();
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
     const [isAuthedUser, setIsAuthedUser] = useState(false)
     const [reviewUpdated, setReviewUpdated] = useState(false)
 
@@ -46,6 +46,7 @@ const SingleReviewView = () => {
       console.log(review)
       if (auth.username && review?.title) {
         console.log("user!")
+        setIsAuthedUser(true)
         setReview(prevState => ({
           ...prevState,
           "username": auth.username,
@@ -53,6 +54,7 @@ const SingleReviewView = () => {
           "date": formatDate(review.date),
           "date_modified": formatDate(review.date_modified)
         }))
+        setIsLoading(false)
       } else if (review?.title) {
         console.log("No auth")
         setReview(prevState => ({
@@ -60,6 +62,7 @@ const SingleReviewView = () => {
           "date": formatDate(review.date),
           "date_modified": formatDate(review.date_modified)
         }))
+        setIsLoading(false)
       }
     }, [reviewUpdated])
 
@@ -67,10 +70,8 @@ const SingleReviewView = () => {
       // console.log("in single review use effect")
       let isMounted = true;
       const source = axios.CancelToken.source();
-      setIsLoading(true)
 
       const fetchAuthData = async () => {
-          setIsLoading(true)
 
           try {
               const response = await axiosPrivate.get('/reviews/auth_reviews/', {
@@ -88,7 +89,7 @@ const SingleReviewView = () => {
               console.log("failed")
               setReviews([])
           } finally {
-              isMounted && setIsLoading(false)
+            //   isMounted && setIsLoading(false)
           }
       }
 
@@ -107,7 +108,7 @@ const SingleReviewView = () => {
                   // console.log("404 getting anon user details")
               }
           } finally {
-              isMounted && setIsLoading(false)
+            //   isMounted && setIsLoading(false)
           }
       }
 
@@ -155,10 +156,10 @@ const SingleReviewView = () => {
               if (reviews[0]?.user === auth?.user_id && auth?.username === params.username) {
                   console.log("reviews are present and belong to authed paramed user")
                   setIsAuthedUser(true)
-                  setIsLoading(false)
+                //   setIsLoading(false)
               } else if (reviews[0].username === params.username) {
                   console.log("reviews are present and belong to public paramed user")
-                  setIsLoading(false)
+                //   setIsLoading(false)
               } else {
                   console.log("reviews present but not same url, pull data")
                   PullData()
@@ -249,37 +250,41 @@ const SingleReviewView = () => {
 
     return (
         <>
-            <GlobalStyle />
-            <OuterContainer>
-              <Container>
-                <TitleContainer>
-                  <Title>{review?.title}</Title>
-                </TitleContainer>
-                <ContentContainer>
-                    <Link to={`/user/${review?.username}`} style={{textDecoration: 'none'}}><Name>{review?.name}</Name></Link>
-                    <Date>{review?.date}</Date>
-                    <Content>{review?.review}</Content>
-                    {/* <LastEdited>Last edited on {dateModified}</LastEdited> */}
-                    <LastEdited>Last edited on {review?.date_modified}</LastEdited>
-                </ContentContainer>
-              </Container>
-            </OuterContainer>
-            {/* show button for editing if isAuthedUser is true */}
-            {isAuthedUser && 
-                EditAppear((style, item) =>
-                    item ? 
-                    <ButtonContainer style={style} onClick={() => handleEditClick()}>{EditButton()}</ButtonContainer>
-                    : ''
-                    )
-            }
-            {/* show button for going back if fromListView is true */}
-            {fromReviewFeed && 
-                BackAppear((style, item) =>
-                    item ? 
-                    <BackContainer style={style} onClick={() => handleBackClick()}>{BackButton()}</BackContainer>
-                    : ''
-                    )
-            }
+        {!isLoading && 
+            <>
+                <GlobalStyle />
+                <OuterContainer>
+                <Container>
+                    <TitleContainer>
+                    <Title>{review?.title}</Title>
+                    </TitleContainer>
+                    <ContentContainer>
+                        <Link to={`/user/${review?.username}`} style={{textDecoration: 'none'}}><Name>{review?.name}</Name></Link>
+                        <Date>{review?.date}</Date>
+                        <Content>{review?.review}</Content>
+                        <LastEdited>Last edited on {review?.date_modified}</LastEdited>
+                    </ContentContainer>
+                </Container>
+                </OuterContainer>
+
+                {/* show button for editing if isAuthedUser is true */}
+                {isAuthedUser && 
+                    EditAppear((style, item) =>
+                        item ? 
+                        <ButtonContainer style={style} onClick={() => handleEditClick()}>{EditButton()}</ButtonContainer>
+                        : ''
+                        )
+                }
+                {/* show button for going back if fromListView is true */}
+                {fromReviewFeed && 
+                    BackAppear((style, item) =>
+                        item ? 
+                        <BackContainer style={style} onClick={() => handleBackClick()}>{BackButton()}</BackContainer>
+                        : ''
+                        )
+                }
+            </>
+        }
         </>
     );
 }

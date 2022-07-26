@@ -25,9 +25,6 @@ export const NoticeContainer = styled(animated.div)`
 
 `
 
-export const NoticeText = styled.div` 
-`;
-
 export const SvgComponent = styled.svg`
     position: fixed;
     z-index: 15;

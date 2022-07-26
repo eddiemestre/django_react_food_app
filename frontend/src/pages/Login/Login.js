@@ -7,15 +7,6 @@ import { useTransition } from '@react-spring/web'
 import LoginForm from "../../components/LoginForm/index.js";
 import RegistrationContext from "../../context/RegistrationContext.js";
 
-// import useAuth from "../../hooks/useAuth.js";
-// import { Navigate, useNavigate } from "react-router-dom";
-// import AbsoluteWrapper from "../../components/Wrapper/index.js";
-// import AuthenticatedContext from "../../context/AuthContext.js";
-// import Header from "../../components/Header/index.js";
-// import Footer from "../../components/Footer/index.js";
-
-
-
 const Login = () => {
     const delay = ms => new Promise(res => setTimeout(res, ms));
     const { justSignedUp, setJustSignedUp } = useContext(RegistrationContext);

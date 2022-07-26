@@ -1,8 +1,8 @@
 import React, { useEffect, useState, useContext } from "react"
 import EditReviewModule from "../../components/EditReviewModule/index.js";
 import { useTransition } from '@react-spring/web';
-import { Test2, Container, GlobalStyle, SvgContent, ButtonContainer, FaderDivClose, ModalContainer } from './Styles.js';
-import { useOutletContext, useLocation, useNavigate, useParams } from "react-router-dom";
+import { Container, GlobalStyle, SvgContent, ButtonContainer, FaderDivClose, ModalContainer } from './Styles.js';
+import { useNavigate, useParams } from "react-router-dom";
 import DiscardModal from "../../components/DiscardModal/index.js";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.js";
 import DataContext from "../../context/DataContext.js";
@@ -26,7 +26,7 @@ const EditReview = () => {
     const [onEdit, setOnEdit] = useState(true)
     const [review, setReview] = useState({})
     const [reviewUpdated, setReviewUpdated] = useState(false)
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
 
 
     useEffect(() => {
@@ -51,6 +51,7 @@ const EditReview = () => {
             "date": formatDate(review.date),
             "date_modified": formatDate(review.date_modified)
             }))
+            setIsLoading(false)
         }
       } else {
         console.log("not logged in")
@@ -64,8 +65,6 @@ const EditReview = () => {
       setIsLoading(true)
 
       const fetchAuthData = async () => {
-          setIsLoading(true)
-
           try {
               const response = await axiosPrivate.get('/reviews/auth_reviews/', {
                   cancelToken: source.token
@@ -224,37 +223,40 @@ const EditReview = () => {
     }
 
     return (
-
         <>
-           <GlobalStyle />
-           <Container>
-                <EditReviewModule 
-                    setDiscardModal={setDiscardModal} 
-                    setDiscardType={setDiscardType}
-                    setInputHasChanged={setInputHasChanged}
-                    inputHasChanged={inputHasChanged}
-                    review={review}
-                    setReview={setReview}
-                />
-            </Container>
+        {!isLoading && 
+            <>
+                <GlobalStyle />
+                <Container>
+                        <EditReviewModule 
+                            setDiscardModal={setDiscardModal} 
+                            setDiscardType={setDiscardType}
+                            setInputHasChanged={setInputHasChanged}
+                            inputHasChanged={inputHasChanged}
+                            review={review}
+                            setReview={setReview}
+                        />
+                    </Container>
 
-            {EditAppear((style, item) =>
-                item ? 
-                <ButtonContainer style={style}>{createReviewButton()}</ButtonContainer>
-                : '')
-            }
+                    {EditAppear((style, item) =>
+                        item ? 
+                        <ButtonContainer style={style}>{createReviewButton()}</ButtonContainer>
+                        : '')
+                    }
+                    
+                    {discardModal && (backgroundOverlay((style, item) =>
+                        item 
+                        ? <FaderDivClose style={style}/> 
+                        : '' ))
+                    }
             
-            {discardModal && (backgroundOverlay((style, item) =>
-                item 
-                ? <FaderDivClose style={style}/> 
-                : '' ))
-            }
-    
-            {discardModal && (modalAppear((style, item) => 
-                item 
-                ? <ModalContainer style={style}><DiscardModal type={discardType} clickYes={clickYes} clickNo={clickNo}/></ModalContainer> 
-                : ''))
-            }    
+                    {discardModal && (modalAppear((style, item) => 
+                        item 
+                        ? <ModalContainer style={style}><DiscardModal type={discardType} clickYes={clickYes} clickNo={clickNo}/></ModalContainer> 
+                        : ''))
+                    }    
+            </>
+        }
         </>
     )
 

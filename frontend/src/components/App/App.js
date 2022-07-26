@@ -2,12 +2,22 @@ import './App.css';
 import React from "react"
 import { Routes, Route } from 'react-router-dom';
 
+// hooks
 import { RegistrationProvider } from '../../context/RegistrationContext';
 import { AuthProvider } from '../../context/AuthProvider';
+import { DataProvider } from '../../context/DataContext';
+import PersistLogin from '../PersistLogin/PersistLogin';
+import { RequireAuthCreate, RequireAuthEdit, RequireAuthSettings } from '../RequireAuth';
 
+import useWindowSize from '../../hooks/useWindowSize';
+import LargeScreenView from '../LargeScreenView';
+
+// templates
 import PublicTemplate from '../Routes/PublicRouteTemplate';
 import InAppTemplate from '../Routes/InAppTemplate';
+import ReviewAdderTemplate from '../Routes/PersistentReviewAdder';
 
+// pages
 import Login from '../../pages/Login/Login';
 import SignUp from '../../pages/SignUp/SignUp';
 import Home from '../../pages/Home/Home';
@@ -17,19 +27,7 @@ import EditReview from '../../pages/EditReview';
 import Settings from '../../pages/Settings';
 import UpdatePassword from '../../pages/UpdatePassword';
 
-import useWindowSize from '../../hooks/useWindowSize';
-import LargeScreenView from '../LargeScreenView';
-import { DataProvider } from '../../context/DataContext';
 
-import ReviewAdderTemplate from '../Routes/PersistentReviewAdder';
-
-import PersistLogin from '../PersistLogin/PersistLogin';
-import { RequireAuthCreate, RequireAuthEdit, RequireAuthSettings } from '../RequireAuth';
-
-// import AnimatedRoutes from '../Routes/AnimatedRoutes';
-// import PublicRoutes from '../Routes/PublicRoutes';
-// import NotFoundRoute from '../Routes/NotFoundRoute';
-// import { AuthenticatedProvider } from '../../context/AuthContext';
 
 
 function App() {
@@ -74,11 +72,6 @@ function App() {
           </>
           : <LargeScreenView />}
       </AuthProvider>
-
-      /* <PublicRoutes /> */
-      /* <AnimatedRoutes /> */
-      /* <NotFoundRoute /> */
-
 
   );
 }

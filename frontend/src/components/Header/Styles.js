@@ -14,16 +14,6 @@ export const HeadContainer = styled.div`
     ${'' /* background: pink; */}
     padding-left: 5%;
     padding-right: 5%;
-
-    :before {
-        ${'' /* content : "";
-        position: absolute;
-        left: 5%;
-        bottom: -1px;
-        height: 1px;
-        width: 90%;
-        border-bottom:1px solid white; */}
-    }
 `;
 
 export const AppHead = styled.div`

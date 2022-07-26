@@ -3,29 +3,11 @@ import { animated } from '@react-spring/web';
 import DatePicker from 'react-datepicker';
 
 export const DetailsContainer = styled(animated.div)`
-    ${'' /* background: blue;
-    border: none;
-    border-radius: 5px 5px 0 0;
-    margin: 0 -5%;
-     */}
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212;
     border-radius: 10px 10px 0px 0px;
     font-family: 'Open Sans', sans-serif;
     z-index: 10;
     height: 100%;
-    
-    ${'' /* height: 100%; */}
-    ${'' /* overflow: auto; */}
-    ${'' /* top: 6%; */}
-    ${'' /* background: blue;
-    display: grid;
-
-    grid-template-rows: 6% 100px;
-    border: none; */}
-
-    ${'' /* box-size: border-box; */}
-
-    ${'' /* position: fixed; */}
 `;
 
 export const GridContainer = styled.div` 
@@ -38,16 +20,7 @@ export const GridContainer = styled.div`
     height: 100%;
     position: fixed;
     width: 90%;
-
-    ${'' /* background: blue; */}
-    ${'' /* height: 100%; */}
-    ${'' /* overflow: auto; */}
-    ${'' /* top: 6%; */}
-    ${'' /* z-index: 10; */}
-    ${'' /* border: none; */}
-    ${'' /* border-radius: 10px 10px 0px 0px; */}
 `
-
 
 // should this be flex but the outer be grid so it scrolls?
 export const Head = styled.div`
@@ -83,8 +56,19 @@ export const Save = styled.button`
     }
 `;
 
-export const SaveContent = styled.div`
+export const InsideContainer = styled.div`
+    overflow: scroll;
+    position: relative;
+    width: 100%;
+    ${'' /* padding-bottom: 20%; */}
+    ${'' /* height: 100%; */}
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    ::-webkit-scrollbar {
+        display: none;
+    }
 `;
+
 
 export const InputTitle = styled.div`
     color: white;
@@ -115,25 +99,25 @@ export const InputText = styled.input`
     }
 `;
 
-// export const DateText = styled.input`
-//     padding-top: 1%;
-//     height: 2em;
-//     width: 100%;
-//     border: none;
-//     border-radius: 5px;
-//     background: linear-gradient(0deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), #121212;
-//     color: white;
-//     outline: none;
-//     font-family: 'Open Sans', sans-serif;
-//     ${'' /* text-indent: 0.2em; */}
-//     ${'' /* padding-left: 0.5em;
-//     font-size: 16px;
-//     text-align: left;
-//     ::placeholder {
-//         color: #bebebe;
-//         font-style: italic;
-//     } */}
-// `;
+export const DatePick = styled(DatePicker)`
+    border: none;
+    border-radius: 5px;
+    padding-top: 1%;
+    height: 2.5em;
+    width: 100%;
+    font-family: 'Open Sans', sans-serif;
+    background: linear-gradient(0deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), #121212;
+    color: white;
+    box-sizing: border-box;
+    padding-left: 0.5em;
+    font-size: 16px;
+    outline: none;
+    text-align: left;
+    ::placeholder {
+        color: #bebebe;
+        font-style: italic;
+    }
+`;
 
 export const LargeInputText = styled.textarea`
     padding-top: 1%;
@@ -169,43 +153,6 @@ export const FieldDetailText = styled.div`
     font-size: 12px;
 `;
 
-export const DatePick = styled(DatePicker)`
-    border: none;
-    border-radius: 5px;
-    padding-top: 1%;
-    height: 2.5em;
-    width: 100%;
-    font-family: 'Open Sans', sans-serif;
-    background: linear-gradient(0deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), #121212;
-    color: white;
-    box-sizing: border-box;
-    padding-left: 0.5em;
-    font-size: 16px;
-    outline: none;
-    text-align: left;
-    ::placeholder {
-        color: #bebebe;
-        font-style: italic;
-    }
-
-`
-
-export const InsideContainer = styled.div`
-    overflow: scroll;
-    position: relative;
-    width: 100%;
-    ${'' /* padding-bottom: 20%; */}
-    ${'' /* height: 100%; */}
-    -ms-overflow-style: none; /* for Internet Explorer, Edge */
-    scrollbar-width: none; /* for Firefox */
-    ::-webkit-scrollbar {
-        display: none;
-    }
-    ${'' /* height: 1300%; */}
-`;
-
-
-
 export const SwitchContainer = styled.div` 
     position: relative;
     display: block;
@@ -221,31 +168,6 @@ export const VisibilityToggle = styled.div`
     font-size: 12px;
 `;
 
-export const ContentContainer = styled(animated.div)`
-    ${'' /* display: grid; */}
-    width: 100%;
-    height: 100%;
-    bottom: 0;
-    position: absolute;
-    ${'' /* margin-left: -5%;
-    margin-right: -5%; */}
-    ${'' /* overflow: auto; */}
-    ${'' /* top: 6%; */}
-     ${'' /* grid-template-rows: 6% auto; */}
-    border: none;
-    border-radius: 10px 10px 0px 0px;
-    font-family: 'Open Sans', sans-serif;
-    z-index: 6000;
-`;
-
-export const FadeText = styled.div` 
-    background: white;
-    height: 10%;
-    width: 100%;
-    z-index: 10000;
-    top: 0;
-`
-
 export const DeleteReview = styled.div` 
 	background: none;
 	color: inherit;
@@ -258,11 +180,7 @@ export const DeleteReview = styled.div`
     font-size: 12px;
     font-weight: 700;
     width: max-content;
-    ${'' /* height: 5%; */}
     text-align: left;
-    ${'' /* margin-left: -3%; */}
-    ${'' /* position: absolute;
-    top: 85%; */}
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212;
     border: none;
     -webkit-touch-callout: none; /* iOS Safari */
@@ -276,4 +194,16 @@ export const DeleteReview = styled.div`
     :hover {
         color: #C56679;
     }
-`
+`;
+
+export const ContentContainer = styled(animated.div)`
+    width: 100%;
+    height: 100%;
+    bottom: 0;
+    position: absolute;
+    border: none;
+    border-radius: 10px 10px 0px 0px;
+    font-family: 'Open Sans', sans-serif;
+    z-index: 6000;
+`;
+

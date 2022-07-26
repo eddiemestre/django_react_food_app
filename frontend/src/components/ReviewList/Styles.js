@@ -2,14 +2,8 @@ import styled from "styled-components"
 
 
 export const ReviewContainer = styled.div`
-    ${'' /* border-top: 1px solid white; */}
-    ${'' /* display: flex;
-    justify-content: center;
-    flex-direction: column;
-    gap: 0.7em; */}
     display: grid;
     grid-template-rows: 8% auto;
-    ${'' /* height: 100%; */}
     padding-bottom: 1.5em;
     padding-left: 5%;
     padding-right: 5%;
@@ -20,20 +14,19 @@ export const ReviewContainer = styled.div`
     box-sizing: border-box;
 `;
 
-export const MyReviews = styled.div`
-    color: white;
-    align-items: left;
-    font-weight: 700;
-    font-size: 1.5em;
-`;
-
-
 export const UserReviewsTitle = styled.div` 
     height: 100%;
     width: 100%;
     ${'' /* background: orange; */}
     display: flex;
     align-items: center;
+`;
+
+export const MyReviews = styled.div`
+    color: white;
+    align-items: left;
+    font-weight: 700;
+    font-size: 1.5em;
 `;
 
 export const ReviewFeedContainer = styled.div`
@@ -46,6 +39,14 @@ export const ReviewFeedContainer = styled.div`
     ${'' /* background: red; */}
 `;
 
+export const TextContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+`;
+
 export const AddText = styled.div`
     color: white;
     font-size: 16px;
@@ -54,13 +55,3 @@ export const AddText = styled.div`
     text-align: center;
 `;
 
-export const TextContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    ${'' /* padding-bottom: 5%;
-    background: blue; */}
-    ${'' /* padding-top: 60%; */}
-`;

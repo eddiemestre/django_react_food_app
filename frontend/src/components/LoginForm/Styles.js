@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 
 export const App = styled.div`
     font-family: 'Open Sans', sans-serif;
@@ -8,8 +8,6 @@ export const App = styled.div`
     justify-content: center;
     flex-direction: column;
     gap: 20px;
-    ${'' /* height: 90vh; */}
-    ${'' /* background: blue; */}
     width: 100%;
 `;
 

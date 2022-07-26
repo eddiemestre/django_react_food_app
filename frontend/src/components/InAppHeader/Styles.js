@@ -1,8 +1,8 @@
 import styled from "styled-components"
 import { animated } from '@react-spring/web';
+
 export const HeadContainer = styled.div`
     display: flex;
-    ${'' /* height: 6%; */}
     height: 50px;
     width: 100%;
     position: fixed;
@@ -27,19 +27,10 @@ export const HeadContainer = styled.div`
     }
 `;
 
-
 export const AppName = styled.div`
     color: white;
     font-weight: 700;
     font-size: 1em;
-`;
-
-export const Icon = styled.div`
-    transform: scale(1.8);
-    transform-origin: center;
-    padding-right: 1%;
-    padding-top: 1%;
-
 `;
 
 export const SvgContainer = styled.svg`
@@ -49,7 +40,6 @@ export const SvgContainer = styled.svg`
 `;
 
 export const MenuContainer = styled(animated.div)`
-    ${'' /* background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212; */}
     position: fixed;
     background: white;
     height: 100%;

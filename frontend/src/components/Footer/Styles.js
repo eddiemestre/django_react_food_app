@@ -9,7 +9,6 @@ export const Container = styled.div`
     width: 100%;
     height: 10%;
     box-sizing: border-box;
-    ${'' /* background: pink; */}
 `;
 
 export const AppFoot = styled.div`

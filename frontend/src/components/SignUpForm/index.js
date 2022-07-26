@@ -66,9 +66,7 @@ const SignUpForm = () => {
         return
       } else if (!passCheck) {
         return // errors below handle this
-      } // else {
-      //   console.log("valid data submitted")
-      // }
+      }
 
       try {
           await axios.post(REGISTER_URL,

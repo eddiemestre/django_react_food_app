@@ -150,18 +150,6 @@ const useAxiosFetchReviews = (username) => {
             }
         }
 
-        // auth? 
-        // fetch auth data
-        // else
-        // localstorage variables? Set them and fetch auth data
-
-        // else
-        // request auth user data
-        // set user data in memory and local storage
-        // then fetch auth data
-        // else 
-        // anonymous, get public data
-
         PullData(username)
         
         const cleanUp = () => {

@@ -13,18 +13,14 @@ import useInput from "../../hooks/useInput.js";
 import { Link, useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth.js";
 import axios, { axiosPrivate } from '../../api/axios';
-import DataContext from "../../context/DataContext.js";
 
 const LOGIN_URL = '/auth/login/';
 
 const LoginForm = () => {
-    const { auth, setAuth } = useAuth();
+    const { setAuth } = useAuth();
     const navigate = useNavigate();
-  const { setIsLoggedIn } = useContext(DataContext)
-
     const [errorMessages, setErrorMessages] = useState({});
-
-    const [email, resetEmail, emailAttribs] =  useInput('email', '') // useLocalStorage('email', '') //useState('');
+    const [email, resetEmail, emailAttribs] =  useInput('email', '')
     const [password, setPassword] = useState('');
   
     useEffect(() => {
@@ -90,11 +86,6 @@ const LoginForm = () => {
           "user_id": response?.data[0]?.id,
           "name": response?.data[0]?.name
         }))
-
-        // set in localStorage
-        localStorage.setItem('user_id', JSON.stringify(response?.data[0]?.id))
-        localStorage.setItem('username', JSON.stringify(response?.data[0]?.username))
-        localStorage.setItem('name', JSON.stringify(response?.data[0]?.name))
         
         return username
 
@@ -114,7 +105,6 @@ const LoginForm = () => {
       // // use the accessToken to get user details
       const username = await GetAuthedUser(accessToken);
 
-      // setIsLoggedIn(true)
       navigate(`/user/${username}/`);
     };
   

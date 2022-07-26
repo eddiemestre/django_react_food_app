@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext, useMemo } from "react";
+import React, {useEffect, useState, useContext } from "react";
 import {GlobalStyle, GridContainer } from './Styles.js';
 import ReviewList from "../../components/ReviewList/index.js";
 import DataContext from "../../context/DataContext.js";
@@ -10,17 +10,12 @@ import axios from "axios";
 
 const Home = () => {
     const { reviews, setReviews } = useContext(DataContext);
-    const [isLoading, setIsLoading] = useState(false)
+    const [isLoading, setIsLoading] = useState(true)
     const { auth, anonUser, setAnonUser } = useAuth();
     const params = useParams();
     const axiosPrivate = useAxiosPrivate();
 
-    // useEffect(() => {
-    //     console.log(reviews)
-    // }, [reviews])
-
     useEffect(() => {
-        // console.log("in home use effect")
         let isMounted = true;
         const source = axios.CancelToken.source();
         setIsLoading(true)
@@ -147,7 +142,6 @@ const Home = () => {
             <GridContainer >
                 <ReviewList reviews={reviews} auth={auth} anonUser={anonUser}/>
             </GridContainer>}
-            {isLoading && <p>Loading...</p>}
         </>
     );
 };

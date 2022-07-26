@@ -150,10 +150,8 @@ const PasswordUpdate = ({ setUpdatedPassword }) => {
                 {renderErrorMessage("incorrectOld")}  
                 <InputTitle>New Pasword</InputTitle>   
                 <InputText placeholder="new password..." type="password" name="pass" autoComplete="new-password" value={passNew} onChange={onChangeNew} required />
-                {/* {renderErrorMessage("pass")} */}
                 <InputTitle>Confirm New Pasword</InputTitle> 
                 <InputText placeholder="confirm password..." type="password" name="pass2" autoComplete="new-password" value={passNewConfirm} onChange={onChangeNewConfirm} required />
-                {/* {renderErrorMessage("pass2")} */}
                 {renderErrorMessage("server")}
                 {renderErrorMessage("other")}
                 <PasswordValidator pass_length_valid={isEightChar} pass_num_valid={hasNum} pass_sym_valid={hasSym} pass_same={isPassSame}></PasswordValidator>

@@ -1,9 +1,8 @@
-import React, {useEffect, useState} from "react";
-import { HeadContainer, AppName, SvgContainer } from './Styles.js';
+import React, {useState} from "react";
+import { HeadContainer, AppName, SvgContainer, MenuBackground, MenuContainer } from './Styles.js';
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth.js";
 import { useTransition } from '@react-spring/web';
-import { MenuBackground, MenuContainer } from "./Styles.js";
 import MenuModal from "../Menu/index.js";
 
 const InAppHeader = () => {

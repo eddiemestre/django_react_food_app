@@ -1,8 +1,5 @@
-import React, { useEffect, useState } from "react"
-import { useTransition, animated } from '@react-spring/web';
-import { Test2, Container, GlobalStyle, Content, Numbers, Text } from './Styles.js';
-import ReviewModule from "../../components/CreateReviewModule/index.js";
-import { useOutletContext, useLocation } from "react-router-dom";
+import React from "react";
+import { Container, GlobalStyle, Content, Numbers, Text } from './Styles.js';
 import Header from "../../components/Header/index.js";
 import Footer from "../../components/Footer/index.js";
 

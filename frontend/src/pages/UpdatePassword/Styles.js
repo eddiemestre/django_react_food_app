@@ -7,22 +7,11 @@ export const GlobalStyle = createGlobalStyle`
         font-family: 'Open Sans', sans-serif;
         position: fixed;
         overflow: hidden;
-        width: 100%;
-        ${'' /* position: ${props => props.modal_opened || props.menu_opened ? "fixed" : ""};
-        overflow: ${props => props.modal_opened || props.menu_opened ? "hidden" : "scroll"};
-        top: ${props => props.modal_opened || props.menu_opened ? `-${window.scrollY}px` : ""}; */}
-        ${'' /* height: 100%;
-        width: 100%; */}
-        ${'' /* margin-top: 12%; */}
-    
+        width: 100%;    
     }
 `
 
 export const OuterContainer = styled.div`
-    ${'' /* grid-template-rows: 6% 94%; */}
-    ${'' /* height: 100%; */}
-    ${'' /* position: fixed; */}
-    ${'' /* padding: 0% 5%; */}
     margin-top: 50px;
     box-sizing: border-box;
     width: 100%;
@@ -33,11 +22,6 @@ export const OuterContainer = styled.div`
 `;
 
 export const SettingsContainer = styled.div`
-    ${'' /* border-top: 1px solid white; */}
-    ${'' /* display: flex;
-    justify-content: center;
-    flex-direction: column;
-    gap: 0.7em; */}
     display: grid;
     grid-template-rows: 8% auto;
     ${'' /* height: 100%; */}

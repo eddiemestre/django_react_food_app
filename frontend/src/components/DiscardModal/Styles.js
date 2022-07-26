@@ -35,8 +35,6 @@ export const Discard = styled.div`
 export const Yes = styled.div`
     width: 100%;
     height: 100%;
-    ${'' /* position: relative;
-    box-sizing: border-box; */}
     color: #B00020;
     display: flex;
     justify-content: center;

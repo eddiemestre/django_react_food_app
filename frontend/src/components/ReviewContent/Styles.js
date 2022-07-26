@@ -2,29 +2,11 @@ import styled from "styled-components"
 
 
 export const DetailsContainer = styled.div`
-    ${'' /* background: blue;
-    border: none;
-    border-radius: 5px 5px 0 0;
-    margin: 0 -5%;
-     */}
     background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212;
     border-radius: 10px 10px 0px 0px;
     font-family: 'Open Sans', sans-serif;
     z-index: 10;
     height: 100%;
-    
-    ${'' /* height: 100%; */}
-    ${'' /* overflow: auto; */}
-    ${'' /* top: 6%; */}
-    ${'' /* background: blue;
-    display: grid;
-
-    grid-template-rows: 6% 100px;
-    border: none; */}
-
-    ${'' /* box-size: border-box; */}
-
-    ${'' /* position: fixed; */}
 `;
 
 
@@ -53,7 +35,7 @@ export const AddSpot = styled.div`
     font-size: 16px;
     font-weight: 700;
     color: white;
-`
+`;
 
 export const Done = styled.div`
     right: 2%;
@@ -69,6 +51,19 @@ export const Done = styled.div`
     
     :hover {
         background: #363636;
+    }
+`;
+
+export const InsideContainer = styled.div`
+    ${'' /* background: pink; */}
+    width: 100%;
+    padding-top: 2%;
+    overflow: scroll;
+    padding-bottom: 30%;
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    ::-webkit-scrollbar {
+        display: none;
     }
 `;
 
@@ -98,34 +93,3 @@ export const Content = styled.textarea`
     }
 `;
 
-// export const Title = styled.input` 
-//     padding-top: 1%;
-//     height: 2.5em;
-//     width: 100%;
-//     border: none;
-//     box-sizing: border-box;
-//     border-radius: 5px;
-//     background: linear-gradient(0deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), #121212;
-//     color: white;
-//     padding-left: 0.5em;
-//     font-size: 16px;
-//     font-family: 'Open Sans', sans-serif;
-//     outline: none;
-//     ::placeholder {
-//         color: #bebebe;
-//         font-style: italic;
-//     }
-// `;
-
-export const InsideContainer = styled.div`
-    ${'' /* background: pink; */}
-    width: 100%;
-    padding-top: 2%;
-    overflow: scroll;
-    padding-bottom: 30%;
-    -ms-overflow-style: none; /* for Internet Explorer, Edge */
-    scrollbar-width: none; /* for Firefox */
-    ::-webkit-scrollbar {
-        display: none;
-    }
-`;

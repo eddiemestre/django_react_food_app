@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from "react"
+import React, { useState, useEffect } from "react"
 import { useTransition, animated } from '@react-spring/web';
 import {    GlobalStyle, 
             Container, 
@@ -10,11 +10,19 @@ import {    GlobalStyle,
             NoticeText} from './Styles.js';
 import SettingsForm from "../../components/SettingsForm/index.js";
 import { useOutletContext } from "react-router-dom";
+import useAuth from "../../hooks/useAuth.js";
 
 const Settings = () => {
+    const { auth } = useAuth();
     const {updatedPassword, setUpdatedPassword} = useOutletContext();
     const [updatedSettings, setUpdatedSettings] = useState(false);
     const [isLoading, setIsLoading] = useState(false)
+
+    useEffect(() => {
+        if (auth?.accessToken) {
+            setIsLoading(false)
+        }
+    }, [auth])
     
     const delay = ms => new Promise(res => setTimeout(res, ms));
 

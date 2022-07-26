@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from "react"
+import React from "react"
 import { useTransition, animated } from '@react-spring/web';
 import {    GlobalStyle,
             OuterContainer,
             SettingsContainer,
             PageTitle,
             Container, 
-            MyReviews, 
-            ReviewContainer} from './Styles.js';
+            MyReviews } from './Styles.js';
 import PasswordUpdate from "../../components/PasswordUpdate/index.js";
 import { useOutletContext } from "react-router-dom";
 

@@ -1,5 +1,5 @@
-import { Outlet, useLocation } from "react-router-dom";
-import { useState, useEffect, useContext } from "react";
+import { Outlet } from "react-router-dom";
+import { useState, useEffect } from "react";
 import useRefreshToken from "../../hooks/useRefreshToken.js";
 import useAuth from "../../hooks/useAuth.js";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.js";
@@ -76,18 +76,12 @@ const PersistLogin = () => {
     }, [])
 
     useEffect(() => {
-        console.log(`isLoading: ${isLoading}`)
-        console.log(`isLoadingAuth: ${isLoadingSetAuth}`)
-        console.log(`aT: ${JSON.stringify(auth?.accessToken)}`)
+        // console.log(`isLoading: ${isLoading}`)
+        // console.log(`isLoadingAuth: ${isLoadingSetAuth}`)
+        // console.log(`aT: ${JSON.stringify(auth?.accessToken)}`)
     }, [isLoading, isLoadingSetAuth])
 
     return (
-        // <>
-        //     {isLoading
-        //         ? <p>Loading...</p>
-        //         : <Outlet/>
-        //     }
-        // </>
         <>
         {isLoading || isLoadingSetAuth
         ? <p>Loading...</p>

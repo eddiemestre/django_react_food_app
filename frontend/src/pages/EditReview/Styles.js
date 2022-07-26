@@ -6,13 +6,6 @@ export const GlobalStyle = createGlobalStyle`
     body {
         background: linear-gradient(0deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.05)), #121212;
         font-family: 'Open Sans', sans-serif;
-        position: ${props => props.modal_opened || props.menu_opened ? "fixed" : ""};
-        overflow: ${props => props.modal_opened || props.menu_opened ? "hidden" : "scroll"};
-        top: ${props => props.modal_opened || props.menu_opened ? `-${window.scrollY}px` : ""};
-        ${'' /* height: 100%;
-        width: 100%; */}
-        ${'' /* margin-top: 10%; */}
-        ${'' /* height: 100vh; */}
     }
 `;
 

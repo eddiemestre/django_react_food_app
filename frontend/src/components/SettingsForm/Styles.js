@@ -42,6 +42,11 @@ export const InputText = styled.input`
     }
 `;
 
+export const PasswordContainer = styled.div` 
+    position: relative;
+`;
+
+
 export const PasswordText = styled.input`
     padding-top: 1%;
     height: 2.5em;
@@ -59,6 +64,25 @@ export const PasswordText = styled.input`
         background: linear-gradient(0deg, rgba(255, 255, 255, 0.16), rgba(255, 255, 255, 0.16)), #121212;
     }
     
+`;
+
+export const SvgArrow = styled.svg`
+    position: absolute;
+    z-index: 15;
+    right: 0;
+    ${'' /* background: blue; */}
+    ${'' /* right: 2%;
+    bottom: 5%; */}
+    height: 100%;
+    width: 10%;
+    transform: scale(.75);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -o-user-select: none;
+    user-select: none;
 `;
 
 
@@ -106,6 +130,16 @@ export const Save = styled.div`
     }
 `;
 
+export const SaveButton = styled.button` 
+	background: none;
+	color: inherit;
+	border: none;
+	padding: 0;
+	font: inherit;
+	cursor: pointer;
+	outline: inherit;
+`;
+
 export const Exit = styled.div` 
     width: 50%;
     height: 50%;
@@ -122,37 +156,4 @@ export const Exit = styled.div`
     :hover {
         background: linear-gradient(0deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.08)), #121212;
     }
-`;
-
-export const PasswordContainer = styled.div` 
-    position: relative;
-`
-
-export const SvgArrow = styled.svg`
-    position: absolute;
-    z-index: 15;
-    right: 0;
-    ${'' /* background: blue; */}
-    ${'' /* right: 2%;
-    bottom: 5%; */}
-    height: 100%;
-    width: 10%;
-    transform: scale(.75);
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-`;
-
-export const SaveButton = styled.button` 
-	background: none;
-	color: inherit;
-	border: none;
-	padding: 0;
-	font: inherit;
-	cursor: pointer;
-	outline: inherit;
 `;

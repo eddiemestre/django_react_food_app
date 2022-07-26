@@ -1,10 +1,7 @@
-import React, {useState} from "react";
-import { Info, Item, Icon } from './Styles.js';
+import React from "react";
+import { Info, Item } from './Styles.js';
 
 const PasswordValidator = (props) => {
-
-    // console.log("inside validator", props.pass_length_valid)
-
 
     return(
         <Info>
