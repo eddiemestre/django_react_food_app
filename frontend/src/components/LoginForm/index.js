@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useContext } from "react";
+import React, {useEffect, useState } from "react";
 import { App, 
         LogForm, 
         Title, 
@@ -49,6 +49,7 @@ const LoginForm = () => {
         const accessToken = response?.data?.access;
 
         setAuth({email: email, accessToken: accessToken});
+
         setPassword('');
 
         return accessToken;
@@ -86,6 +87,10 @@ const LoginForm = () => {
           "user_id": response?.data[0]?.id,
           "name": response?.data[0]?.name
         }))
+
+        localStorage.setItem('user_id', JSON.stringify(response?.data[0]?.id))
+        localStorage.setItem('username', JSON.stringify(response?.data[0]?.username))
+        localStorage.setItem('name', JSON.stringify(response?.data[0]?.name))
         
         return username
 

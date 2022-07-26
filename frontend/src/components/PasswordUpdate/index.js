@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
-import {Container, InputTitle, InputText, Error, FieldDetailText, ChoicesContainer, Save, Exit, PasswordText, SvgArrow, ChangeButton, PasswordContainer} from "./Styles";
+import { useNavigate } from 'react-router-dom';
+import {Container, InputTitle, InputText, Error, ChoicesContainer, Save, Exit, ChangeButton } from "./Styles";
 import PasswordValidator from '../PasswordValidator';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import useAuth from '../../hooks/useAuth';
+
 const PASSWORD_REGEX = /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,24}$/;
 
 
 const PasswordUpdate = ({ setUpdatedPassword }) => {
+    const { auth } = useAuth();
     const [oldPass, setOldPass] = useState('');
     const [passNew, setPassNew] = useState('');
     const [passNewConfirm, setPassNewConfirm] = useState('');
@@ -15,7 +18,6 @@ const PasswordUpdate = ({ setUpdatedPassword }) => {
     const [hasNum, setHasNum] = useState(false);
     const [hasSym, setHasSym] = useState(false);
     const [isPassSame, setIsPassSame] = useState(false);
-    const [validPassword, setValidPassword] = useState(false);
     const navigate = useNavigate();
     const axiosPrivate = useAxiosPrivate();
 
@@ -31,16 +33,18 @@ const PasswordUpdate = ({ setUpdatedPassword }) => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log("Submit password change")
-        const passCheck = PASSWORD_REGEX.test(passNew);
+        // const passCheck = PASSWORD_REGEX.test(passNew);
 
         try {
-            const response = await axiosPrivate.put(`/auth/change_password/${JSON.parse(localStorage.getItem('user_id'))}/`,
+            const response = await axiosPrivate.put(`/auth/change_password/${auth.user_id}/`,
               JSON.stringify({old_password: oldPass, password: passNew, password2: passNewConfirm}),
               {
                 headers: {'Content-Type': 'application/json'},
                 withCredentials: true
               }
             );
+
+            // console.log(response)
   
             // clear input fields, set state back to empty strings
             setOldPass('');
@@ -56,7 +60,7 @@ const PasswordUpdate = ({ setUpdatedPassword }) => {
             } else if (err.response?.status === 400) {
               if (err.response.data['old_password']) {
                 console.log(err.response.data)
-                const PasswordError = err.response.data['old_password'];
+                // const PasswordError = err.response.data['old_password'];
                 //const errorCheck = PasswordError.at(0);
                 console.log(errors.incorrectOld)
                 setErrorMessages({name: "incorrectOld", message: errors.incorrectOld});
@@ -87,21 +91,6 @@ const PasswordUpdate = ({ setUpdatedPassword }) => {
             <Error>{errorMessages.message}</Error>
         );
 
-    const RightArrow = (
-        <SvgArrow
-            xmlns="http://www.w3.org/2000/svg"
-            width="30"
-            height="30"
-            fill="none"
-            viewBox="0 0 30 30"
-        >
-            <path
-                fill="#fff"
-                d="M10.737 20.738L16.462 15l-5.725-5.738L12.5 7.5 20 15l-7.5 7.5-1.763-1.762z"
-            ></path>
-        </SvgArrow>
-    )
-
 
     // check for valid password
     useEffect(() => {
@@ -131,12 +120,6 @@ const PasswordUpdate = ({ setUpdatedPassword }) => {
             setIsPassSame(true);
         } else {
             setIsPassSame(false);
-        }
-
-        if (isEightChar && hasNum && hasSym && isPassSame) {
-            setValidPassword(true);
-        } else {
-            setValidPassword(false);
         }
 
 
