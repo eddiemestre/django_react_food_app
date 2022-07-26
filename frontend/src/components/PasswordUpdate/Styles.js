@@ -40,22 +40,6 @@ export const InputText = styled.input`
     }
 `;
 
-export const SvgArrow = styled.svg`
-    position: absolute;
-    z-index: 15;
-    right: 0;
-    height: 100%;
-    width: 10%;
-    transform: scale(.75);
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    -o-user-select: none;
-    user-select: none;
-`;
-
 export const ChoicesContainer = styled.div` 
     height: 100px;
     width: 100%;
