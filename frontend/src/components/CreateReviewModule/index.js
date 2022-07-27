@@ -51,16 +51,28 @@ const CreateReviewModule = ({ toggleReviewOff, setReviewModuleActive, setInputHa
     }
 
     const onChangeDate = (date) => {
+
+        console.log("date", date)
+        // we need this to always give us the user time zone date
+        // do we need to ensure the time is sent to the backend as well?
         if (date) {
-            const offset = date.getTimezoneOffset();
-            let formattedDate = new Date(date.getTime() - (offset*60*1000))
-            setDateValue(formattedDate)
+            setDateValue(date)
             setStartDate(date)
-            onChange()
         } else {
-            setStartDate(null)
             setDateValue(null)
+            setStartDate(null)
         }
+        onChange();
+        // if (date) {
+        //     const offset = date.getTimezoneOffset();
+        //     let formattedDate = new Date(date.getTime() - (offset*60*1000))
+        //     setDateValue(formattedDate)
+        //     setStartDate(date)
+        //     onChange()
+        // } else {
+        //     setStartDate(null)
+        //     setDateValue(null)
+        // }
     }
 
     const onThoughtsClick = () => {
@@ -152,19 +164,19 @@ const CreateReviewModule = ({ toggleReviewOff, setReviewModuleActive, setInputHa
         navigate(`/user/${auth?.username}`)
     }
 
-    const formatUTC = (dateInt, addOffset = true) => {
-        let date = (!dateInt || dateInt.length < 1) ? new Date() : new Date(dateInt);
-        if (typeof dateInt === "string") {
-            // console.log("formatUTC date", date)
-            return date;
-        } else {
-            const offset = addOffset ? date.getTimezoneOffset() : -(date.getTimezoneOffset());
-            const offsetDate = new Date();
-            offsetDate.setTime(date.getTime() + offset * 60000)
-            // console.log("formatUTC offset", offsetDate)
-            return offsetDate;
-        }
-    }
+    // const formatUTC = (dateInt, addOffset = true) => {
+    //     let date = (!dateInt || dateInt.length < 1) ? new Date() : new Date(dateInt);
+    //     if (typeof dateInt === "string") {
+    //         // console.log("formatUTC date", date)
+    //         return date;
+    //     } else {
+    //         const offset = addOffset ? date.getTimezoneOffset() : -(date.getTimezoneOffset());
+    //         const offsetDate = new Date();
+    //         offsetDate.setTime(date.getTime() + offset * 60000)
+    //         // console.log("formatUTC offset", offsetDate)
+    //         return offsetDate;
+    //     }
+    // }
 
 
     return (
@@ -180,7 +192,7 @@ const CreateReviewModule = ({ toggleReviewOff, setReviewModuleActive, setInputHa
                     <InputText placeholder="restaurant, cafe, bar..." value={reviewTitle} type="text" name="uname" onChange={onTitleChange} required />
                     <InputTitle>On</InputTitle>
                     <DatePick
-                        selected={startDate ? formatUTC(new Date(startDate)) : null}
+                        selected={startDate ? new Date(startDate) : null}
                         onChange={(date) => onChangeDate(date)}
                         maxDate={(new Date())}
                         dateFormat="MMM d, yyyy"

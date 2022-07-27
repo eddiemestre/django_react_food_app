@@ -1,8 +1,8 @@
 import styled from "styled-components"
 
 export const Container = styled.div`
-    bottom: 0;
-    position: absolute;
+    ${'' /* bottom: 0;
+    position: absolute; */}
     display: flex;
     justify-content: center;
     align-items: center;

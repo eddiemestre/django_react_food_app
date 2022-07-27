@@ -1,6 +1,7 @@
 import React from "react";
 import { GlobalStyle, GridContainer } from "./Styles";
 import SignUpForm from "../../components/SignUpForm/index.js";
+import Footer from "../../components/Footer";
 
 const SignUp = () => {
 
@@ -10,6 +11,7 @@ const SignUp = () => {
             <GridContainer>
                 <SignUpForm />
             </GridContainer>
+            <Footer />
         </>
 
     );

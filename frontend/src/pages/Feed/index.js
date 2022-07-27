@@ -7,13 +7,20 @@ import { useParams } from "react-router-dom";
 import useAuth from "../../hooks/useAuth.js";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.js";
 import axios from "axios";
+import NotFound from "../NotFound/index.js";
 
-const Home = () => {
+const Feed = () => {
     const { reviews, setReviews } = useContext(DataContext);
     const [isLoading, setIsLoading] = useState(true)
+    const [notFound, setNotFound] = useState(false)
     const { auth, anonUser, setAnonUser } = useAuth();
     const params = useParams();
     const axiosPrivate = useAxiosPrivate();
+
+    useEffect(() => {
+        setNotFound(false)
+        setIsLoading(true)
+    }, [params])
 
     useEffect(() => {
         let isMounted = true;
@@ -55,9 +62,8 @@ const Home = () => {
                  
             } catch (err) {
                 console.error(err);
-                if (err?.response?.status === 404) {
+                    setNotFound(true)
                     // console.log("404 getting anon user details")
-                }
             } finally {
                 isMounted && setIsLoading(false)
             }
@@ -138,12 +144,15 @@ const Home = () => {
     return (
         <>
             <GlobalStyle />
-            {!isLoading && 
+            {!isLoading && !notFound &&
             <GridContainer >
                 <ReviewList reviews={reviews} auth={auth} anonUser={anonUser}/>
             </GridContainer>}
+            {!isLoading && notFound &&
+                <NotFound />
+            }
         </>
     );
 };
 
-export default Home;
+export default Feed;

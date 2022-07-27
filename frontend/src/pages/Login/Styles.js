@@ -2,26 +2,32 @@ import styled, { createGlobalStyle } from "styled-components";
 import { animated } from '@react-spring/web';
 
 export const GlobalStyle = createGlobalStyle`
-    
     body {
         background-color: #121212;
         font-family: 'Open Sans', sans-serif;
-        position: relative;
-        
+        position: fixed;
+        overflow: hidden;
+        width: 100%;
     }
-`
+`;
+
+// export const GridContainer = styled.div`
+//     height: 100%;
+//     ${'' /* background: orange; */}
+//     display: flex;
+//     justify-content: center;
+// `
 
 export const GridContainer = styled.div`
-    ${'' /* display: flex;
-    flex-direction: column;
-    justify-content: center;
-    background: orange; */}
-    height: 100%;
-    ${'' /* background: orange; */}
+    margin-top: 50px;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: calc(90% - 50px);
+    overflow: scroll;
+    ${'' /* background: pink; */}
     display: flex;
-    justify-content: center;
-    ${'' /* margin-top: 50%; */}
-`
+    align-items: center;
+`;
 
 export const PageTitle = styled.h1`
     display: none

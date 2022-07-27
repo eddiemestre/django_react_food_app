@@ -1,5 +1,4 @@
 import styled, { createGlobalStyle } from "styled-components";
-import { animated } from '@react-spring/web';
 
 export const GlobalStyle = createGlobalStyle`
     body {
@@ -15,24 +14,8 @@ export const GridContainer = styled.div`
     margin-top: 50px;
     box-sizing: border-box;
     width: 100%;
-    min-height: calc(90% - 50px);
-    overflow: scroll;
+    height: calc(100% - 50px);
     ${'' /* background: pink; */}
     display: flex;
     align-items: center;
-`;
-
-export const PageTitle = styled.h1`
-    display: none
-
-    @media screen and (max-width: 600px) {
-        PageTitle {
-            font-family: 'Open Sans', sans-serif;
-            color: pink;
-            display: block;
-        }
-    }
-`
-
-export const LogContainer = styled(animated.div)` 
 `;

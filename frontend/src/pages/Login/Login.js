@@ -5,6 +5,7 @@ import {GlobalStyle,
         NoticeText } from './Styles.js'
 import { useTransition } from '@react-spring/web'
 import LoginForm from "../../components/LoginForm/index.js";
+import Footer from "../../components/Footer/index.js";
 import RegistrationContext from "../../context/RegistrationContext.js";
 
 const Login = () => {
@@ -40,6 +41,7 @@ const Login = () => {
            <GridContainer>
                <LoginForm />
             </GridContainer>
+            <Footer />
         </>
     );
 };

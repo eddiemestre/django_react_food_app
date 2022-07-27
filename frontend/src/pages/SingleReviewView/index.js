@@ -20,6 +20,7 @@ import {default as axiosAPI} from "../../api/axios.js";
 import { formatDate } from '../../utils/FormatDate';
 import DataContext from '../../context/DataContext';
 import axios from 'axios';
+import NotFound from '../NotFound';
 
 const SingleReviewView = () => {
     const { auth, setAnonUser } = useAuth();
@@ -29,14 +30,27 @@ const SingleReviewView = () => {
     const [review, setReview] = useState({})
     const axiosPrivate = useAxiosPrivate();
     const [isLoading, setIsLoading] = useState(true)
+    const [notFound, setNotFound] = useState(false)
     const [isAuthedUser, setIsAuthedUser] = useState(false)
     const [reviewUpdated, setReviewUpdated] = useState(false)
+
+    useEffect(() => {
+        console.log("update params")
+        setNotFound(false)
+        setIsLoading(true)
+    }, [params])
 
 
     useEffect(() => {
       console.log("reviews", reviews)
       console.log(reviews.find(review => (review.id).toString() === params.id))
       setReview(reviews.find(review => (review.id).toString() === params.id))
+    //   if (Object.keys(reviews).length > 0) {
+    //     console.log("has reviews")
+    //     if (reviews.find(review => (review.id).toString() !== params.id)) {
+    //         console.log("no reviews with this param")
+    //     }
+    //   }
       setReviewUpdated(!reviewUpdated)
     }, [reviews, params])
 
@@ -82,11 +96,18 @@ const SingleReviewView = () => {
               if (isMounted) {
                   console.log("mounted set Data")
                   setReviews(response.data);
+
+                  if (!response.data.find(review => (review.id).toString() === params.id)) {
+                    console.log("review doesn't exist")
+                    setNotFound(true)
+                    setIsLoading(false)
+                  }
                   setIsAuthedUser(true)
               }
           }  catch (err) {
               if (isMounted)
-              console.log("failed")
+              setNotFound(true)
+              setIsLoading(false)
               setReviews([])
           } finally {
             //   isMounted && setIsLoading(false)
@@ -103,10 +124,9 @@ const SingleReviewView = () => {
               isMounted && setAnonUser(response?.data)
                
           } catch (err) {
-              console.error(err);
-              if (err?.response?.status === 404) {
-                  // console.log("404 getting anon user details")
-              }
+                console.error(err);
+                setNotFound(true)
+                setIsLoading(false)
           } finally {
             //   isMounted && setIsLoading(false)
           }
@@ -123,13 +143,18 @@ const SingleReviewView = () => {
               // console.log("list data in review list", response?.data);
               isMounted && setReviews(response?.data)
 
+              if (!response.data.find(review => (review.id).toString() === params.id)) {
+                console.log("review doesn't exist")
+                setNotFound(true)
+              }
+
+
           } catch (err) {
               console.log(err);
-              if (err?.response?.status === 404) {
-                  // console.log("no public reviews found")
-              }
+                setNotFound(true)
+                setIsLoading(false)
           } finally {
-              setIsLoading(false)
+            //   setIsLoading(false)
           }
       }
 
@@ -155,10 +180,24 @@ const SingleReviewView = () => {
           if (reviews.length) {
               if (reviews[0]?.user === auth?.user_id && auth?.username === params.username) {
                   console.log("reviews are present and belong to authed paramed user")
+                  if (reviews.find(review => (review.id).toString() === params.id)) {
+                    console.log("found review")
+                  } else {
+                    console.log("didn't find")
+                    setNotFound(true)
+                    setIsLoading(false)
+                  }
                   setIsAuthedUser(true)
                 //   setIsLoading(false)
               } else if (reviews[0].username === params.username) {
                   console.log("reviews are present and belong to public paramed user")
+                  if (reviews.find(review => (review.id).toString() === params.id)) {
+                    console.log("found review")
+                  } else {
+                    console.log("didn't find")
+                    setNotFound(true)
+                    setIsLoading(false)
+                  }
                 //   setIsLoading(false)
               } else {
                   console.log("reviews present but not same url, pull data")
@@ -249,43 +288,46 @@ const SingleReviewView = () => {
     }
 
     return (
-        <>
-        {!isLoading && 
             <>
                 <GlobalStyle />
-                <OuterContainer>
-                <Container>
-                    <TitleContainer>
-                    <Title>{review?.title}</Title>
-                    </TitleContainer>
-                    <ContentContainer>
-                        <Link to={`/user/${review?.username}`} style={{textDecoration: 'none'}}><Name>{review?.name}</Name></Link>
-                        <Date>{review?.date}</Date>
-                        <Content>{review?.review}</Content>
-                        <LastEdited>Last edited on {review?.date_modified}</LastEdited>
-                    </ContentContainer>
-                </Container>
-                </OuterContainer>
+                {!isLoading && !notFound &&
+                    <>
+                        <OuterContainer>
+                        <Container>
+                            <TitleContainer>
+                            <Title>{review?.title}</Title>
+                            </TitleContainer>
+                            <ContentContainer>
+                                <Link to={`/user/${review?.username}`} style={{textDecoration: 'none'}}><Name>{review?.name}</Name></Link>
+                                <Date>{review?.date}</Date>
+                                <Content>{review?.review}</Content>
+                                <LastEdited>Last edited on {review?.date_modified}</LastEdited>
+                            </ContentContainer>
+                        </Container>
+                        </OuterContainer>
 
-                {/* show button for editing if isAuthedUser is true */}
-                {isAuthedUser && 
-                    EditAppear((style, item) =>
-                        item ? 
-                        <ButtonContainer style={style} onClick={() => handleEditClick()}>{EditButton()}</ButtonContainer>
-                        : ''
-                        )
+                        {/* show button for editing if isAuthedUser is true */}
+                        {isAuthedUser && 
+                            EditAppear((style, item) =>
+                                item ? 
+                                <ButtonContainer style={style} onClick={() => handleEditClick()}>{EditButton()}</ButtonContainer>
+                                : ''
+                                )
+                        }
+                        {/* show button for going back if fromListView is true */}
+                        {fromReviewFeed && 
+                            BackAppear((style, item) =>
+                                item ? 
+                                <BackContainer style={style} onClick={() => handleBackClick()}>{BackButton()}</BackContainer>
+                                : ''
+                                )
+                        }
+                    </>
                 }
-                {/* show button for going back if fromListView is true */}
-                {fromReviewFeed && 
-                    BackAppear((style, item) =>
-                        item ? 
-                        <BackContainer style={style} onClick={() => handleBackClick()}>{BackButton()}</BackContainer>
-                        : ''
-                        )
+                {!isLoading && notFound && 
+                    <NotFound />
                 }
             </>
-        }
-        </>
     );
 }
 

@@ -12,7 +12,12 @@ export const App = styled.div`
 `;
 
 export const LogForm = styled.div`
-  width: 80%;
+  width: 82%;
+  padding-left: 1%;
+  padding-right: 1%;
+  max-height: 80%;
+  ${'' /* background: blue; */}
+  overflow: scroll;
 `;
 
 export const Title = styled.div`
@@ -67,7 +72,9 @@ export const SubmitButton = styled.button`
     font-weight: 700;
     color: black;
     padding: 3%;
+    height: 45px;
     width: 40%;
+    width: 125px;
     &:hover {
         background: linear-gradient(0deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), #03DAC6;
     }

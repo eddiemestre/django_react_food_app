@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { HeadContainer, AppName, SvgContainer, MenuBackground, MenuContainer } from './Styles.js';
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth.js";
@@ -9,6 +9,7 @@ const InAppHeader = () => {
     const navigate = useNavigate();
     const { auth } = useAuth();
     const [menuOpened, setMenuOpened] = useState(false)
+
 
     const handleClick = () => {
         setMenuOpened(true)
@@ -30,7 +31,7 @@ const InAppHeader = () => {
         if (auth?.username) {
             navigate(`/user/${auth?.username}/`)
         } else {
-            navigate('/login')
+            navigate('/')
         }
         
     }

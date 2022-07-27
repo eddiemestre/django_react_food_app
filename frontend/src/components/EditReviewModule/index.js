@@ -52,9 +52,16 @@ const EditReviewModule = ({ setInputHasChanged, inputHasChanged, setDiscardModal
     useEffect(() => {
         console.log("this is teh review", review)
         if (review?.title) {
-            setDateValue(review.date)
+            if (review?.date !== "No Date") {
+                setDateValue(review.date)
+                setStartDate(review.date)
+            } else {
+                setDateValue('')
+                setStartDate('')
+            }
+            
             setIsPrivate(review.private)
-            setStartDate(review.date)
+            
             setReviewContent(review.review)
             setReviewTitle(review.title)
 
@@ -79,19 +86,41 @@ const EditReviewModule = ({ setInputHasChanged, inputHasChanged, setDiscardModal
     }
 
     const onChangeDate = (date) => {
-        if (date) {
-            const offset = date.getTimezoneOffset();
-            let formattedDate = new Date(date.getTime() - (offset*60*1000))
-            // formattedDate = formattedDate.toISOString().split('T')[0]
 
-            // setDateValue(formattedDate)
-            setDateValue(formattedDate)
+        console.log("date", date)
+        // we need this to always give us the user time zone date
+        // do we need to ensure the time is sent to the backend as well?
+        if (date) {
+            setDateValue(date)
             setStartDate(date)
-            onChange()
         } else {
-            setStartDate(null)
             setDateValue(null)
+            setStartDate(null)
         }
+        onChange();
+        // console.log("prev date", date)
+
+        // // this sets the time 7 hours ahead (if user is PST)
+        // const newDate = formatUTC(date)
+
+        // console.log("formatUTC date", newDate)
+
+        // // this subtracts 7 hours (if user is PST)
+        // if (newDate) {
+        //     const offset = date.getTimezoneOffset();
+        //     let formattedDate = new Date(newDate.getTime() - (offset*60*1000))
+        //     // this date is the same as newDate above
+        //     console.log("formatUTC offset date", formattedDate)
+        //     setDateValue(formattedDate)
+        //     setStartDate(date)
+
+        //     console.log("format", formattedDate)
+        //     console.log("date", date)
+        //     onChange()
+        // } else {
+        //     setStartDate(null)
+        //     setDateValue(null)
+        // }
     }
 
     const onThoughtsClick = () => {
@@ -116,6 +145,52 @@ const EditReviewModule = ({ setInputHasChanged, inputHasChanged, setDiscardModal
         onChange()
     }
 
+    const SaveNewReview = async () => {
+        try {
+            let response;
+            let reviewToSave = {
+                title: reviewTitle,
+                review: reviewContent,
+                private: isPrivate,
+                user: auth?.user_id
+            }
+            if (startDate) {
+                console.log("has date")
+                reviewToSave['date'] = dateValue
+                // post review with all fields
+                // add review to reviews data context
+                response = await axiosPrivate.post('/reviews/review/', 
+                    JSON.stringify(reviewToSave),
+                    {
+                        headers: {'Content-Type': 'application/json'},
+                        withCredentials: true,
+                    }
+                );
+            } else {
+                // start date is empty
+                console.log("no date")
+                response = await axiosPrivate.post('/reviews/review/', 
+                JSON.stringify(reviewToSave),
+                    {
+                        headers: {'Content-Type': 'application/json'},
+                        withCredentials: true,
+                    }
+                );
+            }
+
+            // console.log("in response post review", response)
+
+            // sort reviews by date and alphabetical order
+            const allReviews = [...reviews, response.data];
+            allReviews.sort((a, b) =>  (a.date===null)-(b.date===null) || new Date(b.date) - new Date(a.date) || a.title.localeCompare(b.title))
+            setReviews(allReviews)
+            console.log(allReviews)
+            
+        } catch (err) {
+            // console.log("in error review module")
+            console.log(err);
+        }
+    }
 
     const UpdateReview = async () => {
         console.log("update review")
@@ -124,9 +199,11 @@ const EditReviewModule = ({ setInputHasChanged, inputHasChanged, setDiscardModal
             console.log("title is different")
             data["title"] = reviewTitle
         }
+
         if (originalDate !== dateValue) {
             console.log("date is different")
             data["date"] = dateValue
+            console.log(dateValue)
         }
         if (originalReviewContent !== reviewContent) {
             console.log("content is different")
@@ -202,19 +279,19 @@ const EditReviewModule = ({ setInputHasChanged, inputHasChanged, setDiscardModal
         navigate(`/user/${auth?.username}/${params.id}`)
     }
 
-    const formatUTC = (dateInt, addOffset = true) => {
-        let date = (!dateInt || dateInt.length < 1) ? new Date() : new Date(dateInt);
-        if (typeof dateInt === "string") {
-            // console.log("formatUTC date", date)
-            return date;
-        } else {
-            const offset = addOffset ? date.getTimezoneOffset() : -(date.getTimezoneOffset());
-            const offsetDate = new Date();
-            offsetDate.setTime(date.getTime() + offset * 60000)
-            // console.log("formatUTC offset", offsetDate)
-            return offsetDate;
-        }
-    }
+    // const formatUTC = (dateInt, addOffset = true) => {
+    //     let date = (!dateInt || dateInt.length < 1) ? new Date() : new Date(dateInt);
+    //     if (typeof dateInt === "string") {
+    //         // console.log("formatUTC date", date)
+    //         return date;
+    //     } else {
+    //         const offset = addOffset ? date.getTimezoneOffset() : -(date.getTimezoneOffset());
+    //         const offsetDate = new Date();
+    //         offsetDate.setTime(date.getTime() + offset * 60000)
+    //         // console.log("formatUTC offset", offsetDate)
+    //         return offsetDate;
+    //     }
+    // }
 
 
     const ClickToDelete = () => {
@@ -237,7 +314,7 @@ const EditReviewModule = ({ setInputHasChanged, inputHasChanged, setDiscardModal
                         <InputText placeholder="restaurant, cafe, bar..." value={reviewTitle} type="text" name="uname" onChange={onTitleChange} required />
                         <InputTitle>On</InputTitle>
                         <DatePick
-                            selected={startDate ? formatUTC(new Date(startDate)) : null}
+                            selected={startDate ? new Date(startDate) : null}
                             onChange={(date) => onChangeDate(date)}
                             maxDate={(new Date())}
                             // locale="en-US"

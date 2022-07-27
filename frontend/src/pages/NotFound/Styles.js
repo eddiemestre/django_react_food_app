@@ -1,25 +1,31 @@
 import styled, { createGlobalStyle } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
-    
     body {
         background-color: #121212;
         font-family: 'Open Sans', sans-serif;
-        position: relative;
-        
+        position: fixed;
+        overflow: hidden;
+        width: 100%;
     }
-`
+`;
 
-export const Container = styled.div` 
-    height: 80%;
+// export const GridContainer = styled.div`
+//     height: 100%;
+//     ${'' /* background: orange; */}
+//     display: flex;
+//     justify-content: center;
+// `
+
+export const Container = styled.div`
+    margin-top: 50px;
+    box-sizing: border-box;
     width: 100%;
-    top: 10%;
-    ${'' /* background: blue; */}
-    position: absolute;
-    overflow: hidden;
+    min-height: calc(100% - 50px);
+    overflow: scroll;
+    ${'' /* background: pink; */}
     display: flex;
-    align-items: center; 
-    justify-content: center;
+    align-items: center;
 `;
 
 export const Content = styled.div` 

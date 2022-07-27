@@ -4,6 +4,7 @@ import { useTransition } from '@react-spring/web';
 import { Container, GlobalStyle, SvgContent, ButtonContainer, FaderDivClose, ModalContainer } from './Styles.js';
 import { useNavigate, useParams } from "react-router-dom";
 import DiscardModal from "../../components/DiscardModal/index.js";
+import NotFound from "../NotFound/index.js";
 import useAxiosPrivate from "../../hooks/useAxiosPrivate.js";
 import DataContext from "../../context/DataContext.js";
 import { formatDate } from "../../utils/FormatDate.js";
@@ -27,7 +28,13 @@ const EditReview = () => {
     const [review, setReview] = useState({})
     const [reviewUpdated, setReviewUpdated] = useState(false)
     const [isLoading, setIsLoading] = useState(true)
+    const [notFound, setNotFound] = useState(false)
 
+    useEffect(() => {
+        console.log("params update")
+        setNotFound(false)
+        setIsLoading(true)
+    }, [params])
 
     useEffect(() => {
       console.log("reviews", reviews)
@@ -73,12 +80,19 @@ const EditReview = () => {
               // console.log(response)
               if (isMounted) {
                   console.log("mounted set Data")
-                  setReviews(response.data);
-                  setReview(response.data.find(review => (review.id).toString() === params.id))
+                //   setReviews(response.data);
+                  
+                  if (response.data.find(review => (review.id).toString() === params.id)) {
+                    setReview(response.data.find(review => (review.id).toString() === params.id))
+                  } else {
+                    console.log("didn't find")
+                    setNotFound(true)
+                  }
               }
           }  catch (err) {
               if (isMounted)
               console.log("failed")
+              setNotFound(true)
               setReviews([])
           } finally {
               isMounted && setIsLoading(false)
@@ -93,6 +107,7 @@ const EditReview = () => {
                   fetchAuthData()
               } else {
                 console.log("not where we're suppose to be")
+                setNotFound(true)
               }
           } else {
             console.log("no auth")
@@ -102,6 +117,12 @@ const EditReview = () => {
       const HasReviews = () => {
           if (reviews.length && auth?.accessToken) {
               if (reviews[0]?.user === auth?.user_id && auth?.username === params.username) {
+                    if (reviews.find(review => (review.id).toString() === params.id)) {
+                        console.log("found review")
+                    } else {
+                        console.log("didn't find")
+                        setNotFound(true)
+                    }
                   console.log("reviews are present and belong to authed paramed user")
                   setIsLoading(false)
               }  else {
@@ -224,10 +245,12 @@ const EditReview = () => {
 
     return (
         <>
-        {!isLoading && 
-            <>
-                <GlobalStyle />
-                <Container>
+        
+            
+            <GlobalStyle />
+            {!isLoading && !notFound &&  
+                <>
+                    <Container>
                         <EditReviewModule 
                             setDiscardModal={setDiscardModal} 
                             setDiscardType={setDiscardType}
@@ -237,7 +260,6 @@ const EditReview = () => {
                             setReview={setReview}
                         />
                     </Container>
-
                     {EditAppear((style, item) =>
                         item ? 
                         <ButtonContainer style={style}>{createReviewButton()}</ButtonContainer>
@@ -254,11 +276,15 @@ const EditReview = () => {
                         item 
                         ? <ModalContainer style={style}><DiscardModal type={discardType} clickYes={clickYes} clickNo={clickNo}/></ModalContainer> 
                         : ''))
-                    }    
-            </>
-        }
+                    }  
+                </>
+            }
+            {!isLoading && notFound && 
+                <NotFound />
+            }
         </>
-    )
+    );
+    
 
 }
 

@@ -18,15 +18,16 @@ import InAppTemplate from '../Routes/InAppTemplate';
 import ReviewAdderTemplate from '../Routes/PersistentReviewAdder';
 
 // pages
+import Home from '../../pages/Home';
 import Login from '../../pages/Login/Login';
 import SignUp from '../../pages/SignUp/SignUp';
-import Home from '../../pages/Home/Home';
+import Feed from '../../pages/Feed';
 import SingleReviewView from '../../pages/SingleReviewView';
 import CreateReview from '../../pages/CreateReview';
 import EditReview from '../../pages/EditReview';
 import Settings from '../../pages/Settings';
 import UpdatePassword from '../../pages/UpdatePassword';
-
+import NotFound from '../../pages/NotFound';
 
 
 
@@ -35,24 +36,22 @@ function App() {
 
   return (
       <AuthProvider>
-        { width < 601 ?
-          <>
-          <DataProvider>
-            <RegistrationProvider>
+        <DataProvider>
+          <RegistrationProvider>
+
+          { width < 601 || width == undefined ?
+            <>
               <Routes>
                 <Route element={<PublicTemplate />}>
+                  <Route path="/" element={<Home />} />
                   <Route exact path="/login" element={<Login />} />
                   <Route exact path="/register" element={<SignUp />} />
                 </Route>
-              </Routes>
-            </RegistrationProvider>
 
-            
-              <Routes>
                 <Route element={<PersistLogin />}>
                   <Route element={<InAppTemplate />}>
                     <Route element={<ReviewAdderTemplate />}>
-                      <Route path="/user/:username" element={<Home />} />
+                      <Route path="/user/:username" element={<Feed />} />
                       <Route element={<RequireAuthCreate />}>
                         <Route path="/create-review" element={<CreateReview />} />
                       </Route>
@@ -67,12 +66,16 @@ function App() {
                     </Route>
                   </Route>
                 </Route>
-              </Routes>
-            </DataProvider>
-          </>
-          : <LargeScreenView />}
-      </AuthProvider>
 
+                <Route element={<InAppTemplate />}>
+                  <Route exact path="*" element={<NotFound />} />
+                </Route>
+              </Routes>
+            </>
+          : <LargeScreenView />}
+          </RegistrationProvider>
+        </DataProvider>
+      </AuthProvider>
   );
 }
 

@@ -13,7 +13,7 @@ const ReviewAdderTemplate = () => {
     const [discardModal, setDiscardModal] = useState(false)     // animates discard modal in and out
     const [inputHasChanged, setInputHasChanged] = useState(false)   // determines if discard modal should animate
     const [animateButton, setAnimateButton] = useState(true)     // animates review adder/discarder button
-    const [urlIsUser, setUrlIsUser] = useState(true)    // ensures button only appears when on the logged in user's feed
+    const [urlIsUser, setUrlIsUser] = useState(false)    // ensures button only appears when on the logged in user's feed
     
     // hooks
     const { auth } = useAuth();
@@ -24,13 +24,14 @@ const ReviewAdderTemplate = () => {
     // check if we are on the logged in user's feed
     useEffect(() => {
         if (params?.username) {
+            console.log(location.pathname)
             if (params.username === auth?.username) {
                 setUrlIsUser(true)
             } else {
                 setUrlIsUser(false)
             }
         }
-    }, [params, auth])
+    }, [params, auth, location])
 
     // changes review toggle mode depending on page
     useEffect(() => {

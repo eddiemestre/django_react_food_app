@@ -23,4 +23,5 @@ export const InsideContainer = styled.div`
     height: 100%;
     display: grid;
     place-content: center;
+    text-align: center;
 `;

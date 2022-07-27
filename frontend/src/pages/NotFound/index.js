@@ -1,14 +1,11 @@
 import React from "react";
 import { Container, GlobalStyle, Content, Numbers, Text } from './Styles.js';
-import Header from "../../components/Header/index.js";
-import Footer from "../../components/Footer/index.js";
 
 const NotFound = () => {
     
     return (
         <>
             <GlobalStyle />
-            <Header />
             <Container>
                 <Content>
                     <Numbers>
@@ -19,7 +16,6 @@ const NotFound = () => {
                     </Text>
                 </Content>
             </Container>
-            <Footer />
         </>
     )
 
