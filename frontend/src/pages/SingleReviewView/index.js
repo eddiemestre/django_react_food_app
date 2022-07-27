@@ -126,9 +126,9 @@ const SingleReviewView = () => {
           } catch (err) {
                 console.error(err);
                 setNotFound(true)
-                setIsLoading(false)
+                
           } finally {
-            //   isMounted && setIsLoading(false)
+              isMounted && setIsLoading(false)
           }
       }
 
@@ -152,9 +152,8 @@ const SingleReviewView = () => {
           } catch (err) {
               console.log(err);
                 setNotFound(true)
-                setIsLoading(false)
           } finally {
-            //   setIsLoading(false)
+              setIsLoading(false)
           }
       }
 

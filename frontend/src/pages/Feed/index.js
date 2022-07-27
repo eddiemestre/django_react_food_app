@@ -85,9 +85,7 @@ const Feed = () => {
 
             } catch (err) {
                 console.log(err);
-                if (err?.response?.status === 404) {
-                    // console.log("no public reviews found")
-                }
+                setNotFound(true)
             } finally {
                 setIsLoading(false)
             }
