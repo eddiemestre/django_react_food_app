@@ -81,9 +81,12 @@ const SignUpForm = () => {
         return // errors below handle this
       }
 
+      const lowerEmail = email.toLowerCase()
+      const lowerusername = username.toLowerCase()
+
       try {
           await axios.post(REGISTER_URL,
-            JSON.stringify({email, username, name, password1: pass_one, password2: pass_two}),
+            JSON.stringify({email: lowerEmail, username: lowerusername, name, password1: pass_one, password2: pass_two}),
             {
               headers: {'Content-Type': 'application/json'},
               withCredentials: true

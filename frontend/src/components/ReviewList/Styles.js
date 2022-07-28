@@ -41,9 +41,10 @@ export const ReviewFeedContainer = styled.div`
 
 export const TextContainer = styled.div`
     display: flex;
+    ${'' /* background: blue; */}
     justify-content: center;
     align-items: center;
-    height: 100%;
+    height: calc(100vh - 280px);
     width: 100%;
 `;
 

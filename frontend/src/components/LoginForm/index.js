@@ -50,9 +50,13 @@ const LoginForm = () => {
     };
 
     const PostLogin = async () => {
+
+
+      const lowerEmail = email.toLowerCase()
+
       try {
         const response = await axios.post(LOGIN_URL, 
-            JSON.stringify({email, password}),
+            JSON.stringify({email: lowerEmail, password}),
             {
               headers: {'Content-Type': 'application/json'},
               withCredentials: true,
