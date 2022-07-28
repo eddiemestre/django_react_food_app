@@ -58,7 +58,7 @@ const SingleReviewView = () => {
     useEffect(() => {
       console.log("trigger")
       console.log(review)
-      if (auth.username && review?.title) {
+      if (auth.username && review?.title && auth.user_id === review.user) {
         console.log("user!")
         setIsAuthedUser(true)
         setReview(prevState => ({
@@ -109,8 +109,6 @@ const SingleReviewView = () => {
               setNotFound(true)
               setIsLoading(false)
               setReviews([])
-          } finally {
-            //   isMounted && setIsLoading(false)
           }
       }
 
@@ -126,9 +124,7 @@ const SingleReviewView = () => {
           } catch (err) {
                 console.error(err);
                 setNotFound(true)
-                
-          } finally {
-              isMounted && setIsLoading(false)
+                setIsLoading(false)
           }
       }
 
@@ -145,15 +141,17 @@ const SingleReviewView = () => {
 
               if (!response.data.find(review => (review.id).toString() === params.id)) {
                 console.log("review doesn't exist")
+                // set these two variables since review isn't found
                 setNotFound(true)
+                setIsLoading(false)
               }
-
+              
+              // if review is found, we need the useEffect to retrigger, which sets loading to false
 
           } catch (err) {
               console.log(err);
                 setNotFound(true)
-          } finally {
-              setIsLoading(false)
+                setIsLoading(false)
           }
       }
 
@@ -164,12 +162,12 @@ const SingleReviewView = () => {
                   console.log("authed users reviews")
                   fetchAuthData()
               } else {
-                  // console.log(`${params.username}'s public reviews`)
+                  console.log(`${params.username}'s public reviews while other user logged in`)
                   getAnonUser()
                   fetchAnonData()
               }
           } else {
-              // console.log(`${params.username}'s public reviews`)
+              console.log(`${params.username}'s public reviews`)
               getAnonUser()
               fetchAnonData()
           }
@@ -179,25 +177,26 @@ const SingleReviewView = () => {
           if (reviews.length) {
               if (reviews[0]?.user === auth?.user_id && auth?.username === params.username) {
                   console.log("reviews are present and belong to authed paramed user")
-                  if (reviews.find(review => (review.id).toString() === params.id)) {
-                    console.log("found review")
-                  } else {
+                  if (!reviews.find(review => (review.id).toString() === params.id)) {
                     console.log("didn't find")
+                    // if reviews aren't found, set NotFound and isLoading
+                    // otherwise authed will be set to true below and the useEffect will handle
                     setNotFound(true)
                     setIsLoading(false)
-                  }
+                  } 
+        
+                  // isLoading is set above if reviews are found since we need to add that additional auth info
                   setIsAuthedUser(true)
-                //   setIsLoading(false)
+                  
               } else if (reviews[0].username === params.username) {
                   console.log("reviews are present and belong to public paramed user")
-                  if (reviews.find(review => (review.id).toString() === params.id)) {
-                    console.log("found review")
-                  } else {
-                    console.log("didn't find")
+                  // if reviews aren't found, setNotFound and isLoading
+                  // otherwise, reviews will be handled by above useEffect
+                  if (!reviews.find(review => (review.id).toString() === params.id)) {
+                    // console.log("didn't find")
                     setNotFound(true)
                     setIsLoading(false)
                   }
-                //   setIsLoading(false)
               } else {
                   console.log("reviews present but not same url, pull data")
                   PullData()

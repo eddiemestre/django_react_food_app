@@ -3,19 +3,19 @@ import styled from "styled-components"
 
 export const ReviewContainer = styled.div`
     display: grid;
-    grid-template-rows: 8% auto;
+    grid-template-rows: 1fr auto;
     padding-bottom: 1.5em;
     padding-left: 5%;
     padding-right: 5%;
-    height: 100%;
+    ${'' /* height: 100%; */}
     width: 100%;
-    overflow: auto;
+    ${'' /* overflow: auto; */}
     ${'' /* background: green; */}
     box-sizing: border-box;
 `;
 
-export const UserReviewsTitle = styled.div` 
-    height: 100%;
+export const UserReviewsTitle = styled.div`
+    min-height: 60px;
     width: 100%;
     ${'' /* background: orange; */}
     display: flex;

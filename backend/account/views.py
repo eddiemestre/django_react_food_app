@@ -65,9 +65,12 @@ class GetOtherID(viewsets.ReadOnlyModelViewSet):
         username = None
         if 'pk' in kwargs:
             username = self.kwargs['pk']
-        userData = Account.objects.get(username=username)
+        try:
+            userData = Account.objects.get(username=username)
+        except:
+            return Response({"Failed": "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
         if not userData:
-            raise Http404
+            return Response({"Failed": "User does not exist"}, status=status.HTTP_404_NOT_FOUND)
             
         response = Response()
         response.data = {'username': userData.username, 

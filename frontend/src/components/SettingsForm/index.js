@@ -34,12 +34,13 @@ const SettingsForm = ({ setUpdatedSettings }) => {
     const [orUsername, setOrUsername] = useState('');
     const [orEmail, setOrEmail] = useState('');
     const [isLoading, setIsLoading] = useState(true)
+    const delay = ms => new Promise(res => setTimeout(res, ms));
 
     const errors = {
         uname: "Invalid username. Should contain only letters and numbers and be 4 - 23 characters long.",
         unameTaken: "Username already taken. Please pick another.",
         name: "Invalid name.",
-        email: "Invalid email.",
+        nameLength: "Name must be less than 50 characters long.",
         emailTaken: "An account with this email already exists. Please use another.",
         server: "No server response.",
         other: "Failed to update user settings. Please try again.",
@@ -60,13 +61,36 @@ const SettingsForm = ({ setUpdatedSettings }) => {
         }
     }, [auth])
 
+    const errorExpiration = async () => {
+        await delay(5000);
+        setErrorMessages({})
+    };
+
+    useEffect(() => {
+        console.log("in errorMessages use effect")
+        if (Object.keys(errorMessages).length > 0) {
+            console.log("has error messages")
+            errorExpiration()
+        }
+    }, [errorMessages])
+
+    // useEffect(() => {
+    //     setErrorMessages({})   
+    // }, [name, username, email])
+
     
     const handleSubmit = async (event) => {
         event.preventDefault();
         console.log("Submit settings change")
 
         const userCheck = USER_REGEX.test(username);
-        const emailCheck = EMAIL_REGEX.test(email);
+        // const emailCheck = EMAIL_REGEX.test(email);
+
+        if (!userCheck) {
+            setErrorMessages({name: "uname", message: errors.uname}); 
+            setUsername(orUsername)
+            return;
+        }
 
         var data = {}
 
@@ -107,6 +131,7 @@ const SettingsForm = ({ setUpdatedSettings }) => {
             setUpdatedSettings(true)
 
         } catch (err) {
+            console.log(err.response)
             if (!err?.response) {
               setErrorMessages({name: "server", message: errors.server});
             } else if (err.response?.status === 400) {
@@ -115,15 +140,33 @@ const SettingsForm = ({ setUpdatedSettings }) => {
               if (err.response.data['username']) {
                 const usernameError = err.response.data['username'];
                 const errorCheck = usernameError.at(0);
+                console.log("error check", errorCheck)
                 if (errorCheck === "This field must be unique.") { 
                     setErrorMessages({name: "unameTaken", message: errors.unameTaken}); 
+                    setUsername(orUsername)
+                } else if (errorCheck === "account with this username already exists.") {
+                    setErrorMessages({name: "unameTaken", message: errors.unameTaken}); 
+                    setUsername(orUsername)
+                } else if (errorCheck === "Ensure this field has no more than 30 characters.") {
+
                 }
+
               } 
               // 
               else if (err.response.data['email']) {
                 const emailError = err.response.data['email'];
                 const errorCheck = emailError.at(0);
-                if (errorCheck === "This field must be unique.") { setErrorMessages({name: "emailTaken", message: errors.emailTaken}); }
+                if (errorCheck === "account with this email already exists.") { 
+                    setErrorMessages({name: "emailTaken", message: errors.emailTaken}); 
+                    setEmail(orEmail)
+                }
+              }
+
+              else if(err.response.data['name']) {
+                const nameError = err.response.data['name'];
+                const errorCheck = nameError.at(0);
+                setErrorMessages({name: "nameLength", message: errors.nameLength}); 
+                setName(orName)
               }
             } else {
               setErrorMessages({name: "other", message: errors.other})
@@ -170,6 +213,7 @@ const SettingsForm = ({ setUpdatedSettings }) => {
                 <InputTitle>Full Name</InputTitle>
                 <InputText placeholder="name i.e. &quot;John&quot;..." value={name} type="text" name="name" onChange={(e) => OnNameChange(e)} />
                 {renderErrorMessage("name")}
+                {renderErrorMessage("nameLength")}
                 <InputTitle>Username</InputTitle>
                 <InputText placeholder="username i.e. &quot;johnsmith89&quot;..." value={username} type="text" name="uname" onChange={(e) => OnUsernameChange(e)} />
                 {renderErrorMessage("uname")}

@@ -32,6 +32,7 @@ const SignUpForm = () => {
 
     const [email, setEmail] = useState('');
 
+    const delay = ms => new Promise(res => setTimeout(res, ms));
 
 //     // TO DO: add accessibility features for screen readers
     const errors = {
@@ -46,6 +47,18 @@ const SignUpForm = () => {
       other: "Registration Failed. Please try again.",
     };
   
+    const errorExpiration = async () => {
+      await delay(5000);
+      setErrorMessages({})
+    };
+
+    useEffect(() => {
+      console.log("in errorMessages use effect")
+      if (Object.keys(errorMessages).length > 0) {
+          console.log("has error messages")
+          errorExpiration()
+      }
+    }, [errorMessages])
     
 
     const handleSubmit = async (event) => {

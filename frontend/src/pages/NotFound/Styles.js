@@ -10,13 +10,6 @@ export const GlobalStyle = createGlobalStyle`
     }
 `;
 
-// export const GridContainer = styled.div`
-//     height: 100%;
-//     ${'' /* background: orange; */}
-//     display: flex;
-//     justify-content: center;
-// `
-
 export const Container = styled.div`
     margin-top: 50px;
     box-sizing: border-box;

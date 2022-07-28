@@ -15,7 +15,8 @@ export const GridContainer = styled.div`
     box-sizing: border-box;
     width: 100%;
     height: calc(100% - 50px);
+    overflow: scroll;
     ${'' /* background: pink; */}
-    display: flex;
-    align-items: center;
+    ${'' /* display: flex; */}
+    ${'' /* align-items: center; */}
 `;

@@ -9,8 +9,6 @@ import {GlobalStyle,
 
 import { useTransition } from '@react-spring/web'
 import Footer from "../../components/Footer/index.js";
-// import Phone from '../../static/iPhone12Pro-Reviews.png';
-// import Phone from '../../static/phone-slice.png';
 import Phone from '../../static/reviews_iphone-2.png';
 import { useNavigate } from "react-router-dom";
 

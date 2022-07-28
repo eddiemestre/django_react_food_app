@@ -46,6 +46,8 @@ const Feed = () => {
                 if (isMounted)
                 console.log("failed")
                 setReviews([])
+                setIsLoading(false)
+                setNotFound(true)
             } finally {
                 isMounted && setIsLoading(false)
             }

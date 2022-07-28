@@ -48,7 +48,7 @@ const EditReview = () => {
     useEffect(() => {
       console.log("trigger")
       console.log(review)
-      if (auth?.accessToken) {
+      if (auth?.accessToken && auth.username === params.username) {
         console.log("user!")
         if (review?.title) {
             setReview(prevState => ({
@@ -61,7 +61,9 @@ const EditReview = () => {
             setIsLoading(false)
         }
       } else {
-        console.log("not logged in")
+        console.log("Not authed")
+        setNotFound(true)
+        setIsLoading(false)
       }
     }, [reviewUpdated])
 
@@ -108,9 +110,12 @@ const EditReview = () => {
               } else {
                 console.log("not where we're suppose to be")
                 setNotFound(true)
+                setIsLoading(false)
               }
           } else {
             console.log("no auth")
+            setNotFound(true)
+            setIsLoading(false)
           }
       }
   

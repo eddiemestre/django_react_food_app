@@ -1,9 +1,10 @@
 import React from "react";
 import { ReviewContainer, AddText, MyReviews, TextContainer, UserReviewsTitle, ReviewFeedContainer } from './Styles.js';
 import ReviewListModule from "../ReviewListModule/index.js";
-
+import { useParams } from "react-router-dom";
 
 const ReviewList = ({reviews, anonUser, auth}) => {
+    const params = useParams();
 
     const AllReviews = (
         reviews.map(review => (
@@ -27,7 +28,7 @@ const ReviewList = ({reviews, anonUser, auth}) => {
     return (
         <ReviewContainer>
             <UserReviewsTitle>
-                {auth?.name
+                {auth?.username === params.username
                     ? <MyReviews>My Reviews</MyReviews>
                     : anonUser?.name
                         ? <MyReviews>{anonUser.name}'s Reviews</MyReviews>

@@ -22,12 +22,26 @@ const LoginForm = () => {
     const [errorMessages, setErrorMessages] = useState({});
     const [email, resetEmail, emailAttribs] =  useInput('email', '')
     const [password, setPassword] = useState('');
+    const delay = ms => new Promise(res => setTimeout(res, ms));
   
     useEffect(() => {
       setErrorMessages({});
     }, [email, password])
 
-  
+    
+    const errorExpiration = async () => {
+      await delay(5000);
+      setErrorMessages({})
+    };
+
+    useEffect(() => {
+      console.log("in errorMessages use effect")
+      if (Object.keys(errorMessages).length > 0) {
+          console.log("has error messages")
+          errorExpiration()
+      }
+    }, [errorMessages])
+
     const errors = {
       emailPass: "Invalid email or password. Try again or create an account.",
       missing: "Missing email or password. Please try again.",
@@ -92,7 +106,9 @@ const LoginForm = () => {
         localStorage.setItem('username', JSON.stringify(response?.data[0]?.username))
         localStorage.setItem('name', JSON.stringify(response?.data[0]?.name))
         
-        return username
+        // return username
+
+        navigate(`/user/${username}/`);
 
       } catch (err) {
         console.log(err);
@@ -110,7 +126,9 @@ const LoginForm = () => {
       // // use the accessToken to get user details
       const username = await GetAuthedUser(accessToken);
 
-      navigate(`/user/${username}/`);
+      // navigate(`/user/${username}/`);
+
+      
     };
   
     // Generate JSX code for error message
