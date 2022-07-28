@@ -24,7 +24,7 @@ const ReviewAdderTemplate = () => {
     // check if we are on the logged in user's feed
     useEffect(() => {
         if (params?.username) {
-            console.log(location.pathname)
+            // console.log(location.pathname)
             if (params.username === auth?.username) {
                 setUrlIsUser(true)
             } else {
@@ -97,20 +97,20 @@ const ReviewAdderTemplate = () => {
     const ModalConditions = () => {
 
         if (reviewModuleActive === false) {
-            // console.log("review modal false, changing to true")
+            // // console.log("review modal false, changing to true")
             toggleReviewOn()
             setReviewModuleActive(true)
             navigate('/create-review');
             
         } else {
             if (inputHasChanged === false) {
-                // console.log("review modal true, changing to false. No changes detected")
+                // // console.log("review modal true, changing to false. No changes detected")
                 toggleReviewOff()
                 setReviewModuleActive(false)
                 navigate(`/user/${auth?.username}`)
                 
             } else {
-                // console.log("Discard Modal false, changing to True")
+                // // console.log("Discard Modal false, changing to True")
                 setDiscardModal(true)
             }
         }
@@ -139,7 +139,7 @@ const ReviewAdderTemplate = () => {
 
     const AnimateReviewButton = (animate) => {
         if (animate) {
-            // console.log("animating review button")
+            // // console.log("animating review button")
             return (
                 animateButtonAppear((style, item) =>
                 item ? 
@@ -148,7 +148,7 @@ const ReviewAdderTemplate = () => {
                 )
             )
         } else {
-            // console.log("not animating review button")
+            // // console.log("not animating review button")
             return (
                 <ButtonContainer>{createReviewButton()}</ButtonContainer>
             )

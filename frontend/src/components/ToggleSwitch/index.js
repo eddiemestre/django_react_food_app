@@ -5,7 +5,7 @@ const ToggleSwitch = ({ isPrivate, setIsPrivate, setInputHasChanged, label }) =>
 
     const triggerToggle = () => {
         setIsPrivate(!isPrivate)
-        // console.log(isPrivate);
+        // // console.log(isPrivate);
         setInputHasChanged(true)
     }
 

@@ -35,20 +35,20 @@ const SingleReviewView = () => {
     const [reviewUpdated, setReviewUpdated] = useState(false)
 
     useEffect(() => {
-        console.log("update params")
+        // console.log("update params")
         setNotFound(false)
         setIsLoading(true)
     }, [params])
 
 
     useEffect(() => {
-      console.log("reviews", reviews)
-      console.log(reviews.find(review => (review.id).toString() === params.id))
+      // console.log("reviews", reviews)
+      // console.log(reviews.find(review => (review.id).toString() === params.id))
       setReview(reviews.find(review => (review.id).toString() === params.id))
     //   if (Object.keys(reviews).length > 0) {
-    //     console.log("has reviews")
+    //     // console.log("has reviews")
     //     if (reviews.find(review => (review.id).toString() !== params.id)) {
-    //         console.log("no reviews with this param")
+    //         // console.log("no reviews with this param")
     //     }
     //   }
       setReviewUpdated(!reviewUpdated)
@@ -56,10 +56,10 @@ const SingleReviewView = () => {
 
 
     useEffect(() => {
-      console.log("trigger")
-      console.log(review)
+      // console.log("trigger")
+      // console.log(review)
       if (auth.username && review?.title && auth.user_id === review.user) {
-        console.log("user!")
+        // console.log("user!")
         setIsAuthedUser(true)
         setReview(prevState => ({
           ...prevState,
@@ -70,7 +70,7 @@ const SingleReviewView = () => {
         }))
         setIsLoading(false)
       } else if (review?.title) {
-        console.log("No auth")
+        // console.log("No auth")
         setReview(prevState => ({
           ...prevState,
           "date": formatDate(review.date),
@@ -81,7 +81,7 @@ const SingleReviewView = () => {
     }, [reviewUpdated])
 
     useEffect(() => {
-      // console.log("in single review use effect")
+      // // console.log("in single review use effect")
       let isMounted = true;
       const source = axios.CancelToken.source();
 
@@ -92,13 +92,13 @@ const SingleReviewView = () => {
                   cancelToken: source.token
               });
 
-              // console.log(response)
+              // // console.log(response)
               if (isMounted) {
-                  console.log("mounted set Data")
+                  // console.log("mounted set Data")
                   setReviews(response.data);
 
                   if (!response.data.find(review => (review.id).toString() === params.id)) {
-                    console.log("review doesn't exist")
+                    // console.log("review doesn't exist")
                     setNotFound(true)
                     setIsLoading(false)
                   }
@@ -118,7 +118,7 @@ const SingleReviewView = () => {
                   cancelToken: source.token
               });
 
-              // console.log("user data", response?.data);
+              // // console.log("user data", response?.data);
               isMounted && setAnonUser(response?.data)
                
           } catch (err) {
@@ -136,11 +136,11 @@ const SingleReviewView = () => {
                   cancelToken: source.token,
                   headers: {'Content-Type': 'application/json'}
               });
-              // console.log("list data in review list", response?.data);
+              // // console.log("list data in review list", response?.data);
               isMounted && setReviews(response?.data)
 
               if (!response.data.find(review => (review.id).toString() === params.id)) {
-                console.log("review doesn't exist")
+                // console.log("review doesn't exist")
                 // set these two variables since review isn't found
                 setNotFound(true)
                 setIsLoading(false)
@@ -149,7 +149,7 @@ const SingleReviewView = () => {
               // if review is found, we need the useEffect to retrigger, which sets loading to false
 
           } catch (err) {
-              console.log(err);
+              // console.log(err);
                 setNotFound(true)
                 setIsLoading(false)
           }
@@ -157,17 +157,17 @@ const SingleReviewView = () => {
 
       const PullData = async () => {
           if (auth?.accessToken) {
-              // console.log("authed user signed in")
+              // // console.log("authed user signed in")
               if (auth?.username === params.username) {
-                  console.log("authed users reviews")
+                  // console.log("authed users reviews")
                   fetchAuthData()
               } else {
-                  console.log(`${params.username}'s public reviews while other user logged in`)
+                  // console.log(`${params.username}'s public reviews while other user logged in`)
                   getAnonUser()
                   fetchAnonData()
               }
           } else {
-              console.log(`${params.username}'s public reviews`)
+              // console.log(`${params.username}'s public reviews`)
               getAnonUser()
               fetchAnonData()
           }
@@ -176,9 +176,9 @@ const SingleReviewView = () => {
       const HasReviews = () => {
           if (reviews.length) {
               if (reviews[0]?.user === auth?.user_id && auth?.username === params.username) {
-                  console.log("reviews are present and belong to authed paramed user")
+                  // console.log("reviews are present and belong to authed paramed user")
                   if (!reviews.find(review => (review.id).toString() === params.id)) {
-                    console.log("didn't find")
+                    // console.log("didn't find")
                     // if reviews aren't found, set NotFound and isLoading
                     // otherwise authed will be set to true below and the useEffect will handle
                     setNotFound(true)
@@ -189,20 +189,20 @@ const SingleReviewView = () => {
                   setIsAuthedUser(true)
                   
               } else if (reviews[0].username === params.username) {
-                  console.log("reviews are present and belong to public paramed user")
+                  // console.log("reviews are present and belong to public paramed user")
                   // if reviews aren't found, setNotFound and isLoading
                   // otherwise, reviews will be handled by above useEffect
                   if (!reviews.find(review => (review.id).toString() === params.id)) {
-                    // console.log("didn't find")
+                    // // console.log("didn't find")
                     setNotFound(true)
                     setIsLoading(false)
                   }
               } else {
-                  console.log("reviews present but not same url, pull data")
+                  // console.log("reviews present but not same url, pull data")
                   PullData()
               }
           } else {
-              console.log("no reviews present, pull data")
+              // console.log("no reviews present, pull data")
               PullData()
           }
       }

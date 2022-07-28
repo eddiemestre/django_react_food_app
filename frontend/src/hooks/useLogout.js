@@ -23,10 +23,10 @@ const useLogout = () => {
                 withCredentials: true,   // sends cookie to backend
             });
 
-            console.log(response)
+            // console.log(response)
             
         } catch (err) {
-            console.log(err);
+            // console.log(err);
             navigate('/logout')
         
         }

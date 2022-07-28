@@ -5,7 +5,7 @@ const ReviewContent = (props) => {
 
     const getInputValue = (event) => {
         props.setReview(event.target.value)
-        console.log(props.review)
+        // console.log(props.review)
     }
     return (
         <DetailsContainer>

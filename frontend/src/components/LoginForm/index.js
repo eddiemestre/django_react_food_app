@@ -35,9 +35,9 @@ const LoginForm = () => {
     };
 
     useEffect(() => {
-      console.log("in errorMessages use effect")
+      // console.log("in errorMessages use effect")
       if (Object.keys(errorMessages).length > 0) {
-          console.log("has error messages")
+          // console.log("has error messages")
           errorExpiration()
       }
     }, [errorMessages])
@@ -59,7 +59,7 @@ const LoginForm = () => {
             }
         );
 
-        console.log(JSON.stringify(response?.data));
+        // console.log(JSON.stringify(response?.data));
         const accessToken = response?.data?.access;
 
         setAuth({email: email, accessToken: accessToken});
@@ -69,7 +69,7 @@ const LoginForm = () => {
         return accessToken;
 
       } catch (err) {
-        console.log(err)
+        // console.log(err)
           if(!err?.response) {
             setErrorMessages({name: "server", message: errors.server});
           } else if (err.response?.status === 400) {
@@ -111,7 +111,7 @@ const LoginForm = () => {
         navigate(`/user/${username}/`);
 
       } catch (err) {
-        console.log(err);
+        // console.log(err);
       }
     }
 

@@ -49,7 +49,7 @@ const SettingsForm = ({ setUpdatedSettings }) => {
 
       useEffect(() => {
         setIsLoading(true)
-        console.log("in settings form use effect", auth)
+        // console.log("in settings form use effect", auth)
         setName(auth?.name || '')
         setUsername(auth?.username || '')
         setEmail(auth?.email || '')
@@ -67,9 +67,9 @@ const SettingsForm = ({ setUpdatedSettings }) => {
     };
 
     useEffect(() => {
-        console.log("in errorMessages use effect")
+        // console.log("in errorMessages use effect")
         if (Object.keys(errorMessages).length > 0) {
-            console.log("has error messages")
+            // console.log("has error messages")
             errorExpiration()
         }
     }, [errorMessages])
@@ -81,7 +81,7 @@ const SettingsForm = ({ setUpdatedSettings }) => {
     
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log("Submit settings change")
+        // console.log("Submit settings change")
 
         const userCheck = USER_REGEX.test(username);
         // const emailCheck = EMAIL_REGEX.test(email);
@@ -106,7 +106,7 @@ const SettingsForm = ({ setUpdatedSettings }) => {
 
         // if changes aren't different, return before patching
         if (Object.keys(data).length === 0) {
-            console.log("no changes to commit");
+            // console.log("no changes to commit");
             return;
         }
 
@@ -131,7 +131,7 @@ const SettingsForm = ({ setUpdatedSettings }) => {
             setUpdatedSettings(true)
 
         } catch (err) {
-            console.log(err.response)
+            // console.log(err.response)
             if (!err?.response) {
               setErrorMessages({name: "server", message: errors.server});
             } else if (err.response?.status === 400) {
@@ -140,7 +140,7 @@ const SettingsForm = ({ setUpdatedSettings }) => {
               if (err.response.data['username']) {
                 const usernameError = err.response.data['username'];
                 const errorCheck = usernameError.at(0);
-                console.log("error check", errorCheck)
+                // console.log("error check", errorCheck)
                 if (errorCheck === "This field must be unique.") { 
                     setErrorMessages({name: "unameTaken", message: errors.unameTaken}); 
                     setUsername(orUsername)

@@ -31,25 +31,25 @@ const EditReview = () => {
     const [notFound, setNotFound] = useState(false)
 
     useEffect(() => {
-        console.log("params update")
+        // console.log("params update")
         setNotFound(false)
         setIsLoading(true)
     }, [params])
 
     useEffect(() => {
-      console.log("reviews", reviews)
-      console.log(reviews.find(review => (review.id).toString() === params.id))
+      // console.log("reviews", reviews)
+      // console.log(reviews.find(review => (review.id).toString() === params.id))
       setReview(reviews.find(review => (review.id).toString() === params.id))
       setReviewUpdated(!reviewUpdated)
-      console.log("review", review)
+      // console.log("review", review)
     }, [reviews, params])
 
 
     useEffect(() => {
-      console.log("trigger")
-      console.log(review)
+      // console.log("trigger")
+      // console.log(review)
       if (auth?.accessToken && auth.username === params.username) {
-        console.log("user!")
+        // console.log("user!")
         if (review?.title) {
             setReview(prevState => ({
             ...prevState,
@@ -61,14 +61,14 @@ const EditReview = () => {
             setIsLoading(false)
         }
       } else {
-        console.log("Not authed")
+        // console.log("Not authed")
         setNotFound(true)
         setIsLoading(false)
       }
     }, [reviewUpdated])
 
     useEffect(() => {
-      console.log("in edit review use effect")
+      // console.log("in edit review use effect")
       let isMounted = true;
       const source = axios.CancelToken.source();
       setIsLoading(true)
@@ -79,21 +79,21 @@ const EditReview = () => {
                   cancelToken: source.token
               });
 
-              // console.log(response)
+              // // console.log(response)
               if (isMounted) {
-                  console.log("mounted set Data")
+                  // console.log("mounted set Data")
                 //   setReviews(response.data);
                   
                   if (response.data.find(review => (review.id).toString() === params.id)) {
                     setReview(response.data.find(review => (review.id).toString() === params.id))
                   } else {
-                    console.log("didn't find")
+                    // console.log("didn't find")
                     setNotFound(true)
                   }
               }
           }  catch (err) {
               if (isMounted)
-              console.log("failed")
+              // console.log("failed")
               setNotFound(true)
               setReviews([])
           } finally {
@@ -103,17 +103,17 @@ const EditReview = () => {
 
       const PullData = async () => {
           if (auth?.accessToken) {
-              // console.log("authed user signed in")
+              // // console.log("authed user signed in")
               if (auth?.username === params.username) {
-                  console.log("authed users reviews")
+                  // console.log("authed users reviews")
                   fetchAuthData()
               } else {
-                console.log("not where we're suppose to be")
+                // console.log("not where we're suppose to be")
                 setNotFound(true)
                 setIsLoading(false)
               }
           } else {
-            console.log("no auth")
+            // console.log("no auth")
             setNotFound(true)
             setIsLoading(false)
           }
@@ -123,19 +123,19 @@ const EditReview = () => {
           if (reviews.length && auth?.accessToken) {
               if (reviews[0]?.user === auth?.user_id && auth?.username === params.username) {
                     if (reviews.find(review => (review.id).toString() === params.id)) {
-                        console.log("found review")
+                        // console.log("found review")
                     } else {
-                        console.log("didn't find")
+                        // console.log("didn't find")
                         setNotFound(true)
                     }
-                  console.log("reviews are present and belong to authed paramed user")
+                  // console.log("reviews are present and belong to authed paramed user")
                   setIsLoading(false)
               }  else {
-                  console.log("reviews present but not same url, pull data")
+                  // console.log("reviews present but not same url, pull data")
                   PullData()
               }
           } else {
-              console.log("no reviews present, pull data")
+              // console.log("no reviews present, pull data")
               PullData()
           }
       }
@@ -165,7 +165,7 @@ const EditReview = () => {
 
 
     const DeleteThisReview = async () => {
-        console.log("delete review from database")
+        // console.log("delete review from database")
         try {
             let response;
                 // post review with all fields
@@ -177,13 +177,13 @@ const EditReview = () => {
                 );
             
             // remove review from local list
-            // console.log("all reviews", reviews)
+            // // console.log("all reviews", reviews)
             const reviewsList = reviews.filter(review => (review.id).toString() !== params.id)
-            // console.log("remove review", reviewsList)
+            // // console.log("remove review", reviewsList)
             setReviews(reviewsList)
 
         } catch (err) {
-            console.log(err);
+            // console.log(err);
         }
     }
 
@@ -199,11 +199,11 @@ const EditReview = () => {
     const ModalConditions = () => {
         setDiscardType("edit")
         if (inputHasChanged === false) {
-            console.log("review modal true, changing to false. No changes detected")
+            // console.log("review modal true, changing to false. No changes detected")
             navigate(`/user/${params.username}/${params.id}`)
             
         } else {
-            console.log("Discard Modal false, changing to True")
+            // console.log("Discard Modal false, changing to True")
             setDiscardModal(true)
         }
     }

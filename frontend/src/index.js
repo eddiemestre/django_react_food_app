@@ -4,25 +4,24 @@ import './index.css';
 import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-// import { AuthenticatedProvider } from './context/AuthContext';
-// import { AuthProvider } from './context/AuthProvider';
+import { disableReactDevTools } from '@fvilers/disable-react-devtools';
+
+if (process.env.NODE_ENV === 'production') {
+  disableReactDevTools();
+}
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
     <BrowserRouter>
-      {/* <AuthenticatedProvider>
-        <AuthProvider> */}
           <Routes>
             <Route path="/*" element={<App />} />
           </Routes>
-        {/* </AuthProvider>
-      </AuthenticatedProvider> */}
     </BrowserRouter>
   // </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
+// to log results (for example: reportWebVitals(// console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

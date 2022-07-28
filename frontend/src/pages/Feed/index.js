@@ -35,16 +35,16 @@ const Feed = () => {
                     cancelToken: source.token
                 });
 
-                // console.log(response)
+                // // console.log(response)
                 if (isMounted) {
-                    // console.log("mounted set Data")
+                    // // console.log("mounted set Data")
                     let allReviews = response.data; 
                     allReviews.sort((a, b) =>  (a.date===null)-(b.date===null) || new Date(b.date) - new Date(a.date) || a.title.localeCompare(b.title))
                     setReviews(allReviews);
                 }
             }  catch (err) {
                 if (isMounted)
-                console.log("failed")
+                // console.log("failed")
                 setReviews([])
                 setIsLoading(false)
                 setNotFound(true)
@@ -59,13 +59,13 @@ const Feed = () => {
                     cancelToken: source.token
                 });
 
-                // console.log("user data", response?.data);
+                // // console.log("user data", response?.data);
                 isMounted && setAnonUser(response?.data)
                  
             } catch (err) {
                 console.error(err);
                     setNotFound(true)
-                    // console.log("404 getting anon user details")
+                    // // console.log("404 getting anon user details")
             } finally {
                 isMounted && setIsLoading(false)
             }
@@ -79,14 +79,14 @@ const Feed = () => {
                     cancelToken: source.token,
                     headers: {'Content-Type': 'application/json'}
                 });
-                // console.log("list data in review list", response?.data);
+                // // console.log("list data in review list", response?.data);
 
                 let allReviews = response.data; 
                 allReviews.sort((a, b) =>  (a.date===null)-(b.date===null) || new Date(b.date) - new Date(a.date) || a.title.localeCompare(b.title))
                 isMounted && setReviews(allReviews)
 
             } catch (err) {
-                console.log(err);
+                // console.log(err);
                 setNotFound(true)
             } finally {
                 setIsLoading(false)
@@ -95,17 +95,17 @@ const Feed = () => {
 
         const PullData = async () => {
             if (auth?.accessToken) {
-                // console.log("authed user signed in")
+                // // console.log("authed user signed in")
                 if (auth?.username === params.username) {
-                    // console.log("authed users reviews")
+                    // // console.log("authed users reviews")
                     fetchAuthData()
                 } else {
-                    // console.log(`${params.username}'s public reviews`)
+                    // // console.log(`${params.username}'s public reviews`)
                     getAnonUser()
                     fetchAnonData()
                 }
             } else {
-                // console.log(`${params.username}'s public reviews`)
+                // // console.log(`${params.username}'s public reviews`)
                 getAnonUser()
                 fetchAnonData()
             }
@@ -114,17 +114,17 @@ const Feed = () => {
         const HasReviews = () => {
             if (reviews.length) {
                 if (reviews[0]?.user === auth?.user_id && auth?.username === params.username) {
-                    console.log("reviews are present and belong to authed paramed user")
+                    // console.log("reviews are present and belong to authed paramed user")
                     setIsLoading(false)
                 } else if (reviews[0].username === params.username) {
-                    console.log("reviews are present and belong to public paramed user")
+                    // console.log("reviews are present and belong to public paramed user")
                     setIsLoading(false)
                 } else {
-                    console.log("reviews present but not same url, pull data")
+                    // console.log("reviews present but not same url, pull data")
                     PullData()
                 }
             } else {
-                console.log("no reviews present, pull data")
+                // console.log("no reviews present, pull data")
                 PullData()
             }
         }

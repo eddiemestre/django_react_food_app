@@ -23,7 +23,7 @@ const useAxiosFetchReviews = (username) => {
     } 
 
     useEffect(() => {
-        console.log("in axiosfetchreviews use effect")
+        // console.log("in axiosfetchreviews use effect")
         let isMounted = true;
         // const source = axiosAPI.CancelToken.source();
         setIsLoading(true)
@@ -36,15 +36,15 @@ const useAxiosFetchReviews = (username) => {
                     // cancelToken: source.token
                 });
 
-                console.log(response)
+                // console.log(response)
                 if (isMounted) {
-                    console.log("mounted set Data")
+                    // console.log("mounted set Data")
                     setData(response.data);
                     setFetchError(null);
                 }
             }  catch (err) {
                 if (isMounted)
-                console.log("failed")
+                // console.log("failed")
                 setFetchError(err.message)
                 setData([])
             } finally {
@@ -73,7 +73,7 @@ const useAxiosFetchReviews = (username) => {
               
               return true
             } catch (err) {
-              console.log(err);
+              // console.log(err);
               return false
             } finally {
                 isMounted && setIsLoading(false)
@@ -81,17 +81,17 @@ const useAxiosFetchReviews = (username) => {
         }
 
         const getAnonUser = async (username) => {
-            console.log("username", username)
+            // console.log("username", username)
             try {
                 const response = await axios.get(`/auth/get_other_user/${username}/`);
 
-                console.log("user data", response?.data);
+                // console.log("user data", response?.data);
                 isMounted && setAnonUser(response?.data)
                  
             } catch (err) {
                 console.error(err);
                 if (err?.response?.status === 404) {
-                    console.log("404 getting anon user details")
+                    // console.log("404 getting anon user details")
                 }
             } finally {
                 isMounted && setIsLoading(false)
@@ -105,13 +105,13 @@ const useAxiosFetchReviews = (username) => {
                 {
                     headers: {'Content-Type': 'application/json'},
                 });
-                console.log("list data in review list", response?.data);
+                // console.log("list data in review list", response?.data);
                 isMounted && setData(response?.data)
 
             } catch (err) {
-                console.log(err);
+                // console.log(err);
                 if (err?.response?.status === 404) {
-                    console.log("no public reviews found")
+                    // console.log("no public reviews found")
                 }
             } finally {
                 setIsLoading(false)
@@ -120,10 +120,10 @@ const useAxiosFetchReviews = (username) => {
 
         const PullData = async (username) => {
             if (auth?.accessToken && hasLocalStorage()) {
-                console.log("has auth")
+                // console.log("has auth")
                 fetchAuthData()
             } else if (hasLocalStorage()) {
-                console.log("has localStorage")
+                // console.log("has localStorage")
                 setAuth(prevState => ({
                     ...prevState, 
                     name: JSON.parse(localStorage.getItem('name')),
@@ -133,16 +133,16 @@ const useAxiosFetchReviews = (username) => {
                 }))
                 fetchAuthData()
             } else {
-                console.log("no local storage")
+                // console.log("no local storage")
                 const authSuccess = await GetAuthedUser();
                 if (authSuccess) {
-                    console.log("get authed user success")
+                    // console.log("get authed user success")
                     fetchAuthData()
                 } else {
-                    console.log("anonymous user")
+                    // console.log("anonymous user")
                     setAuth({})
                     if (username) {
-                        console.log("get user details")
+                        // console.log("get user details")
                         getAnonUser(username);
                         fetchAnonData(username)
                     }
@@ -154,7 +154,7 @@ const useAxiosFetchReviews = (username) => {
         
         const cleanUp = () => {
             isMounted = false;
-            console.log("cancelled?")
+            // console.log("cancelled?")
             // source.cancel();
         }
 

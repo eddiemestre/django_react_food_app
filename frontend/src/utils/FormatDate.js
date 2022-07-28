@@ -6,11 +6,11 @@ export const parseDate = (date) => {
     if (date.includes('T')) {
         temp = date.split('T');
         temp = temp[0]
-        // console.log("temp parsed", temp)
+        // // console.log("temp parsed", temp)
 
-        // console.log("parsed", temp)
+        // // console.log("parsed", temp)
     }
-    // console.log(temp)
+    // // console.log(temp)
     temp = temp.split('-')
     temp = `${temp[2]}-${temp[1]}-${temp[0]}`
     parsed = temp.split('-');
@@ -20,15 +20,15 @@ export const parseDate = (date) => {
             }
         }
 
-        // console.log("Final parsed", parsed)
-    // console.log(parsed)
+        // // console.log("Final parsed", parsed)
+    // // console.log(parsed)
     return parsed;
 }
 
 
 export const formatDate = (date) => {
-    // console.log("Format date", date)
-    // console.log("inside formatted date", date)
+    // // console.log("Format date", date)
+    // // console.log("inside formatted date", date)
     if (!date) {
         return "No Date"
     }
@@ -40,7 +40,7 @@ export const formatDate = (date) => {
 
     const parse = parseDate(date)
     const newDate = `${months[parseInt(parse[1] - 1)]} ${parse[0]}, ${parse[2]}`
-    // console.log("new Date", newDate)
+    // // console.log("new Date", newDate)
     return newDate;
 }
 

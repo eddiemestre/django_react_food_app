@@ -45,7 +45,7 @@ const Home = () => {
                 <TopDiv />
                 {TextAppear((style, item) =>
                     item 
-                    ? <WelcomeText style={style}>Track you're favorite restaurants and tell your friends what's tasty.</WelcomeText>
+                    ? <WelcomeText style={style}>Track your favorite restaurants and tell your friends what's tasty.</WelcomeText>
                     : ''
                 )}
                 <RegisterButton onClick={() => navigate('/register')}>Sign Up</RegisterButton>

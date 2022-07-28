@@ -32,7 +32,7 @@ const PasswordUpdate = ({ setUpdatedPassword }) => {
     
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log("Submit password change")
+        // console.log("Submit password change")
         // const passCheck = PASSWORD_REGEX.test(passNew);
 
         try {
@@ -44,7 +44,7 @@ const PasswordUpdate = ({ setUpdatedPassword }) => {
               }
             );
 
-            // console.log(response)
+            // // console.log(response)
   
             // clear input fields, set state back to empty strings
             setOldPass('');
@@ -59,12 +59,12 @@ const PasswordUpdate = ({ setUpdatedPassword }) => {
               setErrorMessages({name: "server", message: errors.server});
             } else if (err.response?.status === 400) {
               if (err.response.data['old_password']) {
-                console.log(err.response.data)
+                // console.log(err.response.data)
                 // const PasswordError = err.response.data['old_password'];
                 //const errorCheck = PasswordError.at(0);
-                console.log(errors.incorrectOld)
+                // console.log(errors.incorrectOld)
                 setErrorMessages({name: "incorrectOld", message: errors.incorrectOld});
-                console.log(errorMessages)
+                // console.log(errorMessages)
               }
             } else {
               setErrorMessages({name: "other", message: errors.other})

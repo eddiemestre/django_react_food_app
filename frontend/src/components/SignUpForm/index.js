@@ -53,9 +53,9 @@ const SignUpForm = () => {
     };
 
     useEffect(() => {
-      console.log("in errorMessages use effect")
+      // console.log("in errorMessages use effect")
       if (Object.keys(errorMessages).length > 0) {
-          console.log("has error messages")
+          // console.log("has error messages")
           errorExpiration()
       }
     }, [errorMessages])
@@ -90,7 +90,7 @@ const SignUpForm = () => {
             }
           );
 
-          // console.log(JSON.stringify(response?.data));
+          // // console.log(JSON.stringify(response?.data));
 
           // clear input fields, set state back to empty strings
           setName('');
@@ -125,7 +125,7 @@ const SignUpForm = () => {
             else if (err.response.data['name']) {
               const nameError = err.response.data['name'];
               const errorCheck = nameError.at(0);
-              console.log(errorCheck)
+              // console.log(errorCheck)
               if (errorCheck) { 
                   setErrorMessages({name: "name", message: errors.name}); 
               }

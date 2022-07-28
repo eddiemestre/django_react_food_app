@@ -15,7 +15,7 @@ const PersistLogin = () => {
         let isMounted = true;
 
         const verifyRefreshToken = async () => {
-            console.log("in refresh")
+            // console.log("in refresh")
             try {
                 const accessToken = await refresh();
                 return accessToken;
@@ -52,7 +52,7 @@ const PersistLogin = () => {
             //   return username
       
             } catch (err) {
-              console.log(err);
+              // console.log(err);
             } finally {
                 isMounted && setIsLoadingSetAuth(false)
             }
@@ -76,9 +76,9 @@ const PersistLogin = () => {
     }, [])
 
     useEffect(() => {
-        // console.log(`isLoading: ${isLoading}`)
-        // console.log(`isLoadingAuth: ${isLoadingSetAuth}`)
-        // console.log(`aT: ${JSON.stringify(auth?.accessToken)}`)
+        // // console.log(`isLoading: ${isLoading}`)
+        // // console.log(`isLoadingAuth: ${isLoadingSetAuth}`)
+        // // console.log(`aT: ${JSON.stringify(auth?.accessToken)}`)
     }, [isLoading, isLoadingSetAuth])
 
     return (

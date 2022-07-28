@@ -47,12 +47,12 @@ const CreateReviewModule = ({ toggleReviewOff, setReviewModuleActive, setInputHa
 
     const onChange = () => {
         setInputHasChanged(true)
-        // console.log("input has changed set to true")
+        // // console.log("input has changed set to true")
     }
 
     const onChangeDate = (date) => {
 
-        console.log("date", date)
+        // console.log("date", date)
         // we need this to always give us the user time zone date
         // do we need to ensure the time is sent to the backend as well?
         if (date) {
@@ -77,7 +77,7 @@ const CreateReviewModule = ({ toggleReviewOff, setReviewModuleActive, setInputHa
 
     const onThoughtsClick = () => {
         setWriteReviewModal(true);
-        // console.log("write review modal", writeReviewModal)
+        // // console.log("write review modal", writeReviewModal)
         onChange();
     }
 
@@ -93,7 +93,7 @@ const CreateReviewModule = ({ toggleReviewOff, setReviewModuleActive, setInputHa
 
     const onTitleChange = (event) => {
         setReviewTitle(event.target.value);
-        console.log(reviewTitle);
+        // console.log(reviewTitle);
         onChange()
     }
 
@@ -107,7 +107,7 @@ const CreateReviewModule = ({ toggleReviewOff, setReviewModuleActive, setInputHa
                 user: auth?.user_id
             }
             if (startDate) {
-                console.log("has date")
+                // console.log("has date")
                 reviewToSave['date'] = dateValue
                 // post review with all fields
                 // add review to reviews data context
@@ -120,7 +120,7 @@ const CreateReviewModule = ({ toggleReviewOff, setReviewModuleActive, setInputHa
                 );
             } else {
                 // start date is empty
-                console.log("no date")
+                // console.log("no date")
                 response = await axiosPrivate.post('/reviews/review/', 
                 JSON.stringify(reviewToSave),
                     {
@@ -130,17 +130,17 @@ const CreateReviewModule = ({ toggleReviewOff, setReviewModuleActive, setInputHa
                 );
             }
 
-            // console.log("in response post review", response)
+            // // console.log("in response post review", response)
 
             // sort reviews by date and alphabetical order
             const allReviews = [...reviews, response.data];
             allReviews.sort((a, b) =>  (a.date===null)-(b.date===null) || new Date(b.date) - new Date(a.date) || a.title.localeCompare(b.title))
             setReviews(allReviews)
-            console.log(allReviews)
+            // console.log(allReviews)
             
         } catch (err) {
-            // console.log("in error review module")
-            console.log(err);
+            // // console.log("in error review module")
+            // console.log(err);
         }
     }
 
@@ -167,13 +167,13 @@ const CreateReviewModule = ({ toggleReviewOff, setReviewModuleActive, setInputHa
     // const formatUTC = (dateInt, addOffset = true) => {
     //     let date = (!dateInt || dateInt.length < 1) ? new Date() : new Date(dateInt);
     //     if (typeof dateInt === "string") {
-    //         // console.log("formatUTC date", date)
+    //         // // console.log("formatUTC date", date)
     //         return date;
     //     } else {
     //         const offset = addOffset ? date.getTimezoneOffset() : -(date.getTimezoneOffset());
     //         const offsetDate = new Date();
     //         offsetDate.setTime(date.getTime() + offset * 60000)
-    //         // console.log("formatUTC offset", offsetDate)
+    //         // // console.log("formatUTC offset", offsetDate)
     //         return offsetDate;
     //     }
     // }
