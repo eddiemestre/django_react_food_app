@@ -2,7 +2,7 @@
 
 A mobile web-app that lets users create, read, update, and delete restaurant reviews.
 
-View a working demo [here](https://the-django-food-app.herokuapp.com/) (ongoing bug fixes). Best viewed on mobile or in a browser with a mobile viewport. 
+View a working demo [here](https://the-django-food-app.herokuapp.com/) (ongoing bug fixes). Best viewed on a mobile device or in a desktop browser with a mobile viewport. 
 
 This app uses a react frontend and django backend for all CRUD operations. Django provides exposed 
 endpoints using [django rest framework](https://www.django-rest-framework.org/) and handles 
