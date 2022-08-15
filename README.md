@@ -4,6 +4,11 @@ A mobile web-app that lets users create, read, update, and delete restaurant rev
 
 View a working demo [here](https://the-django-food-app.herokuapp.com/) (ongoing bug fixes). Best viewed on a mobile device or in a desktop browser with a mobile viewport. 
 
+Demo Credentials:
+email: demo@demo.com
+password: demo!234
+(account creation also supported)
+
 This app uses a react frontend and django backend for all CRUD operations. Django provides exposed 
 endpoints using [django rest framework](https://www.django-rest-framework.org/) and handles 
 authentication using [simple_jwt](https://django-rest-framework-simplejwt.readthedocs.io/en/latest/)
